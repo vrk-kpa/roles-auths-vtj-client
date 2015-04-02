@@ -1,0 +1,103 @@
+package fi.vm.kapa.rova.soap.vtj;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.jws.WebService;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Holder;
+import javax.xml.ws.handler.Handler;
+import javax.xml.ws.handler.HandlerResolver;
+import javax.xml.ws.handler.PortInfo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Node;
+
+import fi.vm.kapa.rova.config.SpringPropertyNames;
+import fi.vm.kapa.rova.soap.handlers.XroadHeaderHandler;
+import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
+import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyReqBodyTiedot;
+import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyResType;
+import fi.vrk.xml.rova.vtj.ISoSoAdapterService60;
+import fi.vrk.xml.rova.vtj.ObjectFactory;
+import fi.vrk.xml.rova.vtj.SoSoAdapterService60;
+
+@Component
+@WebService(endpointInterface = "fi.vrk.xml.rova.vtj.ISoSoAdapterService60",wsdlLocation="/WEB-INF/classes/wsdl/vtj.wsdl")
+public class VTJClient implements SpringPropertyNames {
+
+	SoSoAdapterService60 service = new SoSoAdapterService60();
+	ObjectFactory factory = new ObjectFactory();
+	
+	@Autowired
+	private XroadHeaderHandler xroadHeaderHandler;
+	
+	@Value(VTJ_USERNAME)
+	private String vtjUsername;
+	@Value(USER_ID)
+	private String vtjUserId;
+	@Value(VTJ_PASSWORD)
+	private String vtjPassword;
+	@Value(XROAD_ENDPOINT)
+	private String xrdEndPoint;
+	
+	private static Logger LOG = Logger.getLogger(VTJClient.class.toString());
+	
+	public VTJClient() {
+	}
+	
+	@PostConstruct
+	public void init(){
+		HandlerResolver hs = new HandlerResolver() {
+			@SuppressWarnings("rawtypes")
+			@Override
+			public List<Handler> getHandlerChain(PortInfo portInfo) {
+				List<Handler> handlers = new ArrayList<Handler>();
+				handlers.add(xroadHeaderHandler);
+				return handlers;
+			}
+		};
+		service.setHandlerResolver(hs);
+	}
+
+	public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException {
+		LOG.fine("VTJClient.getResponse() starts");
+		ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
+		BindingProvider bp = (BindingProvider) iService;
+
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
+
+		HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
+		reqBodyTiedot.setHenkilotunnus(hetu);
+		reqBodyTiedot.setKayttajatunnus(vtjUsername);
+		reqBodyTiedot.setLoppukayttaja(vtjUserId);
+		reqBodyTiedot.setSalasana(vtjPassword);
+		reqBodyTiedot.setSoSoNimi(schema);
+
+		Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
+		
+		HenkiloTunnusKyselyResType resType = factory.createHenkiloTunnusKyselyResType();
+		Holder<HenkiloTunnusKyselyResType> response = new Holder<HenkiloTunnusKyselyResType>(resType);
+		iService.henkilonTunnusKysely(request, response);
+
+		resType = response.value;
+		List<Object> list = resType.getAny();
+		for (Object o : list) {
+			JAXBContext context = JAXBContext
+					.newInstance(VTJResponseMessage.class);
+			Unmarshaller um = context.createUnmarshaller();
+			um.setEventHandler(new CustomValidationEventHandler());
+
+			return (VTJResponseMessage) um.unmarshal((Node) o);
+		}
+		return null;
+	}
+
+}
