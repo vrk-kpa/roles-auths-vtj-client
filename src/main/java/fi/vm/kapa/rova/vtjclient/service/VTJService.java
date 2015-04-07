@@ -40,6 +40,13 @@ public class VTJService {
 		fi.vm.kapa.rova.soap.vtj.model.Person sPerson = message.getPerson();
 		Person person = new Person();
 		person.setSsn(sPerson.getHetu().getHetu());
+		if (sPerson.getHetu().getValidityCode().equals("1")) {
+			person.setSsnValid(true);
+		} else {
+			person.setSsnValid(false);
+		}
+			
+			
 		person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
 		person.setLastName(sPerson.getLastName().getLastName().getValue());
 		
