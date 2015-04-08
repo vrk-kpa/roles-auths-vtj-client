@@ -37,6 +37,11 @@ public class Person {
 	@XmlElement(name = "Turvakielto", required = false)
 	private ProtectionOrder protectionorder;
 	
+	@XmlElement(name = "Huostaanotto", required = false)
+	private Huostaanotto huostaanotto;
+	
+
+
 	public List<Custodian> getCustodian() {
 		return custodian;
 	}
@@ -99,6 +104,14 @@ public class Person {
 
 	public void setProtectionorder(ProtectionOrder protectionorder) {
 		this.protectionorder = protectionorder;
+	}
+	
+	public Huostaanotto getHuostaanotto() {
+		return huostaanotto;
+	}
+
+	public void setHuostaanotto(Huostaanotto huostaanotto) {
+		this.huostaanotto = huostaanotto;
 	}
 
 	@Override

@@ -60,7 +60,15 @@ public class VTJService {
 
 		person.setPrincipals(getPrincipals(sPerson));
 		person.setCustodians(getCustodians(sPerson));
-		person.setCustody(false);
+		
+		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
+				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
+			person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
+					.getValue().equals("1"));
+		} else {
+			person.setHuostaanotettu(false);
+		}
+			
 		
 		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
