@@ -15,15 +15,17 @@ public class ServiceConfiguration extends ResourceConfig {
 	
 	@Value("${api_key}")
 	String apiKey;
+
+	@Value("${request_alive_seconds}")
+	Integer requestAliveSeconds;
 	
 	public ServiceConfiguration() {
 		register(VTJResource.class);
-		//register(new ValidationContainerRequestFilter("salainenApiKey"));
 	}
 	
 	@PostConstruct
 	public void init() {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-		register(new ValidationContainerRequestFilter(apiKey));
+		register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds));
 	}
 }
