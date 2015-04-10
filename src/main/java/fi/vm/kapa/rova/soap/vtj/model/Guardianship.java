@@ -12,6 +12,10 @@ public class Guardianship {
 	
 	@XmlElement(name = "EdunvalvontaTieto")
 	StringNode guardianship;
+	
+	@XmlElement(name="Rajoituskoodi", required = false)
+	private StringNode rajoituskoodi;
+
 
 	public StringNode getGuardianship() {
 		return guardianship;
@@ -21,4 +25,11 @@ public class Guardianship {
 		this.guardianship = guardianship;
 	}
 
+	public StringNode getRajoituskoodi() {
+		return rajoituskoodi;
+	}
+
+	public void setRajoituskoodi(StringNode rajoituskoodi) {
+		this.rajoituskoodi = rajoituskoodi;
+	}
 }

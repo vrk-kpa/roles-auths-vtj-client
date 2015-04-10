@@ -30,7 +30,7 @@ public class Person {
 	
 	@XmlElement(name="Edunvalvonta", required = false)
 	private Guardianship guardianship;
-
+	
 	@XmlElement(name = "Huoltaja", required = false)
 	private List<Custodian> custodian;
 	
@@ -40,7 +40,7 @@ public class Person {
 	@XmlElement(name = "Huostaanotto", required = false)
 	private Huostaanotto huostaanotto;
 	
-
+	
 
 	public List<Custodian> getCustodian() {
 		return custodian;

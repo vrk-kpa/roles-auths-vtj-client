@@ -29,9 +29,7 @@ public class VTJService {
 			VTJResponseMessage response = client.getResponse(hetu, schema);
 			person = fromSoapMessage(response);
 		} catch (JAXBException e) {
-
 			e.printStackTrace();
-
 		}
 		return person;
 	}
@@ -40,20 +38,19 @@ public class VTJService {
 		fi.vm.kapa.rova.soap.vtj.model.Person sPerson = message.getPerson();
 		Person person = new Person();
 		person.setSsn(sPerson.getHetu().getHetu());
-		if (sPerson.getHetu().getValidityCode().equals("1")) {
+		if (sPerson.getHetu().getValidityCode().equals("1")) { // "1" = hetu voimassa
 			person.setSsnValid(true);
 		} else {
 			person.setSsnValid(false);
 		}
-			
-			
+					
 		person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
 		person.setLastName(sPerson.getLastName().getLastName().getValue());
 		
 		if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null 
 				&& sPerson.getDeceased().getDeceased().getValue() != null) {
 			person.setDeceased(sPerson.getDeceased().getDeceased().getValue()
-					.equals("1"));
+					.equals("1")); // "1" = Kuollut 
 		} else {
 			person.setDeceased(false);
 		}
@@ -64,7 +61,7 @@ public class VTJService {
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
 			person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
-					.getValue().equals("1"));
+					.getValue().equals("1")); // "1" = huostaanotettu
 		} else {
 			person.setHuostaanotettu(false);
 		}
@@ -73,7 +70,12 @@ public class VTJService {
 		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
 			person.setGuardianship(sPerson.getGuardianship().getGuardianship()
-					.getValue().equals("1"));
+					.getValue().equals("1")); // "1" = Edunvalvonnassa
+			if (sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { //ei rajoitettu
+				person.setGuardianshipLimited(false);
+			} else {
+				person.setGuardianshipLimited(true);
+			}
 		} else {
 			person.setGuardianship(false);
 		}
