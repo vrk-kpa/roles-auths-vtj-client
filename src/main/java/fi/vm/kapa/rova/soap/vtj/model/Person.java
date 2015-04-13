@@ -40,6 +40,8 @@ public class Person {
 	@XmlElement(name = "Huostaanotto", required = false)
 	private Huostaanotto huostaanotto;
 	
+	@XmlElement(name = "Huoltotiedot")
+	private CustodyInformation custodyInformation;
 	
 
 	public List<Custodian> getCustodian() {
@@ -112,6 +114,14 @@ public class Person {
 
 	public void setHuostaanotto(Huostaanotto huostaanotto) {
 		this.huostaanotto = huostaanotto;
+	}
+
+	public CustodyInformation getCustodyInformation() {
+		return custodyInformation;
+	}
+
+	public void setCustodyInformation(CustodyInformation custodyInformation) {
+		this.custodyInformation = custodyInformation;
 	}
 
 	@Override

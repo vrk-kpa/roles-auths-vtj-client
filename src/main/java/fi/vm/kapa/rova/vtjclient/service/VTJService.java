@@ -58,6 +58,7 @@ public class VTJService {
 		person.setPrincipals(getPrincipals(sPerson));
 		person.setCustodians(getCustodians(sPerson));
 		
+		
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
 			person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
@@ -69,12 +70,12 @@ public class VTJService {
 		
 		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
-			person.setGuardianship(sPerson.getGuardianship().getGuardianship()
-					.getValue().equals("1")); // "1" = Edunvalvonnassa
-			if (sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { //ei rajoitettu
+			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
+			
+			if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
 				person.setGuardianshipLimited(false);
 			} else {
-				person.setGuardianshipLimited(true);
+				person.setGuardianshipLimited(true); //TODO: Values 2 & 3 have to be checked
 			}
 		} else {
 			person.setGuardianship(false);
@@ -96,16 +97,19 @@ public class VTJService {
 	private List<Person> getCustodians(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
-		List<Custodian> custodians = sPerson.getCustodian();
-		if (custodians != null) {
-			for (Custodian g : custodians) {
-				Person guardian = new Person();
-				guardian.setSsn(g.getId().getValue());
-				guardian.setFirstNames(g.getFirstNames().getValue());
-				guardian.setLastName(g.getLastName().getValue());
-				result.add(guardian);
+		List<Custodian> huoltajat = sPerson.getCustodian();
+		
+		if (huoltajat != null) {
+			for (Custodian g : huoltajat) {
+				Person huoltaja = new Person();
+				huoltaja.setSsn(g.getId().getValue());
+				huoltaja.setFirstNames(g.getFirstNames().getValue());
+				huoltaja.setLastName(g.getLastName().getValue());
+				//huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("K"));
+				result.add(huoltaja);
 			}
 		}
+		
 		return result;
 	}
 

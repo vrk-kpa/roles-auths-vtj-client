@@ -18,6 +18,10 @@ public class Custodian {
 	
 	@XmlElement(name = "Etunimet")
 	private StringNode firstNames;
+	
+	@XmlElement(name = "Huoltotiedot")
+	private CustodyInformation custodyInformation;
+	
 
 	public StringNode getId() {
 		return id;
@@ -42,6 +46,15 @@ public class Custodian {
 	public void setFirstNames(StringNode firstNames) {
 		this.firstNames = firstNames;
 	}
+	
+	public CustodyInformation getCustodyInformation() {
+		return custodyInformation;
+	}
+
+	public void setCustodyInformation(CustodyInformation custodyInformation) {
+		this.custodyInformation = custodyInformation;
+	}
+
 
 	@Override
 	public String toString() {
