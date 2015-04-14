@@ -31,6 +31,9 @@ public class Person {
 	@XmlElement(name="Edunvalvonta", required = false)
 	private Guardianship guardianship;
 	
+	@XmlElement(name="Edunvalvontavaltuutus", required = false)
+	private Guardianship guardianshipAuthorized;
+	
 	@XmlElement(name = "Huoltaja", required = false)
 	private List<Custodian> custodian;
 	
@@ -40,6 +43,8 @@ public class Person {
 	@XmlElement(name = "Huostaanotto", required = false)
 	private Huostaanotto huostaanotto;
 	
+	@XmlElement(name = "Huoltotiedot")
+	private CustodyInformation custodyInformation;
 	
 
 	public List<Custodian> getCustodian() {
@@ -98,6 +103,14 @@ public class Person {
 		this.guardianship = guardianship;
 	}
 
+	public Guardianship getGuardianshipAuthorized() {
+		return guardianshipAuthorized;
+	}
+
+	public void setGuardianshipAuthorized(Guardianship guardianshipAuthorized) {
+		this.guardianshipAuthorized = guardianshipAuthorized;
+	}
+
 	public ProtectionOrder getProtectionorder() {
 		return protectionorder;
 	}
@@ -112,6 +125,14 @@ public class Person {
 
 	public void setHuostaanotto(Huostaanotto huostaanotto) {
 		this.huostaanotto = huostaanotto;
+	}
+
+	public CustodyInformation getCustodyInformation() {
+		return custodyInformation;
+	}
+
+	public void setCustodyInformation(CustodyInformation custodyInformation) {
+		this.custodyInformation = custodyInformation;
 	}
 
 	@Override

@@ -58,6 +58,7 @@ public class VTJService {
 		person.setPrincipals(getPrincipals(sPerson));
 		person.setCustodians(getCustodians(sPerson));
 		
+		
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
 			person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
@@ -69,13 +70,22 @@ public class VTJService {
 		
 		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
-			person.setGuardianship(sPerson.getGuardianship().getGuardianship()
-					.getValue().equals("1")); // "1" = Edunvalvonnassa
-			if (sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { //ei rajoitettu
-				person.setGuardianshipLimited(false);
-			} else {
-				person.setGuardianshipLimited(true);
+			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
+			
+			person.setGuardianshipUnlimited(false);
+			person.setGuardianshipLimited(false);
+			person.setGuardianshipAnnounced(false);
+			
+			if (sPerson.getGuardianship().getRajoituskoodi() != null && sPerson.getGuardianship().getRajoituskoodi().getValue() != null) {
+				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+					person.setGuardianshipUnlimited(true);
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) {
+					person.setGuardianshipLimited(true);
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) {
+					person.setGuardianshipAnnounced(true);
+				}
 			}
+		
 		} else {
 			person.setGuardianship(false);
 		}
@@ -96,16 +106,22 @@ public class VTJService {
 	private List<Person> getCustodians(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
-		List<Custodian> custodians = sPerson.getCustodian();
-		if (custodians != null) {
-			for (Custodian g : custodians) {
-				Person guardian = new Person();
-				guardian.setSsn(g.getId().getValue());
-				guardian.setFirstNames(g.getFirstNames().getValue());
-				guardian.setLastName(g.getLastName().getValue());
-				result.add(guardian);
+		List<Custodian> huoltajat = sPerson.getCustodian();
+		
+		if (huoltajat != null) {
+			for (Custodian g : huoltajat) {
+				Person huoltaja = new Person();
+				huoltaja.setSsn(g.getId().getValue());
+				huoltaja.setFirstNames(g.getFirstNames().getValue());
+				huoltaja.setLastName(g.getLastName().getValue());
+				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null) {
+					huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
+					huoltaja.setHuollonjakoMaarays(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
+				}
+				result.add(huoltaja);
 			}
 		}
+		
 		return result;
 	}
 
