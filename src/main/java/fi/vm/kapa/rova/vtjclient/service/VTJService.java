@@ -72,11 +72,20 @@ public class VTJService {
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
 			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
 			
-			if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
-				person.setGuardianshipLimited(false);
-			} else {
-				person.setGuardianshipLimited(true); //TODO: Values 2 & 3 have to be checked
+			person.setGuardianshipUnlimited(false);
+			person.setGuardianshipLimited(false);
+			person.setGuardianshipAnnounced(false);
+			
+			if (sPerson.getGuardianship().getRajoituskoodi()!=null) {
+				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+					person.setGuardianshipUnlimited(true);
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) {
+					person.setGuardianshipLimited(true);
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) {
+					person.setGuardianshipAnnounced(true);
+				}
 			}
+		
 		} else {
 			person.setGuardianship(false);
 		}
@@ -105,7 +114,10 @@ public class VTJService {
 				huoltaja.setSsn(g.getId().getValue());
 				huoltaja.setFirstNames(g.getFirstNames().getValue());
 				huoltaja.setLastName(g.getLastName().getValue());
-				//huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("K"));
+				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null) {
+					huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
+					huoltaja.setHuollonjakoMaarays(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
+				}
 				result.add(huoltaja);
 			}
 		}

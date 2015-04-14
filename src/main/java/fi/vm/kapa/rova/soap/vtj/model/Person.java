@@ -31,6 +31,9 @@ public class Person {
 	@XmlElement(name="Edunvalvonta", required = false)
 	private Guardianship guardianship;
 	
+	@XmlElement(name="Edunvalvontavaltuutus", required = false)
+	private Guardianship guardianshipAuthorized;
+	
 	@XmlElement(name = "Huoltaja", required = false)
 	private List<Custodian> custodian;
 	
@@ -98,6 +101,14 @@ public class Person {
 
 	public void setGuardianship(Guardianship guardianship) {
 		this.guardianship = guardianship;
+	}
+
+	public Guardianship getGuardianshipAuthorized() {
+		return guardianshipAuthorized;
+	}
+
+	public void setGuardianshipAuthorized(Guardianship guardianshipAuthorized) {
+		this.guardianshipAuthorized = guardianshipAuthorized;
 	}
 
 	public ProtectionOrder getProtectionorder() {
