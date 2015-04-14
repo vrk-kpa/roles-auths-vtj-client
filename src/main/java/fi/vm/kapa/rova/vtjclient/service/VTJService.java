@@ -76,7 +76,7 @@ public class VTJService {
 			person.setGuardianshipLimited(false);
 			person.setGuardianshipAnnounced(false);
 			
-			if (sPerson.getGuardianship().getRajoituskoodi()!=null) {
+			if (sPerson.getGuardianship().getRajoituskoodi() != null && sPerson.getGuardianship().getRajoituskoodi().getValue() != null) {
 				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
 					person.setGuardianshipUnlimited(true);
 				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) {
