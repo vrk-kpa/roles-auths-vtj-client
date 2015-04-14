@@ -6,6 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,15 @@ public class VTJResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/person/{schema}/{hetu}")
-	public Person getPerson(@PathParam("hetu") String hetu,
+	public Response getPerson(@PathParam("hetu") String hetu,
 			@PathParam("schema") String schema) {
-		return service.getPerson(hetu, schema);
+		try {
+			Person person = service.getPerson(hetu, schema);
+			return Response.ok().entity(person).build();
+		} catch (Exception e) {
+			ResponseBuilder responseBuilder = Response.serverError();
+			return responseBuilder.build();
+			
+		}
 	}
 }
