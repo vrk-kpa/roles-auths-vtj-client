@@ -72,7 +72,9 @@ public class VTJService {
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
 			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
 			
-			if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+			if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi() != null
+					&& sPerson.getGuardianship().getRajoituskoodi().getValue() != null
+					&& sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
 				person.setGuardianshipLimited(false);
 			} else {
 				person.setGuardianshipLimited(true); //TODO: Values 2 & 3 have to be checked
