@@ -114,7 +114,8 @@ public class VTJService {
 				huoltaja.setSsn(g.getId().getValue());
 				huoltaja.setFirstNames(g.getFirstNames().getValue());
 				huoltaja.setLastName(g.getLastName().getValue());
-				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null) {
+				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null && 
+						g.getCustodyInformation().getCustodyDivisionCode().getValue() != null) {
 					huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
 					huoltaja.setHuollonjakoMaarays(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
 				}
