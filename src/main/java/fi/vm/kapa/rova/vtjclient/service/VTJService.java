@@ -79,9 +79,9 @@ public class VTJService {
 			if (sPerson.getGuardianship().getRajoituskoodi() != null && sPerson.getGuardianship().getRajoituskoodi().getValue() != null) {
 				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
 					person.setGuardianshipUnlimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) {
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
 					person.setGuardianshipLimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) {
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
 					person.setGuardianshipAnnounced(true);
 				}
 			}
