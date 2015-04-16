@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vm.kapa.rova.soap.vtj.model.Custodian;
+import fi.vm.kapa.rova.soap.vtj.model.GuardianshipAuthorizedPerson;
+import fi.vm.kapa.rova.soap.vtj.model.GuardianshipPerson;
 import fi.vm.kapa.rova.soap.vtj.model.Principal;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.vtj.model.Person;
@@ -57,7 +59,8 @@ public class VTJService {
 
 		person.setPrincipals(getPrincipals(sPerson));
 		person.setCustodians(getCustodians(sPerson));
-		
+		person.setGuardians(getGuardians(sPerson));
+		person.setGuardianshipAuthorizedPersons(getGuardianshipAuthorizedPersons(sPerson));
 		
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
@@ -79,9 +82,9 @@ public class VTJService {
 			if (sPerson.getGuardianship().getRajoituskoodi() != null && sPerson.getGuardianship().getRajoituskoodi().getValue() != null) {
 				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
 					person.setGuardianshipUnlimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) {
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
 					person.setGuardianshipLimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) {
+				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
 					person.setGuardianshipAnnounced(true);
 				}
 			}
@@ -114,14 +117,14 @@ public class VTJService {
 				huoltaja.setSsn(g.getId().getValue());
 				huoltaja.setFirstNames(g.getFirstNames().getValue());
 				huoltaja.setLastName(g.getLastName().getValue());
-				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null) {
+				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null && 
+						g.getCustodyInformation().getCustodyDivisionCode().getValue() != null) {
 					huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
 					huoltaja.setHuollonjakoMaarays(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
 				}
 				result.add(huoltaja);
 			}
 		}
-		
 		return result;
 	}
 
@@ -140,4 +143,41 @@ public class VTJService {
 		}
 		return result;
 	}
+	
+	private List<Person> getGuardians(
+			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
+		List<Person> result = new ArrayList<Person>();
+		List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
+		
+		if (henkiloedunvalvojat != null) {
+			for (GuardianshipPerson p : henkiloedunvalvojat) {
+				Person edunvalvoja = new Person();
+				edunvalvoja.setSsn(p.getHetu().getValue());
+				edunvalvoja.setBirthdate(p.getBirthday().getValue());
+				edunvalvoja.setFirstNames(p.getFirstName().getValue());
+				edunvalvoja.setLastName(p.getLastName().getValue());
+				result.add(edunvalvoja);
+			}
+		}
+		return result;
+	}
+	
+	private List<Person> getGuardianshipAuthorizedPersons(
+			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
+		List<Person> result = new ArrayList<Person>();
+		List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
+		
+		if (henkiloEdunvalvojaValtuutetut != null) {
+			for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
+				Person edunvalvoja = new Person();
+				edunvalvoja.setSsn(p.getHetu().getValue());
+				edunvalvoja.setBirthdate(p.getBirthday().getValue());
+				edunvalvoja.setFirstNames(p.getFirstName().getValue());
+				edunvalvoja.setLastName(p.getLastName().getValue());
+				result.add(edunvalvoja);
+			}
+		}
+		return result;
+	}
+	
 }

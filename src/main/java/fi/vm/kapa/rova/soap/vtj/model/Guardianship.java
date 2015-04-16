@@ -1,5 +1,7 @@
 package fi.vm.kapa.rova.soap.vtj.model;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,11 +13,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Guardianship {
 	
 	@XmlElement(name = "EdunvalvontaTieto")
-	StringNode guardianship;
+	private StringNode guardianship;
 	
 	@XmlElement(name="Rajoituskoodi", required = false)
 	private StringNode rajoituskoodi;
-
+	
+	@XmlElement(name="HenkiloEdunvalvoja", required = false)
+	private List<GuardianshipPerson> guardianshipPerson;
 
 	public StringNode getGuardianship() {
 		return guardianship;
@@ -31,5 +35,13 @@ public class Guardianship {
 
 	public void setRajoituskoodi(StringNode rajoituskoodi) {
 		this.rajoituskoodi = rajoituskoodi;
+	}
+
+	public List<GuardianshipPerson> getGuardianshipPerson() {
+		return guardianshipPerson;
+	}
+
+	public void setGuardianshipPerson(List<GuardianshipPerson> guardianshipPerson) {
+		this.guardianshipPerson = guardianshipPerson;
 	}
 }

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Huostaanotto {
 	@XmlElement(name = "HuostaanottoTieto")
-	StringNode huostaanottoTieto;
+	private StringNode huostaanottoTieto;
 
 	public StringNode getHuostaanottoTieto() {
 		return this.huostaanottoTieto;
