@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProtectionOrder {
 	
 	@XmlElement(name = "TurvakieltoTieto")
-	StringNode protectionorder;
+	private StringNode protectionorder;
 
 	public StringNode getProtectionorder() {
 		return protectionorder;

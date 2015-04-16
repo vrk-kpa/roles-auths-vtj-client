@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vm.kapa.rova.soap.vtj.model.Custodian;
+import fi.vm.kapa.rova.soap.vtj.model.GuardianshipAuthorizedPerson;
+import fi.vm.kapa.rova.soap.vtj.model.GuardianshipPerson;
 import fi.vm.kapa.rova.soap.vtj.model.Principal;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.vtj.model.Person;
@@ -57,7 +59,8 @@ public class VTJService {
 
 		person.setPrincipals(getPrincipals(sPerson));
 		person.setCustodians(getCustodians(sPerson));
-		
+		person.setGuardians(getGuardians(sPerson));
+		person.setGuardianshipAuthorizedPersons(getGuardianshipAuthorizedPersons(sPerson));
 		
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
@@ -121,7 +124,6 @@ public class VTJService {
 				result.add(huoltaja);
 			}
 		}
-		
 		return result;
 	}
 
@@ -140,4 +142,41 @@ public class VTJService {
 		}
 		return result;
 	}
+	
+	private List<Person> getGuardians(
+			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
+		List<Person> result = new ArrayList<Person>();
+		List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
+		
+		if (henkiloedunvalvojat != null) {
+			for (GuardianshipPerson p : henkiloedunvalvojat) {
+				Person edunvalvoja = new Person();
+				edunvalvoja.setSsn(p.getHetu().getValue());
+				edunvalvoja.setBirthdate(p.getBirthday().getValue());
+				edunvalvoja.setFirstNames(p.getFirstName().getValue());
+				edunvalvoja.setLastName(p.getLastName().getValue());
+				result.add(edunvalvoja);
+			}
+		}
+		return result;
+	}
+	
+	private List<Person> getGuardianshipAuthorizedPersons(
+			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
+		List<Person> result = new ArrayList<Person>();
+		List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
+		
+		if (henkiloEdunvalvojaValtuutetut != null) {
+			for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
+				Person edunvalvoja = new Person();
+				edunvalvoja.setSsn(p.getHetu().getValue());
+				edunvalvoja.setBirthdate(p.getBirthday().getValue());
+				edunvalvoja.setFirstNames(p.getFirstName().getValue());
+				edunvalvoja.setLastName(p.getLastName().getValue());
+				result.add(edunvalvoja);
+			}
+		}
+		return result;
+	}
+	
 }
