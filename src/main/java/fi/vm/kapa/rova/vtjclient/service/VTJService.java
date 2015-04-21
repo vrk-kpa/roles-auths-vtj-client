@@ -45,10 +45,13 @@ public class VTJService {
 		} else {
 			person.setSsnValid(false);
 		}
-					
-		person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
-		person.setLastName(sPerson.getLastName().getLastName().getValue());
 		
+		if (sPerson.getFirstName()!=null) {
+			person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
+		}
+		if (sPerson.getLastName()!=null) {
+			person.setLastName(sPerson.getLastName().getLastName().getValue());
+		}
 		if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null 
 				&& sPerson.getDeceased().getDeceased().getValue() != null) {
 			person.setDeceased(sPerson.getDeceased().getDeceased().getValue()
@@ -69,8 +72,7 @@ public class VTJService {
 		} else {
 			person.setHuostaanotettu(false);
 		}
-			
-		
+				
 		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
 				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
 			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
@@ -88,7 +90,6 @@ public class VTJService {
 					person.setGuardianshipAnnounced(true);
 				}
 			}
-		
 		} else {
 			person.setGuardianship(false);
 		}
@@ -109,9 +110,10 @@ public class VTJService {
 	private List<Person> getCustodians(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
-		List<Custodian> huoltajat = sPerson.getCustodian();
 		
-		if (huoltajat != null) {
+		if (sPerson.getCustodian() != null) {
+			List<Custodian> huoltajat = sPerson.getCustodian();
+				
 			for (Custodian g : huoltajat) {
 				Person huoltaja = new Person();
 				huoltaja.setSsn(g.getId().getValue());
@@ -147,9 +149,9 @@ public class VTJService {
 	private List<Person> getGuardians(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
-		List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
 		
-		if (henkiloedunvalvojat != null) {
+		if (sPerson.getGuardianship() != null) {
+			List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
 			for (GuardianshipPerson p : henkiloedunvalvojat) {
 				Person edunvalvoja = new Person();
 				edunvalvoja.setSsn(p.getHetu().getValue());
@@ -165,9 +167,9 @@ public class VTJService {
 	private List<Person> getGuardianshipAuthorizedPersons(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
-		List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
 		
-		if (henkiloEdunvalvojaValtuutetut != null) {
+		if (sPerson.getGuardianshipAuthorization() != null) {
+			List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
 			for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
 				Person edunvalvoja = new Person();
 				edunvalvoja.setSsn(p.getHetu().getValue());
