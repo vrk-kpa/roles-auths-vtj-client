@@ -16,6 +16,9 @@ public class ServiceConfiguration extends ResourceConfig {
 	@Value("${api_key}")
 	String apiKey;
 
+	@Value("${api_path_prefix}")
+	String apiPathPrefix;
+
 	@Value("${request_alive_seconds}")
 	Integer requestAliveSeconds;
 	
@@ -26,6 +29,6 @@ public class ServiceConfiguration extends ResourceConfig {
 	@PostConstruct
 	public void init() {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-		register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds));
+		register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
 	}
 }
