@@ -50,9 +50,6 @@ public class VTJClient implements SpringPropertyNames {
 	
 	private static Logger LOG = Logger.getLogger(VTJClient.class.toString());
 	
-	public VTJClient() {
-	}
-	
 	@PostConstruct
 	public void init(){
 		HandlerResolver hs = new HandlerResolver() {
@@ -82,12 +79,12 @@ public class VTJClient implements SpringPropertyNames {
 		reqBodyTiedot.setSoSoNimi(schema);
 
 		Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
-		
+
 		HenkiloTunnusKyselyResType resType = factory.createHenkiloTunnusKyselyResType();
 		Holder<HenkiloTunnusKyselyResType> response = new Holder<HenkiloTunnusKyselyResType>(resType);
 		iService.henkilonTunnusKysely(request, response);
 
-		resType = response.value;
+		resType	 = response.value;
 		List<Object> list = resType.getAny();
 		for (Object o : list) {
 			JAXBContext context = JAXBContext

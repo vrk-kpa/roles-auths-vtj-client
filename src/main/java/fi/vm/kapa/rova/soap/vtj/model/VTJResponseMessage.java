@@ -1,11 +1,7 @@
 package fi.vm.kapa.rova.soap.vtj.model;
 
-import java.util.List;
-
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +15,7 @@ public class VTJResponseMessage {
 
 	@XmlElement(name = "Paluukoodi")
 	private ResponseCode responseCode;
-	
+
 	@XmlAttribute(name = "tietojenPoimintaaika")
 	private String dataTimeStamp;
 
@@ -75,7 +71,5 @@ public class VTJResponseMessage {
 				+ responseCode + ", dataTimeStamp=" + dataTimeStamp
 				+ ", messageID=" + messageID + ", version=" + version + "]";
 	}
-
-
 
 }

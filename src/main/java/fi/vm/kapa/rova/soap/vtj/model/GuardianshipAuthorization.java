@@ -7,23 +7,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-@XmlRootElement(name="Edunvalvontavaltuutus")
+@XmlRootElement(name = "Edunvalvontavaltuutus")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GuardianshipAuthorization {
-	
-	
+
 	@XmlElement(name = "EdunvalvontavaltuutusTieto")
 	private StringNode guardianshipAuthorization;
 
 	@XmlElement(name = "HenkiloEdunvalvontavaltuutettu")
 	private List<GuardianshipAuthorizedPerson> guardianshipAuthorizedPerson;
-	
+
 	public StringNode getGuardianshipAuthorization() {
 		return guardianshipAuthorization;
 	}
 
-	public void setGuardianshipAuthorization(StringNode guardianshipAuthorization) {
+	public void setGuardianshipAuthorization(
+			StringNode guardianshipAuthorization) {
 		this.guardianshipAuthorization = guardianshipAuthorization;
 	}
 

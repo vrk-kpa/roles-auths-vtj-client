@@ -5,14 +5,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlRootElement(name = "HenkiloEdunvalvontavaltuutettu")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GuardianshipAuthorizedPerson {
-	
+
 	@XmlElement(name = "Henkilotunnus")
 	private StringNode hetu;
-	
+
 	@XmlElement(name = "Syntymaaika")
 	private StringNode birthday;
 
@@ -53,5 +52,5 @@ public class GuardianshipAuthorizedPerson {
 	public void setFirstName(StringNode firstName) {
 		this.firstName = firstName;
 	}
-	
+
 }

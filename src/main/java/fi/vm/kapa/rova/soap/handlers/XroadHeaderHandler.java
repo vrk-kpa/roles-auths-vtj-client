@@ -16,6 +16,7 @@ import static fi.vm.kapa.rova.config.SpringPropertyNames.USER_ID;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -32,12 +33,15 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vrk.xml.rova.vtj.Client;
 import fi.vrk.xml.rova.vtj.ObjectFactory;
 import fi.vrk.xml.rova.vtj.Service;
 
 @Component
 public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext> {
+
+	private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class.toString());
 
 	private ObjectFactory factory = new ObjectFactory();
 	
@@ -137,7 +141,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext> {
 					soapMsg.saveChanges();
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					LOG.severe("Xroad header handler exception occured " + e);
 					e.printStackTrace();
 				}
 			}

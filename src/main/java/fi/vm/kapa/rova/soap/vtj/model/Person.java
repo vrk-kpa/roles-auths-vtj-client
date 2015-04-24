@@ -2,10 +2,8 @@ package fi.vm.kapa.rova.soap.vtj.model;
 
 import java.util.List;
 
-import javax.xml.bind.Element;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,25 +25,24 @@ public class Person {
 
 	@XmlElement(name = "Kuolintiedot", required = false)
 	private Deceased deceased;
-	
-	@XmlElement(name="Edunvalvonta", required = false)
+
+	@XmlElement(name = "Edunvalvonta", required = false)
 	private Guardianship guardianship;
-	
-	@XmlElement(name="Edunvalvontavaltuutus", required = false)
+
+	@XmlElement(name = "Edunvalvontavaltuutus", required = false)
 	private GuardianshipAuthorization guardianshipAuthorization;
-	
+
 	@XmlElement(name = "Huoltaja", required = false)
 	private List<Custodian> custodian;
-	
+
 	@XmlElement(name = "Turvakielto", required = false)
 	private ProtectionOrder protectionorder;
-	
+
 	@XmlElement(name = "Huostaanotto", required = false)
 	private Huostaanotto huostaanotto;
-	
+
 	@XmlElement(name = "Huoltotiedot")
 	private CustodyInformation custodyInformation;
-	
 
 	public List<Custodian> getCustodian() {
 		return custodian;
@@ -58,7 +55,7 @@ public class Person {
 	public Hetu getHetu() {
 		return hetu;
 	}
-	
+
 	public void setHetu(Hetu hetu) {
 		this.hetu = hetu;
 	}
@@ -94,7 +91,7 @@ public class Person {
 	public void setPrincipal(List<Principal> principal) {
 		this.principal = principal;
 	}
-	
+
 	public Guardianship getGuardianship() {
 		return guardianship;
 	}
@@ -107,7 +104,8 @@ public class Person {
 		return guardianshipAuthorization;
 	}
 
-	public void setGuardianshipAuthorized(GuardianshipAuthorization guardianshipAuthorization) {
+	public void setGuardianshipAuthorized(
+			GuardianshipAuthorization guardianshipAuthorization) {
 		this.guardianshipAuthorization = guardianshipAuthorization;
 	}
 
@@ -118,7 +116,7 @@ public class Person {
 	public void setProtectionorder(ProtectionOrder protectionorder) {
 		this.protectionorder = protectionorder;
 	}
-	
+
 	public Huostaanotto getHuostaanotto() {
 		return huostaanotto;
 	}

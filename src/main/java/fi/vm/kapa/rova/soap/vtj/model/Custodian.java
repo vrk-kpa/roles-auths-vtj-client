@@ -1,6 +1,5 @@
 package fi.vm.kapa.rova.soap.vtj.model;
 
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -9,19 +8,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Huoltaja")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Custodian {
-	
+
 	@XmlElement(name = "Henkilotunnus")
 	private StringNode id;
-		
+
 	@XmlElement(name = "Sukunimi")
 	private StringNode lastName;
-	
+
 	@XmlElement(name = "Etunimet")
 	private StringNode firstNames;
-	
+
 	@XmlElement(name = "Huoltotiedot")
 	private CustodyInformation custodyInformation;
-	
 
 	public StringNode getId() {
 		return id;
@@ -46,7 +44,7 @@ public class Custodian {
 	public void setFirstNames(StringNode firstNames) {
 		this.firstNames = firstNames;
 	}
-	
+
 	public CustodyInformation getCustodyInformation() {
 		return custodyInformation;
 	}
@@ -55,11 +53,10 @@ public class Custodian {
 		this.custodyInformation = custodyInformation;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Principal [id=" + id + ", lastName=" + lastName
 				+ ", firstNames=" + firstNames + "]";
 	}
-	
+
 }
