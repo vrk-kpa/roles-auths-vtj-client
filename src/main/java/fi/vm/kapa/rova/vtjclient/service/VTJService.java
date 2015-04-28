@@ -151,12 +151,14 @@ public class VTJService {
 			List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
 			if (henkiloedunvalvojat != null) {
 				for (GuardianshipPerson p : henkiloedunvalvojat) {
-					Person edunvalvoja = new Person();
-					edunvalvoja.setSsn(p.getHetu().getValue());
-					edunvalvoja.setBirthdate(p.getBirthday().getValue());
-					edunvalvoja.setFirstNames(p.getFirstName().getValue());
-					edunvalvoja.setLastName(p.getLastName().getValue());
-					result.add(edunvalvoja);
+					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() > 10) {
+						Person edunvalvoja = new Person();
+						edunvalvoja.setSsn(p.getHetu().getValue());
+						edunvalvoja.setBirthdate(p.getBirthday().getValue());
+						edunvalvoja.setFirstNames(p.getFirstName().getValue());
+						edunvalvoja.setLastName(p.getLastName().getValue());
+						result.add(edunvalvoja);
+					}
 				}
 			}
 		}
@@ -171,12 +173,14 @@ public class VTJService {
 			List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
 			if (henkiloEdunvalvojaValtuutetut != null) {
 				for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
-					Person edunvalvoja = new Person();
-					edunvalvoja.setSsn(p.getHetu().getValue());
-					edunvalvoja.setBirthdate(p.getBirthday().getValue());
-					edunvalvoja.setFirstNames(p.getFirstName().getValue());
-					edunvalvoja.setLastName(p.getLastName().getValue());
-					result.add(edunvalvoja);
+					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() > 10) {
+						Person edunvalvoja = new Person();
+						edunvalvoja.setSsn(p.getHetu().getValue());
+						edunvalvoja.setBirthdate(p.getBirthday().getValue());
+						edunvalvoja.setFirstNames(p.getFirstName().getValue());
+						edunvalvoja.setLastName(p.getLastName().getValue());
+						result.add(edunvalvoja);
+					}
 				}
 			}
 		}
