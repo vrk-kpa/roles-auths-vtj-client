@@ -43,6 +43,17 @@ public class Person {
 
 	@XmlElement(name = "Huoltotiedot")
 	private CustodyInformation custodyInformation;
+	
+	@XmlElement(name = "Huoltajalkm")
+	private int custodyCount;
+
+	public int getCustodyCount() {
+		return custodyCount;
+	}
+
+	public void setCustodyCount(int custodyCount) {
+		this.custodyCount = custodyCount;
+	}
 
 	public List<Custodian> getCustodian() {
 		return custodian;

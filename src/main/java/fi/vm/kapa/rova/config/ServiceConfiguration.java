@@ -29,6 +29,6 @@ public class ServiceConfiguration extends ResourceConfig {
 	@PostConstruct
 	public void init() {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-		register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
+		//register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
 	}
 }

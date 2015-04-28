@@ -16,10 +16,22 @@ public class Guardianship {
 
 	@XmlElement(name = "Rajoituskoodi", required = false)
 	private StringNode rajoituskoodi;
-
+	
+	@XmlElement(name = "RajoitustekstiS", required = false)
+	private StringNode rajoitustekstiS;
+	
+	@XmlElement(name = "RajoitustekstiR", required = false)
+	private StringNode rajoitustekstiR;
+	
 	@XmlElement(name = "HenkiloEdunvalvoja", required = false)
 	private List<GuardianshipPerson> guardianshipPerson;
-
+	
+	@XmlElement(name = "OikeusaputoimistoEdunvalvoja", required = false)
+	private List<GuardianshipLegal> guardianshipLegal;
+	
+	@XmlElement(name = "YritysJaYhteisoEdunvalvoja", required = false)
+	private List<GuardianshipOrganization> guardianshipOrganization;
+	
 	public StringNode getGuardianship() {
 		return guardianship;
 	}
