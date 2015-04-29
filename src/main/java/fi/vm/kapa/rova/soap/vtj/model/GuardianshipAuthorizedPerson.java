@@ -19,7 +19,7 @@ public class GuardianshipAuthorizedPerson {
 	private StringNode lastName;
 
 	@XmlElement(name = "NykyisetEtunimet")
-	private StringNode firstName;
+	private CurrentFirstNames firstName;
 
 	public StringNode getHetu() {
 		return hetu;
@@ -45,11 +45,11 @@ public class GuardianshipAuthorizedPerson {
 		this.lastName = lastName;
 	}
 
-	public StringNode getFirstName() {
+	public CurrentFirstNames getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(StringNode firstName) {
+	public void setFirstName(CurrentFirstNames firstName) {
 		this.firstName = firstName;
 	}
 

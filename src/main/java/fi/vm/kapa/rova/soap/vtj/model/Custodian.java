@@ -11,6 +11,9 @@ public class Custodian {
 
 	@XmlElement(name = "Henkilotunnus")
 	private StringNode id;
+	
+	@XmlElement(name = "Syntymaaika")
+	private StringNode birthDate;
 
 	@XmlElement(name = "Sukunimi")
 	private StringNode lastName;
@@ -51,6 +54,14 @@ public class Custodian {
 
 	public void setCustodyInformation(CustodyInformation custodyInformation) {
 		this.custodyInformation = custodyInformation;
+	}
+
+	public StringNode getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(StringNode birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	@Override

@@ -13,10 +13,9 @@ public class CustomValidationEventHandler implements ValidationEventHandler {
 		LOG.finest("Event Info: " + event);
 		if (event.getMessage().contains("unexpected element")){
 			LOG.finest("Unexpected element found: " + event);
-			return true;
 		} else {
-			return false;
+			System.out.println("Validation event: " + event + " " + event.getMessage());
 		}
+		return true;
 	}
-
 }

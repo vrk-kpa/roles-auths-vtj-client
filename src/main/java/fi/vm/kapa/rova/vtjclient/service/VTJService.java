@@ -155,7 +155,7 @@ public class VTJService {
 						Person edunvalvoja = new Person();
 						edunvalvoja.setSsn(p.getHetu().getValue());
 						edunvalvoja.setBirthdate(p.getBirthday().getValue());
-						edunvalvoja.setFirstNames(p.getFirstName().getValue());
+						edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
 						edunvalvoja.setLastName(p.getLastName().getValue());
 						result.add(edunvalvoja);
 					}
@@ -177,7 +177,7 @@ public class VTJService {
 						Person edunvalvoja = new Person();
 						edunvalvoja.setSsn(p.getHetu().getValue());
 						edunvalvoja.setBirthdate(p.getBirthday().getValue());
-						edunvalvoja.setFirstNames(p.getFirstName().getValue());
+						edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
 						edunvalvoja.setLastName(p.getLastName().getValue());
 						result.add(edunvalvoja);
 					}

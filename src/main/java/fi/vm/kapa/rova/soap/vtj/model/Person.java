@@ -44,16 +44,8 @@ public class Person {
 	@XmlElement(name = "Huoltotiedot")
 	private CustodyInformation custodyInformation;
 	
-	@XmlElement(name = "Huoltajalkm")
-	private int custodyCount;
-
-	public int getCustodyCount() {
-		return custodyCount;
-	}
-
-	public void setCustodyCount(int custodyCount) {
-		this.custodyCount = custodyCount;
-	}
+	@XmlElement(name = "HuoltajaLkm")
+	private CustodyCount custodyCount;
 
 	public List<Custodian> getCustodian() {
 		return custodian;
@@ -142,6 +134,14 @@ public class Person {
 
 	public void setCustodyInformation(CustodyInformation custodyInformation) {
 		this.custodyInformation = custodyInformation;
+	}
+
+	public CustodyCount getCustodyCount() {
+		return custodyCount;
+	}
+
+	public void setCustodyCount(CustodyCount custodyCount) {
+		this.custodyCount = custodyCount;
 	}
 
 	@Override

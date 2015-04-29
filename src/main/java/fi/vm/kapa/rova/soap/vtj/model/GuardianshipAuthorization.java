@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GuardianshipAuthorization {
 
+	@XmlElement(name = "Alkupvm")
+	private StringNode startDate;
+	
 	@XmlElement(name = "EdunvalvontavaltuutusTieto")
 	private StringNode guardianshipAuthorization;
 
