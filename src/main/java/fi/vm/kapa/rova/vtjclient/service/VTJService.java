@@ -22,10 +22,10 @@ public class VTJService {
 	@Autowired
 	private VTJClient client;
 
-	public Person getPerson(String hetu, String schema) {
+	public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) {
 		Person person = null;
 		try {
-			VTJResponseMessage response = client.getResponse(hetu, schema);
+			VTJResponseMessage response = client.getResponse(hetu, schema, origUserId, origRequestId);
 			person = fromSoapMessage(response);
 		} catch (Throwable e) {
 			LOG.severe("Person parsing failed reason:"+ e);

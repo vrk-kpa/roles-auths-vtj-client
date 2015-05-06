@@ -64,13 +64,15 @@ public class VTJClient implements SpringPropertyNames {
 		service.setHandlerResolver(hs);
 	}
 
-	public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException {
+	public VTJResponseMessage getResponse(String hetu, String schema, String origUserId, String origRequestId) throws JAXBException {
 		LOG.fine("VTJClient.getResponse() starts");
 		ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
 		BindingProvider bp = (BindingProvider) iService;
 
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
-
+		bp.getRequestContext().put(XroadHeaderHandler.ORIG_USERID_HEADER, origUserId);
+		bp.getRequestContext().put(XroadHeaderHandler.ORIG_REQUEST_ID_HEADER, origRequestId);
+		
 		HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
 		reqBodyTiedot.setHenkilotunnus(hetu);
 		reqBodyTiedot.setKayttajatunnus(vtjUsername);

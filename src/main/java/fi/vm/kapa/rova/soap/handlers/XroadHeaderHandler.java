@@ -1,19 +1,5 @@
 package fi.vm.kapa.rova.soap.handlers;
 
-import static fi.vm.kapa.rova.config.SpringPropertyNames.CLIENT_MEMBER_CLASS;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.CLIENT_MEMBER_CODE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.CLIENT_OBJECT_TYPE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.CLIENT_SDSB_INSTANCE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.CLIENT_SUBSYSTEM_CODE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.ID;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_MEMBER_CLASS;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_MEMBER_CODE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_OBJECT_TYPE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_SDSB_INSTANCE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_SERVICE_CODE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.SERVICE_SUBSYSTEM_CODE;
-import static fi.vm.kapa.rova.config.SpringPropertyNames.USER_ID;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -33,22 +19,25 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fi.vm.kapa.rova.soap.vtj.VTJClient;
+import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vrk.xml.rova.vtj.Client;
 import fi.vrk.xml.rova.vtj.ObjectFactory;
 import fi.vrk.xml.rova.vtj.Service;
 
 @Component
-public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext> {
+public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, SpringPropertyNames {
 
 	private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class.toString());
 
 	private ObjectFactory factory = new ObjectFactory();
 	
+	public static final String ORIG_USERID_HEADER = "origUserId";
+	public static final String ORIG_REQUEST_ID_HEADER = "origRequestId";
+	
 	public Set<QName> getHeaders() {
 		return Collections.emptySet();
 	}
-
+	
 	@Value(ID)
 	private String id;
 	
@@ -106,11 +95,20 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext> {
 					SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
 					idHeaderElement.addTextNode((String) idElement.getValue());
 
-					JAXBElement<String> userIdElement = factory.createUserId(this.userId);
+					String origUserId = (String) messageContext.get(ORIG_USERID_HEADER);
+					if (origUserId == null) {
+						origUserId = "rova-end-user-unknown";
+					}
+					JAXBElement<String> userIdElement = factory.createUserId(origUserId);
 					SOAPHeaderElement uidHeaderElement = header.addHeaderElement(userIdElement.getName());
 					uidHeaderElement.addTextNode((String) userIdElement.getValue());
-
-					JAXBElement<String> issueElement = factory.createIssue("");
+					
+					String origRequestId = (String) messageContext.get(ORIG_REQUEST_ID_HEADER);
+					if (origRequestId == null) {
+						origRequestId = "";
+					}
+					
+					JAXBElement<String> issueElement = factory.createIssue(origRequestId);
 					SOAPHeaderElement issueHeaderElement = header.addHeaderElement(issueElement.getName());
 					issueHeaderElement.addTextNode((String) issueElement.getValue());
 
