@@ -27,10 +27,10 @@ public class VTJResource {
 	@Path("/person/{schema}/{hetu}")
 	public Response getPerson(@PathParam("hetu") String hetu,
 			@PathParam("schema") String schema,
-			@QueryParam("origUserId") String origUserId,
-			@QueryParam("origRequestId") String origRequestId) {
+			@QueryParam("endUserId") String endUserId,
+			@QueryParam("requestId") String requestId) {
 		try {
-			Person person = service.getPerson(hetu, schema, origUserId, origRequestId);
+			Person person = service.getPerson(hetu, schema, endUserId, requestId);
 			return Response.ok().entity(person).build();
 		} catch (Exception e) {
 			ResponseBuilder responseBuilder = Response.serverError();
