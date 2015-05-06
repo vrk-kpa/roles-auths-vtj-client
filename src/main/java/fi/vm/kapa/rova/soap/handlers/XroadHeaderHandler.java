@@ -2,6 +2,7 @@ package fi.vm.kapa.rova.soap.handlers;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
@@ -37,12 +38,6 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 	public Set<QName> getHeaders() {
 		return Collections.emptySet();
 	}
-	
-	@Value(ID)
-	private String id;
-	
-	@Value(USER_ID)
-	private String userId;
 	
 	@Value(CLIENT_OBJECT_TYPE)
 	private String clientObjectType;
@@ -90,8 +85,8 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 					if (header == null) {
 						header = soapEnv.addHeader();
 					}
-
-					JAXBElement<String> idElement = factory.createId(this.id);
+					
+					JAXBElement<String> idElement = factory.createId(UUID.randomUUID().toString());
 					SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
 					idHeaderElement.addTextNode((String) idElement.getValue());
 

@@ -7,9 +7,6 @@ vtj_password={{ vtj_password }}
 vtj_username={{ vtj_username }}
 # open ssh tunnel via this address to our xroad6 server
 xroad_endpoint={{ xroad_endpoint }}
-# ID identifies this call/request (eg running number or timestamp)
-userId={{ user_id }}
-id={{ id }}
 # SERVICE_OBJECT_TYPE (eg. SERVICE)
 service_object_type=SERVICE
 # CLIENT_OBJECT_TYPE (eg. SUBSYSTEM)
