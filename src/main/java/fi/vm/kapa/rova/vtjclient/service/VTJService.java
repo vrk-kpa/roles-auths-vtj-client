@@ -22,6 +22,8 @@ public class VTJService {
 	@Autowired
 	private VTJClient client;
 
+	final int HETU_LENGTH = 11;
+	
 	public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) {
 		Person person = null;
 		try {
@@ -108,7 +110,8 @@ public class VTJService {
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
 		
-		if (sPerson.getCustodian() != null) {
+		//check if custodian is valid
+		if (sPerson.getCustodian() != null && sPerson.getCustodian().get(0).getId().getValue().length() == HETU_LENGTH) {
 			List<Custodian> huoltajat = sPerson.getCustodian();
 				
 			for (Custodian g : huoltajat) {
@@ -129,9 +132,11 @@ public class VTJService {
 
 	private List<Person> getPrincipals(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
+		
 		List<Person> result = new ArrayList<Person>();
 		List<Principal> principals = sPerson.getPrincipal();
-		if (principals != null) {
+		
+		if (principals != null && principals.get(0).getId().getValue().length() == HETU_LENGTH) {
 			for (Principal p : principals) {
 				Person principal = new Person();
 				principal.setSsn(p.getId().getValue());
@@ -151,7 +156,7 @@ public class VTJService {
 			List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
 			if (henkiloedunvalvojat != null) {
 				for (GuardianshipPerson p : henkiloedunvalvojat) {
-					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() > 10) {
+					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
 						Person edunvalvoja = new Person();
 						edunvalvoja.setSsn(p.getHetu().getValue());
 						edunvalvoja.setBirthdate(p.getBirthday().getValue());
@@ -173,7 +178,7 @@ public class VTJService {
 			List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
 			if (henkiloEdunvalvojaValtuutetut != null) {
 				for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
-					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() > 10) {
+					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
 						Person edunvalvoja = new Person();
 						edunvalvoja.setSsn(p.getHetu().getValue());
 						edunvalvoja.setBirthdate(p.getBirthday().getValue());
