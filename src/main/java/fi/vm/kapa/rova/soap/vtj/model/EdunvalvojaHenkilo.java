@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "HenkiloEdunvalvoja")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GuardianshipPerson {
+public class EdunvalvojaHenkilo {
 
 	@XmlElement(name = "Henkilotunnus")
 	private StringNode hetu;

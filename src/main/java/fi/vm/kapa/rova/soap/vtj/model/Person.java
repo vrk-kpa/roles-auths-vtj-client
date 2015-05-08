@@ -27,32 +27,32 @@ public class Person {
 	private Deceased deceased;
 
 	@XmlElement(name = "Edunvalvonta", required = false)
-	private Guardianship guardianship;
+	private Edunvalvonta edunvalvonta;
 
 	@XmlElement(name = "Edunvalvontavaltuutus", required = false)
-	private GuardianshipAuthorization guardianshipAuthorization;
+	private EdunvalvontaValtuutus edunvalvontaValtuutus;
 
 	@XmlElement(name = "Huoltaja", required = false)
-	private List<Custodian> custodian;
+	private List<Huoltaja> huoltaja;
 
 	@XmlElement(name = "Turvakielto", required = false)
-	private ProtectionOrder protectionorder;
+	private Turvakielto turvakielto;
 
 	@XmlElement(name = "Huostaanotto", required = false)
 	private Huostaanotto huostaanotto;
 
 	@XmlElement(name = "Huoltotiedot")
-	private CustodyInformation custodyInformation;
+	private Huoltotieto huoltotieto;
 	
 	@XmlElement(name = "HuoltajaLkm")
-	private CustodyCount custodyCount;
+	private HuoltajaMaara huoltajaMaara;
 
-	public List<Custodian> getCustodian() {
-		return custodian;
+	public List<Huoltaja> getHuoltaja() {
+		return huoltaja;
 	}
 
-	public void setCustodian(List<Custodian> custodian) {
-		this.custodian = custodian;
+	public void setHuoltaja(List<Huoltaja> huoltaja) {
+		this.huoltaja = huoltaja;
 	}
 
 	public Hetu getHetu() {
@@ -95,29 +95,29 @@ public class Person {
 		this.principal = principal;
 	}
 
-	public Guardianship getGuardianship() {
-		return guardianship;
+	public Edunvalvonta getEdunvalvonta() {
+		return edunvalvonta;
 	}
 
-	public void setGuardianship(Guardianship guardianship) {
-		this.guardianship = guardianship;
+	public void setEdunvalvonta(Edunvalvonta edunvalvonta) {
+		this.edunvalvonta = edunvalvonta;
 	}
 
-	public GuardianshipAuthorization getGuardianshipAuthorization() {
-		return guardianshipAuthorization;
+	public EdunvalvontaValtuutus getEdunvalvontaValtuutus() {
+		return edunvalvontaValtuutus;
 	}
 
-	public void setGuardianshipAuthorized(
-			GuardianshipAuthorization guardianshipAuthorization) {
-		this.guardianshipAuthorization = guardianshipAuthorization;
+	public void setEdunvalvontaValtuutus(
+			EdunvalvontaValtuutus edunvalvontaValtuutus) {
+		this.edunvalvontaValtuutus = edunvalvontaValtuutus;
 	}
 
-	public ProtectionOrder getProtectionorder() {
-		return protectionorder;
+	public Turvakielto getTurvakielto() {
+		return turvakielto;
 	}
 
-	public void setProtectionorder(ProtectionOrder protectionorder) {
-		this.protectionorder = protectionorder;
+	public void setTurvakielto(Turvakielto turvakielto) {
+		this.turvakielto = turvakielto;
 	}
 
 	public Huostaanotto getHuostaanotto() {
@@ -128,20 +128,20 @@ public class Person {
 		this.huostaanotto = huostaanotto;
 	}
 
-	public CustodyInformation getCustodyInformation() {
-		return custodyInformation;
+	public Huoltotieto getHuoltotieto() {
+		return huoltotieto;
 	}
 
-	public void setCustodyInformation(CustodyInformation custodyInformation) {
-		this.custodyInformation = custodyInformation;
+	public void setHuoltotieto(Huoltotieto huoltotieto) {
+		this.huoltotieto = huoltotieto;
 	}
 
-	public CustodyCount getCustodyCount() {
-		return custodyCount;
+	public HuoltajaMaara getHuoltajaMaara() {
+		return huoltajaMaara;
 	}
 
-	public void setCustodyCount(CustodyCount custodyCount) {
-		this.custodyCount = custodyCount;
+	public void setHuoltajaMaara(HuoltajaMaara huoltajaMaara) {
+		this.huoltajaMaara = huoltajaMaara;
 	}
 
 	@Override

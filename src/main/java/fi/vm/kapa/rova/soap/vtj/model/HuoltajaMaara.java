@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="HuoltajaLkm")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CustodyCount {
+public class HuoltajaMaara {
 	
 	private String custodyCount;
 

@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
-import fi.vm.kapa.rova.soap.vtj.model.Custodian;
-import fi.vm.kapa.rova.soap.vtj.model.GuardianshipAuthorizedPerson;
-import fi.vm.kapa.rova.soap.vtj.model.GuardianshipPerson;
+import fi.vm.kapa.rova.soap.vtj.model.Huoltaja;
+import fi.vm.kapa.rova.soap.vtj.model.EdunvalvontaValtuutettuHenkilo;
+import fi.vm.kapa.rova.soap.vtj.model.EdunvalvojaHenkilo;
 import fi.vm.kapa.rova.soap.vtj.model.Principal;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.vtj.model.Person;
@@ -39,11 +39,11 @@ public class VTJService {
 	private Person fromSoapMessage(VTJResponseMessage message) {
 		fi.vm.kapa.rova.soap.vtj.model.Person sPerson = message.getPerson();
 		Person person = new Person();
-		person.setSsn(sPerson.getHetu().getHetu());
+		person.setHetu(sPerson.getHetu().getHetu());
 		if (sPerson.getHetu().getValidityCode().equals("1")) { // "1" = hetu voimassa
-			person.setSsnValid(true);
+			person.setHetuValid(true);
 		} else {
-			person.setSsnValid(false);
+			person.setHetuValid(false);
 		}
 		
 		if (sPerson.getFirstName()!=null) {
@@ -61,9 +61,9 @@ public class VTJService {
 		}
 
 		person.setPrincipals(getPrincipals(sPerson));
-		person.setCustodians(getCustodians(sPerson));
-		person.setGuardians(getGuardians(sPerson));
-		person.setGuardianshipAuthorizedPersons(getGuardianshipAuthorizedPersons(sPerson));
+		person.setHuoltajat(getHuoltajat(sPerson));
+		person.setEdunvalvojat(getEdunvalvojat(sPerson));
+		person.setEdunvalvontaValtuutetut(getEdunvalvontaValtuutetut(sPerson));
 		
 		if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
 				&& sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
@@ -73,56 +73,56 @@ public class VTJService {
 			person.setHuostaanotettu(false);
 		}
 				
-		if (sPerson.getGuardianship() != null && sPerson.getGuardianship().getGuardianship() != null 
-				&& sPerson.getGuardianship().getGuardianship().getValue() != null) {
-			person.setGuardianship(sPerson.getGuardianship().getGuardianship().getValue().equals("1")); // "1" = Edunvalvonnassa
+		if (sPerson.getEdunvalvonta() != null && sPerson.getEdunvalvonta().getEdunvalvontatieto() != null 
+				&& sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue() != null) {
+			person.setEdunvalvonta(sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue().equals("1")); // "1" = Edunvalvonnassa
 			
-			person.setGuardianshipUnlimited(false);
-			person.setGuardianshipLimited(false);
-			person.setGuardianshipAnnounced(false);
+			person.setEdunvalvontaEiRajoitettu(false);
+			person.setEdunvalvontaRajoitettu(false);
+			person.setEdunvalvontaJulistettu(false);
 			
-			if (sPerson.getGuardianship().getRajoituskoodi() != null && sPerson.getGuardianship().getRajoituskoodi().getValue() != null) {
-				if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
-					person.setGuardianshipUnlimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
-					person.setGuardianshipLimited(true);
-				} else if (person.isGuardianship() && sPerson.getGuardianship().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
-					person.setGuardianshipAnnounced(true);
+			if (sPerson.getEdunvalvonta().getRajoituskoodi() != null && sPerson.getEdunvalvonta().getRajoituskoodi().getValue() != null) {
+				if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+					person.setEdunvalvontaEiRajoitettu(true);
+				} else if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
+					person.setEdunvalvontaRajoitettu(true);
+				} else if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
+					person.setEdunvalvontaJulistettu(true);
 				}
 			}
 		} else {
-			person.setGuardianship(false);
+			person.setEdunvalvonta(false);
 		}
 		
-		if (sPerson.getProtectionorder() != null && sPerson.getProtectionorder().getProtectionorder() != null 
-				&& sPerson.getProtectionorder().getProtectionorder().getValue() != null) {
-			person.setProtectionOrder(sPerson.getProtectionorder().getProtectionorder()
+		if (sPerson.getTurvakielto() != null && sPerson.getTurvakielto().getTurvakielto() != null 
+				&& sPerson.getTurvakielto().getTurvakielto().getValue() != null) {
+			person.setTurvakielto(sPerson.getTurvakielto().getTurvakielto()
 					.getValue().equals("1"));
 		} else {
-			person.setProtectionOrder(false);
+			person.setTurvakielto(false);
 		}
 		LOG.info("fromSoapMessage: person="+ person);
 		
 		return person;
 	}
 
-	private List<Person> getCustodians(
+	private List<Person> getHuoltajat(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
 		
 		//check if custodian is valid
-		if (sPerson.getCustodian() != null && sPerson.getCustodian().get(0).getId().getValue().length() == HETU_LENGTH) {
-			List<Custodian> huoltajat = sPerson.getCustodian();
+		if (sPerson.getHuoltaja() != null && sPerson.getHuoltaja().get(0).getId().getValue().length() == HETU_LENGTH) {
+			List<Huoltaja> huoltajat = sPerson.getHuoltaja();
 				
-			for (Custodian g : huoltajat) {
+			for (Huoltaja g : huoltajat) {
 				Person huoltaja = new Person();
-				huoltaja.setSsn(g.getId().getValue());
+				huoltaja.setHetu(g.getId().getValue());
 				huoltaja.setFirstNames(g.getFirstNames().getValue());
 				huoltaja.setLastName(g.getLastName().getValue());
-				if (g.getCustodyInformation() != null && g.getCustodyInformation().getCustodyDivisionCode() != null && 
-						g.getCustodyInformation().getCustodyDivisionCode().getValue() != null) {
-					huoltaja.setHuollonjakoSopimus(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
-					huoltaja.setHuollonjakoMaarays(g.getCustodyInformation().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
+				if (g.getHuoltotieto() != null && g.getHuoltotieto().getCustodyDivisionCode() != null && 
+						g.getHuoltotieto().getCustodyDivisionCode().getValue() != null) {
+					huoltaja.setHuollonjakoSopimus(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
+					huoltaja.setHuollonjakoMaarays(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
 				}
 				result.add(huoltaja);
 			}
@@ -139,7 +139,7 @@ public class VTJService {
 		if (principals != null && principals.get(0).getId().getValue().length() == HETU_LENGTH) {
 			for (Principal p : principals) {
 				Person principal = new Person();
-				principal.setSsn(p.getId().getValue());
+				principal.setHetu(p.getId().getValue());
 				principal.setFirstNames(p.getFirstNames().getValue());
 				principal.setLastName(p.getLastName().getValue());
 				result.add(principal);
@@ -148,17 +148,17 @@ public class VTJService {
 		return result;
 	}
 	
-	private List<Person> getGuardians(
+	private List<Person> getEdunvalvojat(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
 		
-		if (sPerson.getGuardianship() != null) {
-			List<GuardianshipPerson> henkiloedunvalvojat = sPerson.getGuardianship().getGuardianshipPerson();
+		if (sPerson.getEdunvalvonta() != null) {
+			List<EdunvalvojaHenkilo> henkiloedunvalvojat = sPerson.getEdunvalvonta().getEdunvalvojaHenkilo();
 			if (henkiloedunvalvojat != null) {
-				for (GuardianshipPerson p : henkiloedunvalvojat) {
+				for (EdunvalvojaHenkilo p : henkiloedunvalvojat) {
 					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
 						Person edunvalvoja = new Person();
-						edunvalvoja.setSsn(p.getHetu().getValue());
+						edunvalvoja.setHetu(p.getHetu().getValue());
 						edunvalvoja.setBirthdate(p.getBirthday().getValue());
 						edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
 						edunvalvoja.setLastName(p.getLastName().getValue());
@@ -170,21 +170,21 @@ public class VTJService {
 		return result;
 	}
 	
-	private List<Person> getGuardianshipAuthorizedPersons(
+	private List<Person> getEdunvalvontaValtuutetut(
 			fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
 		List<Person> result = new ArrayList<Person>();
 		
-		if (sPerson.getGuardianshipAuthorization() != null) {
-			List<GuardianshipAuthorizedPerson> henkiloEdunvalvojaValtuutetut = sPerson.getGuardianshipAuthorization().getGuardianshipAuthorizedPerson();
-			if (henkiloEdunvalvojaValtuutetut != null) {
-				for (GuardianshipAuthorizedPerson p : henkiloEdunvalvojaValtuutetut) {
+		if (sPerson.getEdunvalvontaValtuutus() != null) {
+			List<EdunvalvontaValtuutettuHenkilo> henkiloEdunvalvontaValtuutetut = sPerson.getEdunvalvontaValtuutus().getEdunvalvontaValtuutettuHenkilo();
+			if (henkiloEdunvalvontaValtuutetut != null) {
+				for (EdunvalvontaValtuutettuHenkilo p : henkiloEdunvalvontaValtuutetut) {
 					if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
-						Person edunvalvoja = new Person();
-						edunvalvoja.setSsn(p.getHetu().getValue());
-						edunvalvoja.setBirthdate(p.getBirthday().getValue());
-						edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
-						edunvalvoja.setLastName(p.getLastName().getValue());
-						result.add(edunvalvoja);
+						Person edunvalvontaValtuutettu = new Person();
+						edunvalvontaValtuutettu.setHetu(p.getHetu().getValue());
+						edunvalvontaValtuutettu.setBirthdate(p.getBirthday().getValue());
+						edunvalvontaValtuutettu.setFirstNames(p.getFirstName().getFirstName().getValue());
+						edunvalvontaValtuutettu.setLastName(p.getLastName().getValue());
+						result.add(edunvalvontaValtuutettu);
 					}
 				}
 			}

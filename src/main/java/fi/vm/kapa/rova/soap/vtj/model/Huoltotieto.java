@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Huoltotiedot")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CustodyInformation {
+public class Huoltotieto {
 
 	@XmlElement(name = "Huollonjakokoodi")
 	private StringNode custodyDivisionCode;

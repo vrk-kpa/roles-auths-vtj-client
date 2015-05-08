@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "OikeusaputoimistoEdunvalvoja")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GuardianshipLegal {
+public class EdunvalvojaOikeusaputoimisto {
 
 	@XmlElement(name = "Viranomaisnumero")
 	private StringNode viranomaisnumero;

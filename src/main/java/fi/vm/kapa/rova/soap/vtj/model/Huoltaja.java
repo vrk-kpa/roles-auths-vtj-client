@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Huoltaja")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Custodian {
+public class Huoltaja {
 
 	@XmlElement(name = "Henkilotunnus")
 	private StringNode id;
@@ -22,7 +22,7 @@ public class Custodian {
 	private StringNode firstNames;
 
 	@XmlElement(name = "Huoltotiedot")
-	private CustodyInformation custodyInformation;
+	private Huoltotieto huoltotieto;
 
 	public StringNode getId() {
 		return id;
@@ -48,12 +48,12 @@ public class Custodian {
 		this.firstNames = firstNames;
 	}
 
-	public CustodyInformation getCustodyInformation() {
-		return custodyInformation;
+	public Huoltotieto getHuoltotieto() {
+		return huoltotieto;
 	}
 
-	public void setCustodyInformation(CustodyInformation custodyInformation) {
-		this.custodyInformation = custodyInformation;
+	public void setHuoltotieto(Huoltotieto huoltotieto) {
+		this.huoltotieto = huoltotieto;
 	}
 
 	public StringNode getBirthDate() {

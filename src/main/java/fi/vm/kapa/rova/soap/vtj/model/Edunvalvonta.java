@@ -9,13 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Edunvalvonta")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Guardianship {
+public class Edunvalvonta {
 
 	@XmlElement(name = "Alkupvm")
 	private StringNode startDate;
 	
 	@XmlElement(name = "EdunvalvontaTieto")
-	private StringNode guardianship;
+	private StringNode edunvalvontaTieto;
 
 	@XmlElement(name = "Rajoituskoodi", required = false)
 	private StringNode rajoituskoodi;
@@ -27,20 +27,20 @@ public class Guardianship {
 	private StringNode rajoitustekstiR;
 	
 	@XmlElement(name = "HenkiloEdunvalvoja", required = false)
-	private List<GuardianshipPerson> guardianshipPerson;
+	private List<EdunvalvojaHenkilo> edunvalvojaHenkilo;
 	
 	@XmlElement(name = "OikeusaputoimistoEdunvalvoja", required = false)
-	private List<GuardianshipLegal> guardianshipLegal;
+	private List<EdunvalvojaOikeusaputoimisto> edunvalvojaOikeusaputoimisto;
 	
 	@XmlElement(name = "YritysJaYhteisoEdunvalvoja", required = false)
-	private List<GuardianshipOrganization> guardianshipOrganization;
-	
-	public StringNode getGuardianship() {
-		return guardianship;
+	private List<EdunvalvojaYritys> edunvalvojaYritys;
+		
+	public StringNode getEdunvalvontatieto() {
+		return edunvalvontaTieto;
 	}
 
-	public void setGuardianship(StringNode guardianship) {
-		this.guardianship = guardianship;
+	public void setEdunvalvontatieto(StringNode edunvalvontaTieto) {
+		this.edunvalvontaTieto = edunvalvontaTieto;
 	}
 
 	public StringNode getRajoituskoodi() {
@@ -51,12 +51,12 @@ public class Guardianship {
 		this.rajoituskoodi = rajoituskoodi;
 	}
 
-	public List<GuardianshipPerson> getGuardianshipPerson() {
-		return guardianshipPerson;
+	public List<EdunvalvojaHenkilo> getEdunvalvojaHenkilo() {
+		return edunvalvojaHenkilo;
 	}
 
-	public void setGuardianshipPerson(
-			List<GuardianshipPerson> guardianshipPerson) {
-		this.guardianshipPerson = guardianshipPerson;
+	public void setEdunvalvojaHenkilo(
+			List<EdunvalvojaHenkilo> edunvalvojaHenkilo) {
+		this.edunvalvojaHenkilo = edunvalvojaHenkilo;
 	}
 }

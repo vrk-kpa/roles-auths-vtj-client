@@ -19,7 +19,7 @@ public class Principal {
 	private StringNode firstNames;
 
 	@XmlElement(name = "Huoltotiedot")
-	private CustodyInformation custodyInformation;
+	private Huoltotieto custodyInformation;
 
 	public StringNode getId() {
 		return id;

@@ -7,17 +7,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="Turvakielto")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ProtectionOrder {
+public class Turvakielto {
 	
 	@XmlElement(name = "TurvakieltoTieto")
-	private StringNode protectionorder;
+	private StringNode turvakielto;
 
-	public StringNode getProtectionorder() {
-		return protectionorder;
+	public StringNode getTurvakielto() {
+		return turvakielto;
 	}
 
-	public void setProtectionorder(StringNode protectionorder) {
-		this.protectionorder = protectionorder;
+	public void setTurvakielto(StringNode turvakielto) {
+		this.turvakielto = turvakielto;
 	}
 
 }
