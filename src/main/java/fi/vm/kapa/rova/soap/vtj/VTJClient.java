@@ -41,8 +41,6 @@ public class VTJClient implements SpringPropertyNames {
 	
 	@Value(VTJ_USERNAME)
 	private String vtjUsername;
-	@Value(USER_ID)
-	private String vtjUserId;
 	@Value(VTJ_PASSWORD)
 	private String vtjPassword;
 	@Value(XROAD_ENDPOINT)
@@ -76,7 +74,7 @@ public class VTJClient implements SpringPropertyNames {
 		HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
 		reqBodyTiedot.setHenkilotunnus(hetu);
 		reqBodyTiedot.setKayttajatunnus(vtjUsername);
-		reqBodyTiedot.setLoppukayttaja(vtjUserId);
+		reqBodyTiedot.setLoppukayttaja(origUserId);
 		reqBodyTiedot.setSalasana(vtjPassword);
 		reqBodyTiedot.setSoSoNimi(schema);
 
