@@ -2,11 +2,11 @@ package fi.vm.kapa.rova.vtjclient.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vm.kapa.rova.soap.vtj.model.Huoltaja;
 import fi.vm.kapa.rova.soap.vtj.model.EdunvalvontaValtuutettuHenkilo;
@@ -17,7 +17,7 @@ import fi.vm.kapa.rova.vtj.model.Person;
 
 @Service
 public class VTJService {
-	private static Logger LOG = Logger.getLogger(VTJService.class.toString());
+	private static Logger LOG = Logger.getLogger(VTJService.class, Logger.VTJ_CLIENT);
 	
 	@Autowired
 	private VTJClient client;
@@ -27,10 +27,18 @@ public class VTJService {
 	public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) {
 		Person person = null;
 		try {
+			long startTime = System.currentTimeMillis();
+			
 			VTJResponseMessage response = client.getResponse(hetu, schema, origUserId, origRequestId);
+			
+			LOG.info("Creating and executing VTJ request took "+ (System.currentTimeMillis() - startTime) + " ms.");
+//			startTime = System.currentTimeMillis();
+			
 			person = fromSoapMessage(response);
+			
+//			LOG.info("Parsing VTJ response took "+ (System.currentTimeMillis() - startTime) + " ms.");
 		} catch (Throwable e) {
-			LOG.severe("Person parsing failed reason:"+ e);
+			LOG.error("Person parsing failed reason:"+ e);
 			e.printStackTrace();
 		}
 		return person;
@@ -54,8 +62,7 @@ public class VTJService {
 		}
 		if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null 
 				&& sPerson.getDeceased().getDeceased().getValue() != null) {
-			person.setDeceased(sPerson.getDeceased().getDeceased().getValue()
-					.equals("1")); // "1" = Kuollut 
+			person.setDeceased(sPerson.getDeceased().getDeceased().getValue().equals("1")); // "1" = Kuollut 
 		} else {
 			person.setDeceased(false);
 		}
@@ -96,12 +103,11 @@ public class VTJService {
 		
 		if (sPerson.getTurvakielto() != null && sPerson.getTurvakielto().getTurvakielto() != null 
 				&& sPerson.getTurvakielto().getTurvakielto().getValue() != null) {
-			person.setTurvakielto(sPerson.getTurvakielto().getTurvakielto()
-					.getValue().equals("1"));
+			person.setTurvakielto(sPerson.getTurvakielto().getTurvakielto().getValue().equals("1"));
 		} else {
 			person.setTurvakielto(false);
 		}
-		LOG.info("fromSoapMessage: person="+ person);
+		LOG.debug("fromSoapMessage: person="+ person);
 		
 		return person;
 	}

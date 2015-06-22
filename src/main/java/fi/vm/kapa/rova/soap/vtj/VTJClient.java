@@ -2,7 +2,6 @@ package fi.vm.kapa.rova.soap.vtj;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebService;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Node;
 
 import fi.vm.kapa.rova.config.SpringPropertyNames;
+import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.handlers.XroadHeaderHandler;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyReqBodyTiedot;
@@ -30,7 +30,7 @@ import fi.vrk.xml.rova.vtj.ObjectFactory;
 import fi.vrk.xml.rova.vtj.SoSoAdapterService60;
 
 @Component
-@WebService(endpointInterface = "fi.vrk.xml.rova.vtj.ISoSoAdapterService60",wsdlLocation="/WEB-INF/classes/wsdl/vtj.wsdl")
+@WebService(endpointInterface = "fi.vrk.xml.rova.vtj.ISoSoAdapterService60")
 public class VTJClient implements SpringPropertyNames {
 
 	SoSoAdapterService60 service = new SoSoAdapterService60();
@@ -46,7 +46,7 @@ public class VTJClient implements SpringPropertyNames {
 	@Value(XROAD_ENDPOINT)
 	private String xrdEndPoint;
 	
-	private static Logger LOG = Logger.getLogger(VTJClient.class.toString());
+	private static Logger LOG = Logger.getLogger(VTJClient.class, Logger.VTJ_CLIENT);
 	
 	@PostConstruct
 	public void init(){
@@ -63,7 +63,7 @@ public class VTJClient implements SpringPropertyNames {
 	}
 
 	public VTJResponseMessage getResponse(String hetu, String schema, String origUserId, String origRequestId) throws JAXBException {
-		LOG.fine("VTJClient.getResponse() starts");
+		LOG.debug("VTJClient.getResponse() starts");
 		ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
 		BindingProvider bp = (BindingProvider) iService;
 

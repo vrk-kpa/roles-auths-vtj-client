@@ -8,7 +8,7 @@ public interface SpringPropertyNames {
 	String VTJ_ISSUE = "${vtj_issue}"; // xroad-kutsun issue
 	String VTJ_SDSB_INSTANCE = "${service_sdsb_instance}"; // kutsuttavan xroad-instanssin id (eg. FI_DEV)
 	String VTJ_MEMBER_CLASS = "${service_member_class}"; // xroad-kohdeorganisaation tyyppi (eg. COM, ORG, GOV)
-	String VTJ_MEMBER_CODE = "${service_member_code}"; // xroad-kohdeorganisaation id (eg. yt-tunnus)
+	String VTJ_MEMBER_CODE = "${service_member_code}"; // xroad-kohdeorganisaation id (eg. y-tunnus)
 	String VTJ_SUBSYSTEM_CODE = "${service_subsystem_code}"; // xroad-kohdealijärjestelmän nimi (eg. DemoService)
 	String VTJ_SERVICE_CODE = "${service_service_code}"; // xroad-kohdepalvelun nimi (eg. getRandom)
 	
