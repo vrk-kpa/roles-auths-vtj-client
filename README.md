@@ -5,4 +5,7 @@ VTJ client for requesting Roles and authorizations related data over Xroad from 
 ## Getting Started
 Maven commands: 
 * mvn install 
-* mvn tomcat7:run
+* mvn spring-boot:run
+
+## Start standalone jar
+java -Dserver.port=8005 -jar target/roles-auths-vtj-client.jar
