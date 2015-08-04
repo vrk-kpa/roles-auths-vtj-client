@@ -212,6 +212,7 @@
 				<configuration>
 					<XadditionalHeaders>true</XadditionalHeaders>
 					<packageName>fi.vrk.xml.rova.vtj</packageName>
+					<wsdlLocation>../../../../../wsdl/vtj.wsdl</wsdlLocation>
 					<wsdlUrls>
 						<wsdlUrl>${basedir}/src/main/resources/wsdl/vtj.wsdl</wsdlUrl>
 					</wsdlUrls>
