@@ -110,7 +110,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 					Client client = factory.createClient();
 					JAXBElement<Client> clientElement = factory.createClient(client);
 					client.setObjectType(this.clientObjectType);
-					client.setSdsbInstance(this.clientSdsbInstance);
+					client.setXRoadInstance(this.clientSdsbInstance);
 					client.setMemberClass(this.clientMemberClass);
 					client.setMemberCode(this.clientMemberCode);
 					client.setSubsystemCode(this.clientSubsystemCode);
@@ -122,7 +122,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 					Service service = factory.createService();
 					JAXBElement<Service> serviceElement = factory.createService(service);
 					service.setObjectType(this.serviceObjectType);
-					service.setSdsbInstance(this.serviceSdsbInstance);
+					service.setXRoadInstance(this.serviceSdsbInstance);
 					service.setMemberClass(this.serviceMemberClass);
 					service.setMemberCode(this.serviceMemberCode);
 					service.setSubsystemCode(this.serviceSubsystemCode);
