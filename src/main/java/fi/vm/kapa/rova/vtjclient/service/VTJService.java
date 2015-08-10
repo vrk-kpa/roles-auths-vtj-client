@@ -31,12 +31,10 @@ public class VTJService {
 			
 			VTJResponseMessage response = client.getResponse(hetu, schema, origUserId, origRequestId);
 			
-			LOG.info("Creating and executing VTJ request took "+ (System.currentTimeMillis() - startTime) + " ms.");
-//			startTime = System.currentTimeMillis();
+			LOG.info("duration="+ (System.currentTimeMillis() - startTime));
 			
 			person = fromSoapMessage(response);
 			
-//			LOG.info("Parsing VTJ response took "+ (System.currentTimeMillis() - startTime) + " ms.");
 		} catch (Throwable e) {
 			LOG.error("Person parsing failed reason:"+ e);
 			e.printStackTrace();
