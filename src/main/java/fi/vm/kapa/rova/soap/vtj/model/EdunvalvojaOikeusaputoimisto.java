@@ -9,38 +9,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EdunvalvojaOikeusaputoimisto {
 
-	@XmlElement(name = "Viranomaisnumero")
-	private StringNode viranomaisnumero;
+    @XmlElement(name = "Viranomaisnumero")
+    private StringNode viranomaisnumero;
 
-	@XmlElement(name = "ViranomainenS")
-	private StringNode viranomainenS;
-	
-	@XmlElement(name = "ViranomainenR")
-	private StringNode viranomainenR;
+    @XmlElement(name = "ViranomainenS")
+    private StringNode viranomainenS;
 
-	
-	public StringNode getViranomaisnumero() {
-		return viranomaisnumero;
-	}
+    @XmlElement(name = "ViranomainenR")
+    private StringNode viranomainenR;
 
-	public void setViranomaisnumero(StringNode viranomaisnumero) {
-		this.viranomaisnumero = viranomaisnumero;
-	}
+    public StringNode getViranomaisnumero() {
+        return viranomaisnumero;
+    }
 
-	public StringNode getViranomainenS() {
-		return viranomainenS;
-	}
+    public void setViranomaisnumero(StringNode viranomaisnumero) {
+        this.viranomaisnumero = viranomaisnumero;
+    }
 
-	public void setViranomainenS(StringNode viranomainenS) {
-		this.viranomainenS = viranomainenS;
-	}
+    public StringNode getViranomainenS() {
+        return viranomainenS;
+    }
 
-	public StringNode getViranomainenR() {
-		return viranomainenR;
-	}
+    public void setViranomainenS(StringNode viranomainenS) {
+        this.viranomainenS = viranomainenS;
+    }
 
-	public void setViranomainenR(StringNode viranomainenR) {
-		this.viranomainenR = viranomainenR;
-	}
-	
+    public StringNode getViranomainenR() {
+        return viranomainenR;
+    }
+
+    public void setViranomainenR(StringNode viranomainenR) {
+        this.viranomainenR = viranomainenR;
+    }
+
 }

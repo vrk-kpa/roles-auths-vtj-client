@@ -10,66 +10,66 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VTJResponseMessage {
 
-	@XmlElement(name = "Henkilo")
-	private Person person;
+    @XmlElement(name = "Henkilo")
+    private Person person;
 
-	@XmlElement(name = "Paluukoodi")
-	private ResponseCode responseCode;
+    @XmlElement(name = "Paluukoodi")
+    private ResponseCode responseCode;
 
-	@XmlAttribute(name = "tietojenPoimintaaika")
-	private String dataTimeStamp;
+    @XmlAttribute(name = "tietojenPoimintaaika")
+    private String dataTimeStamp;
 
-	@XmlAttribute(name = "sanomatunnus")
-	private VTJSchema messageID;
+    @XmlAttribute(name = "sanomatunnus")
+    private VTJSchema messageID;
 
-	@XmlAttribute(name = "versio")
-	private String version;
+    @XmlAttribute(name = "versio")
+    private String version;
 
-	public String getDataTimeStamp() {
-		return dataTimeStamp;
-	}
+    public String getDataTimeStamp() {
+        return dataTimeStamp;
+    }
 
-	public void setDataTimeStamp(String dataTimeStamp) {
-		this.dataTimeStamp = dataTimeStamp;
-	}
+    public void setDataTimeStamp(String dataTimeStamp) {
+        this.dataTimeStamp = dataTimeStamp;
+    }
 
-	public VTJSchema getMessageID() {
-		return messageID;
-	}
+    public VTJSchema getMessageID() {
+        return messageID;
+    }
 
-	public void setMessageID(VTJSchema messageID) {
-		this.messageID = messageID;
-	}
+    public void setMessageID(VTJSchema messageID) {
+        this.messageID = messageID;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public Person getPerson() {
-		return person;
-	}
+    public Person getPerson() {
+        return person;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
-	public ResponseCode getResponseCode() {
-		return responseCode;
-	}
+    public ResponseCode getResponseCode() {
+        return responseCode;
+    }
 
-	public void setResponseCode(ResponseCode responseCode) {
-		this.responseCode = responseCode;
-	}
+    public void setResponseCode(ResponseCode responseCode) {
+        this.responseCode = responseCode;
+    }
 
-	@Override
-	public String toString() {
-		return "VTJResponseMessage [person=" + person + ", responseCode="
-				+ responseCode + ", dataTimeStamp=" + dataTimeStamp
-				+ ", messageID=" + messageID + ", version=" + version + "]";
-	}
+    @Override
+    public String toString() {
+        return "VTJResponseMessage [person=" + person + ", responseCode="
+                + responseCode + ", dataTimeStamp=" + dataTimeStamp
+                + ", messageID=" + messageID + ", version=" + version + "]";
+    }
 
 }

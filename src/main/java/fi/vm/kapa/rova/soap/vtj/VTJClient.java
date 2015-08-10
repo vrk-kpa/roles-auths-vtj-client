@@ -33,68 +33,68 @@ import fi.vrk.xml.rova.vtj.SoSoAdapterService60;
 @WebService(endpointInterface = "fi.vrk.xml.rova.vtj.ISoSoAdapterService60")
 public class VTJClient implements SpringPropertyNames {
 
-	SoSoAdapterService60 service = new SoSoAdapterService60();
-	ObjectFactory factory = new ObjectFactory();
-	
-	@Autowired
-	private XroadHeaderHandler xroadHeaderHandler;
-	
-	@Value(VTJ_USERNAME)
-	private String vtjUsername;
-	@Value(VTJ_PASSWORD)
-	private String vtjPassword;
-	@Value(XROAD_ENDPOINT)
-	private String xrdEndPoint;
-	
-	private static Logger LOG = Logger.getLogger(VTJClient.class, Logger.VTJ_CLIENT);
-	
-	@PostConstruct
-	public void init(){
-		HandlerResolver hs = new HandlerResolver() {
-			@SuppressWarnings("rawtypes")
-			@Override
-			public List<Handler> getHandlerChain(PortInfo portInfo) {
-				List<Handler> handlers = new ArrayList<Handler>();
-				handlers.add(xroadHeaderHandler);
-				return handlers;
-			}
-		};
-		service.setHandlerResolver(hs);
-	}
+    SoSoAdapterService60 service = new SoSoAdapterService60();
+    ObjectFactory factory = new ObjectFactory();
 
-	public VTJResponseMessage getResponse(String hetu, String schema, String origUserId, String origRequestId) throws JAXBException {
-		LOG.debug("VTJClient.getResponse() starts");
-		ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
-		BindingProvider bp = (BindingProvider) iService;
+    @Autowired
+    private XroadHeaderHandler xroadHeaderHandler;
 
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
-		bp.getRequestContext().put(XroadHeaderHandler.ORIG_USERID_HEADER, origUserId);
-		bp.getRequestContext().put(XroadHeaderHandler.ORIG_REQUEST_ID_HEADER, origRequestId);
-		
-		HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
-		reqBodyTiedot.setHenkilotunnus(hetu);
-		reqBodyTiedot.setKayttajatunnus(vtjUsername);
-		reqBodyTiedot.setLoppukayttaja(origUserId);
-		reqBodyTiedot.setSalasana(vtjPassword);
-		reqBodyTiedot.setSoSoNimi(schema);
+    @Value(VTJ_USERNAME)
+    private String vtjUsername;
+    @Value(VTJ_PASSWORD)
+    private String vtjPassword;
+    @Value(XROAD_ENDPOINT)
+    private String xrdEndPoint;
 
-		Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
+    private static Logger LOG = Logger.getLogger(VTJClient.class, Logger.VTJ_CLIENT);
 
-		HenkiloTunnusKyselyResType resType = factory.createHenkiloTunnusKyselyResType();
-		Holder<HenkiloTunnusKyselyResType> response = new Holder<HenkiloTunnusKyselyResType>(resType);
-		iService.henkilonTunnusKysely(request, response);
+    @PostConstruct
+    public void init() {
+        HandlerResolver hs = new HandlerResolver() {
+            @SuppressWarnings("rawtypes")
+            @Override
+            public List<Handler> getHandlerChain(PortInfo portInfo) {
+                List<Handler> handlers = new ArrayList<Handler>();
+                handlers.add(xroadHeaderHandler);
+                return handlers;
+            }
+        };
+        service.setHandlerResolver(hs);
+    }
 
-		resType	 = response.value;
-		List<Object> list = resType.getAny();
-		for (Object o : list) {
-			JAXBContext context = JAXBContext
-					.newInstance(VTJResponseMessage.class);
-			Unmarshaller um = context.createUnmarshaller();
-			um.setEventHandler(new CustomValidationEventHandler());
+    public VTJResponseMessage getResponse(String hetu, String schema, String origUserId, String origRequestId) throws JAXBException {
+        LOG.debug("VTJClient.getResponse() starts");
+        ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
+        BindingProvider bp = (BindingProvider) iService;
 
-			return (VTJResponseMessage) um.unmarshal((Node) o);
-		}
-		return null;
-	}
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
+        bp.getRequestContext().put(XroadHeaderHandler.ORIG_USERID_HEADER, origUserId);
+        bp.getRequestContext().put(XroadHeaderHandler.ORIG_REQUEST_ID_HEADER, origRequestId);
+
+        HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
+        reqBodyTiedot.setHenkilotunnus(hetu);
+        reqBodyTiedot.setKayttajatunnus(vtjUsername);
+        reqBodyTiedot.setLoppukayttaja(origUserId);
+        reqBodyTiedot.setSalasana(vtjPassword);
+        reqBodyTiedot.setSoSoNimi(schema);
+
+        Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
+
+        HenkiloTunnusKyselyResType resType = factory.createHenkiloTunnusKyselyResType();
+        Holder<HenkiloTunnusKyselyResType> response = new Holder<HenkiloTunnusKyselyResType>(resType);
+        iService.henkilonTunnusKysely(request, response);
+
+        resType = response.value;
+        List<Object> list = resType.getAny();
+        for (Object o : list) {
+            JAXBContext context = JAXBContext
+                    .newInstance(VTJResponseMessage.class);
+            Unmarshaller um = context.createUnmarshaller();
+            um.setEventHandler(new CustomValidationEventHandler());
+
+            return (VTJResponseMessage) um.unmarshal((Node) o);
+        }
+        return null;
+    }
 
 }

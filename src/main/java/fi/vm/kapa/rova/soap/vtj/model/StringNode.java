@@ -7,20 +7,20 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StringNode {
 
-	@XmlValue
-	private String value;
+    @XmlValue
+    private String value;
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	@Override
-	public String toString() {
-		return "StringNode [value=" + value + "]";
-	}
+    @Override
+    public String toString() {
+        return "StringNode [value=" + value + "]";
+    }
 
 }

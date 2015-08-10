@@ -11,30 +11,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EdunvalvontaValtuutus {
 
-	@XmlElement(name = "Alkupvm")
-	private StringNode startDate;
-	
-	@XmlElement(name = "EdunvalvontavaltuutusTieto")
-	private StringNode edunvalvontaValtuutustieto;
+    @XmlElement(name = "Alkupvm")
+    private StringNode startDate;
 
-	@XmlElement(name = "HenkiloEdunvalvontavaltuutettu")
-	private List<EdunvalvontaValtuutettuHenkilo> edunvalvontaValtuutettuHenkilo;
+    @XmlElement(name = "EdunvalvontavaltuutusTieto")
+    private StringNode edunvalvontaValtuutustieto;
 
-	public StringNode getEdunvalvontaValtuutustieto() {
-		return edunvalvontaValtuutustieto;
-	}
+    @XmlElement(name = "HenkiloEdunvalvontavaltuutettu")
+    private List<EdunvalvontaValtuutettuHenkilo> edunvalvontaValtuutettuHenkilo;
 
-	public void setEdunvalvontaValtuutustieto(
-			StringNode edunvalvontaValtuutustieto) {
-		this.edunvalvontaValtuutustieto = edunvalvontaValtuutustieto;
-	}
+    public StringNode getEdunvalvontaValtuutustieto() {
+        return edunvalvontaValtuutustieto;
+    }
 
-	public List<EdunvalvontaValtuutettuHenkilo> getEdunvalvontaValtuutettuHenkilo() {
-		return edunvalvontaValtuutettuHenkilo;
-	}
+    public void setEdunvalvontaValtuutustieto(
+            StringNode edunvalvontaValtuutustieto) {
+        this.edunvalvontaValtuutustieto = edunvalvontaValtuutustieto;
+    }
 
-	public void setEdunvalvontaValtuutettuHenkilo(
-			List<EdunvalvontaValtuutettuHenkilo> edunvalvontaValtuutettuHenkilo) {
-		this.edunvalvontaValtuutettuHenkilo = edunvalvontaValtuutettuHenkilo;
-	}
+    public List<EdunvalvontaValtuutettuHenkilo> getEdunvalvontaValtuutettuHenkilo() {
+        return edunvalvontaValtuutettuHenkilo;
+    }
+
+    public void setEdunvalvontaValtuutettuHenkilo(
+            List<EdunvalvontaValtuutettuHenkilo> edunvalvontaValtuutettuHenkilo) {
+        this.edunvalvontaValtuutettuHenkilo = edunvalvontaValtuutettuHenkilo;
+    }
 }

@@ -9,48 +9,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EdunvalvontaValtuutettuHenkilo {
 
-	@XmlElement(name = "Henkilotunnus")
-	private StringNode hetu;
+    @XmlElement(name = "Henkilotunnus")
+    private StringNode hetu;
 
-	@XmlElement(name = "Syntymaaika")
-	private StringNode birthday;
+    @XmlElement(name = "Syntymaaika")
+    private StringNode birthday;
 
-	@XmlElement(name = "NykyinenSukunimi")
-	private StringNode lastName;
+    @XmlElement(name = "NykyinenSukunimi")
+    private StringNode lastName;
 
-	@XmlElement(name = "NykyisetEtunimet")
-	private CurrentFirstNames firstName;
+    @XmlElement(name = "NykyisetEtunimet")
+    private CurrentFirstNames firstName;
 
-	public StringNode getHetu() {
-		return hetu;
-	}
+    public StringNode getHetu() {
+        return hetu;
+    }
 
-	public void setHetu(StringNode hetu) {
-		this.hetu = hetu;
-	}
+    public void setHetu(StringNode hetu) {
+        this.hetu = hetu;
+    }
 
-	public StringNode getBirthday() {
-		return birthday;
-	}
+    public StringNode getBirthday() {
+        return birthday;
+    }
 
-	public void setBirthday(StringNode birthday) {
-		this.birthday = birthday;
-	}
+    public void setBirthday(StringNode birthday) {
+        this.birthday = birthday;
+    }
 
-	public StringNode getLastName() {
-		return lastName;
-	}
+    public StringNode getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(StringNode lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(StringNode lastName) {
+        this.lastName = lastName;
+    }
 
-	public CurrentFirstNames getFirstName() {
-		return firstName;
-	}
+    public CurrentFirstNames getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(CurrentFirstNames firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(CurrentFirstNames firstName) {
+        this.firstName = firstName;
+    }
 
 }

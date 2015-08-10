@@ -14,23 +14,23 @@ import fi.vm.kapa.rova.vtjclient.resources.VTJResource;
 @Configuration
 @ApplicationPath("/")
 public class ServiceConfiguration extends ResourceConfig {
-	
-	@Value("${api_key}")
-	String apiKey;
 
-	@Value("${api_path_prefix}")
-	String apiPathPrefix;
+    @Value("${api_key}")
+    String apiKey;
 
-	@Value("${request_alive_seconds}")
-	Integer requestAliveSeconds;
-	
-	public ServiceConfiguration() {
-		register(VTJResource.class);
-	}
-	
-	@PostConstruct
-	public void init() {
-		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-		register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
-	}
+    @Value("${api_path_prefix}")
+    String apiPathPrefix;
+
+    @Value("${request_alive_seconds}")
+    Integer requestAliveSeconds;
+
+    public ServiceConfiguration() {
+        register(VTJResource.class);
+    }
+
+    @PostConstruct
+    public void init() {
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
+    }
 }

@@ -9,21 +9,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Huoltotieto {
 
-	@XmlElement(name = "Huollonjakokoodi")
-	private StringNode custodyDivisionCode;
+    @XmlElement(name = "Huollonjakokoodi")
+    private StringNode custodyDivisionCode;
 
-	public StringNode getCustodyDivisionCode() {
-		return custodyDivisionCode;
-	}
+    public StringNode getCustodyDivisionCode() {
+        return custodyDivisionCode;
+    }
 
-	public void setCustodyDivisionCode(StringNode custodyDivisionCode) {
-		this.custodyDivisionCode = custodyDivisionCode;
-	}
+    public void setCustodyDivisionCode(StringNode custodyDivisionCode) {
+        this.custodyDivisionCode = custodyDivisionCode;
+    }
 
-	@Override
-	public String toString() {
-		return "CustodyInformation [custodyDivisionCode=" + custodyDivisionCode
-				+ "]";
-	}
+    @Override
+    public String toString() {
+        return "CustodyInformation [custodyDivisionCode=" + custodyDivisionCode
+                + "]";
+    }
 
 }

@@ -5,17 +5,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="HuoltajaLkm")
+@XmlRootElement(name = "HuoltajaLkm")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class HuoltajaMaara {
-	
-	private String custodyCount;
 
-	public String getCustodyCount() {
-		return custodyCount;
-	}
+    private String custodyCount;
 
-	public void setCustodyCount(String custodyCount) {
-		this.custodyCount = custodyCount;
-	}
+    public String getCustodyCount() {
+        return custodyCount;
+    }
+
+    public void setCustodyCount(String custodyCount) {
+        this.custodyCount = custodyCount;
+    }
 }

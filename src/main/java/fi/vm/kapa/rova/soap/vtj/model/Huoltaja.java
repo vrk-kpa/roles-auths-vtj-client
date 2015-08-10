@@ -9,65 +9,65 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Huoltaja {
 
-	@XmlElement(name = "Henkilotunnus")
-	private StringNode id;
-	
-	@XmlElement(name = "Syntymaaika")
-	private StringNode birthDate;
+    @XmlElement(name = "Henkilotunnus")
+    private StringNode id;
 
-	@XmlElement(name = "Sukunimi")
-	private StringNode lastName;
+    @XmlElement(name = "Syntymaaika")
+    private StringNode birthDate;
 
-	@XmlElement(name = "Etunimet")
-	private StringNode firstNames;
+    @XmlElement(name = "Sukunimi")
+    private StringNode lastName;
 
-	@XmlElement(name = "Huoltotiedot")
-	private Huoltotieto huoltotieto;
+    @XmlElement(name = "Etunimet")
+    private StringNode firstNames;
 
-	public StringNode getId() {
-		return id;
-	}
+    @XmlElement(name = "Huoltotiedot")
+    private Huoltotieto huoltotieto;
 
-	public void setId(StringNode id) {
-		this.id = id;
-	}
+    public StringNode getId() {
+        return id;
+    }
 
-	public StringNode getLastName() {
-		return lastName;
-	}
+    public void setId(StringNode id) {
+        this.id = id;
+    }
 
-	public void setLastName(StringNode lastName) {
-		this.lastName = lastName;
-	}
+    public StringNode getLastName() {
+        return lastName;
+    }
 
-	public StringNode getFirstNames() {
-		return firstNames;
-	}
+    public void setLastName(StringNode lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setFirstNames(StringNode firstNames) {
-		this.firstNames = firstNames;
-	}
+    public StringNode getFirstNames() {
+        return firstNames;
+    }
 
-	public Huoltotieto getHuoltotieto() {
-		return huoltotieto;
-	}
+    public void setFirstNames(StringNode firstNames) {
+        this.firstNames = firstNames;
+    }
 
-	public void setHuoltotieto(Huoltotieto huoltotieto) {
-		this.huoltotieto = huoltotieto;
-	}
+    public Huoltotieto getHuoltotieto() {
+        return huoltotieto;
+    }
 
-	public StringNode getBirthDate() {
-		return birthDate;
-	}
+    public void setHuoltotieto(Huoltotieto huoltotieto) {
+        this.huoltotieto = huoltotieto;
+    }
 
-	public void setBirthDate(StringNode birthDate) {
-		this.birthDate = birthDate;
-	}
+    public StringNode getBirthDate() {
+        return birthDate;
+    }
 
-	@Override
-	public String toString() {
-		return "Principal [id=" + id + ", lastName=" + lastName
-				+ ", firstNames=" + firstNames + "]";
-	}
+    public void setBirthDate(StringNode birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Principal [id=" + id + ", lastName=" + lastName
+                + ", firstNames=" + firstNames + "]";
+    }
 
 }

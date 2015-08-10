@@ -9,20 +9,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CurrentLastName {
 
-	@XmlElement(name = "Sukunimi")
-	private StringNode lastName;
+    @XmlElement(name = "Sukunimi")
+    private StringNode lastName;
 
-	public StringNode getLastName() {
-		return lastName;
-	}
+    public StringNode getLastName() {
+        return lastName;
+    }
 
-	public void StringNode(StringNode lastName) {
-		this.lastName = lastName;
-	}
+    public void StringNode(StringNode lastName) {
+        this.lastName = lastName;
+    }
 
-	@Override
-	public String toString() {
-		return "CurrentLastName [lastName=" + lastName + "]";
-	}
+    @Override
+    public String toString() {
+        return "CurrentLastName [lastName=" + lastName + "]";
+    }
 
 }

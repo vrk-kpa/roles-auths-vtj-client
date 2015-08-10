@@ -28,123 +28,123 @@ import fi.vrk.xml.rova.vtj.Service;
 @Component
 public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, SpringPropertyNames {
 
-	private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class, Logger.VTJ_CLIENT);
+    private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class, Logger.VTJ_CLIENT);
 
-	private ObjectFactory factory = new ObjectFactory();
-	
-	public static final String ORIG_USERID_HEADER = "origUserId";
-	public static final String ORIG_REQUEST_ID_HEADER = "origRequestId";
-	
-	public Set<QName> getHeaders() {
-		return Collections.emptySet();
-	}
-	
-	@Value(CLIENT_OBJECT_TYPE)
-	private String clientObjectType;
-	
-	@Value(CLIENT_SDSB_INSTANCE)
-	private String clientSdsbInstance;
-	
-	@Value(CLIENT_MEMBER_CLASS)
-	private String clientMemberClass;
-	
-	@Value(CLIENT_MEMBER_CODE)
-	private String clientMemberCode;
-	
-	@Value(CLIENT_SUBSYSTEM_CODE)
-	private String clientSubsystemCode;
-	
-	@Value(SERVICE_OBJECT_TYPE)
-	private String serviceObjectType;
-	
-	@Value(SERVICE_SDSB_INSTANCE)
-	private String serviceSdsbInstance;
-	
-	@Value(SERVICE_MEMBER_CLASS)
-	private String serviceMemberClass;
-	
-	@Value(SERVICE_MEMBER_CODE)
-	private String serviceMemberCode;
-	
-	@Value(SERVICE_SUBSYSTEM_CODE)
-	private String serviceSubsystemCode;
-	
-	@Value(SERVICE_SERVICE_CODE)
-	private String serviceServiceCode;
-	
-	public boolean handleMessage(SOAPMessageContext messageContext) {
-		Boolean outboundProperty = (Boolean) messageContext
-				.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+    private ObjectFactory factory = new ObjectFactory();
 
-		if (outboundProperty.booleanValue()) {
-			SOAPMessage soapMsg = messageContext.getMessage();
-			SOAPEnvelope soapEnv;
-				try {
-					soapEnv = soapMsg.getSOAPPart().getEnvelope();
-					SOAPHeader header = soapEnv.getHeader();
-					if (header == null) {
-						header = soapEnv.addHeader();
-					}
-					
-					JAXBElement<String> idElement = factory.createId(UUID.randomUUID().toString());
-					SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
-					idHeaderElement.addTextNode((String) idElement.getValue());
+    public static final String ORIG_USERID_HEADER = "origUserId";
+    public static final String ORIG_REQUEST_ID_HEADER = "origRequestId";
 
-					String origUserId = (String) messageContext.get(ORIG_USERID_HEADER);
-					if (origUserId == null) {
-						origUserId = "rova-end-user-unknown";
-					}
-					JAXBElement<String> userIdElement = factory.createUserId(origUserId);
-					SOAPHeaderElement uidHeaderElement = header.addHeaderElement(userIdElement.getName());
-					uidHeaderElement.addTextNode((String) userIdElement.getValue());
-					
-					String origRequestId = (String) messageContext.get(ORIG_REQUEST_ID_HEADER);
-					if (origRequestId == null) {
-						origRequestId = "";
-					}
-					
-					JAXBElement<String> issueElement = factory.createIssue(origRequestId);
-					SOAPHeaderElement issueHeaderElement = header.addHeaderElement(issueElement.getName());
-					issueHeaderElement.addTextNode((String) issueElement.getValue());
+    public Set<QName> getHeaders() {
+        return Collections.emptySet();
+    }
 
-					Client client = factory.createClient();
-					JAXBElement<Client> clientElement = factory.createClient(client);
-					client.setObjectType(this.clientObjectType);
-					client.setXRoadInstance(this.clientSdsbInstance);
-					client.setMemberClass(this.clientMemberClass);
-					client.setMemberCode(this.clientMemberCode);
-					client.setSubsystemCode(this.clientSubsystemCode);
+    @Value(CLIENT_OBJECT_TYPE)
+    private String clientObjectType;
 
-					Marshaller marshaller;
-					marshaller = JAXBContext.newInstance(Client.class).createMarshaller();
-					marshaller.marshal(clientElement, header);
-					
-					Service service = factory.createService();
-					JAXBElement<Service> serviceElement = factory.createService(service);
-					service.setObjectType(this.serviceObjectType);
-					service.setXRoadInstance(this.serviceSdsbInstance);
-					service.setMemberClass(this.serviceMemberClass);
-					service.setMemberCode(this.serviceMemberCode);
-					service.setSubsystemCode(this.serviceSubsystemCode);
-					service.setServiceCode(this.serviceServiceCode);
-					
-					marshaller = JAXBContext.newInstance(Service.class).createMarshaller();
-					marshaller.marshal(serviceElement, header);
-					
-					soapMsg.saveChanges();
-					
-				} catch (Exception e) {
-					LOG.error("Xroad header handler exception occured " + e);
-					e.printStackTrace();
-				}
-			}
-		return true;
-	}
+    @Value(CLIENT_SDSB_INSTANCE)
+    private String clientSdsbInstance;
 
-	public boolean handleFault(SOAPMessageContext messageContext) {
-		return true;
-	}
+    @Value(CLIENT_MEMBER_CLASS)
+    private String clientMemberClass;
 
-	public void close(MessageContext messageContext) {
-	}
+    @Value(CLIENT_MEMBER_CODE)
+    private String clientMemberCode;
+
+    @Value(CLIENT_SUBSYSTEM_CODE)
+    private String clientSubsystemCode;
+
+    @Value(SERVICE_OBJECT_TYPE)
+    private String serviceObjectType;
+
+    @Value(SERVICE_SDSB_INSTANCE)
+    private String serviceSdsbInstance;
+
+    @Value(SERVICE_MEMBER_CLASS)
+    private String serviceMemberClass;
+
+    @Value(SERVICE_MEMBER_CODE)
+    private String serviceMemberCode;
+
+    @Value(SERVICE_SUBSYSTEM_CODE)
+    private String serviceSubsystemCode;
+
+    @Value(SERVICE_SERVICE_CODE)
+    private String serviceServiceCode;
+
+    public boolean handleMessage(SOAPMessageContext messageContext) {
+        Boolean outboundProperty = (Boolean) messageContext
+                .get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
+        if (outboundProperty.booleanValue()) {
+            SOAPMessage soapMsg = messageContext.getMessage();
+            SOAPEnvelope soapEnv;
+            try {
+                soapEnv = soapMsg.getSOAPPart().getEnvelope();
+                SOAPHeader header = soapEnv.getHeader();
+                if (header == null) {
+                    header = soapEnv.addHeader();
+                }
+
+                JAXBElement<String> idElement = factory.createId(UUID.randomUUID().toString());
+                SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
+                idHeaderElement.addTextNode((String) idElement.getValue());
+
+                String origUserId = (String) messageContext.get(ORIG_USERID_HEADER);
+                if (origUserId == null) {
+                    origUserId = "rova-end-user-unknown";
+                }
+                JAXBElement<String> userIdElement = factory.createUserId(origUserId);
+                SOAPHeaderElement uidHeaderElement = header.addHeaderElement(userIdElement.getName());
+                uidHeaderElement.addTextNode((String) userIdElement.getValue());
+
+                String origRequestId = (String) messageContext.get(ORIG_REQUEST_ID_HEADER);
+                if (origRequestId == null) {
+                    origRequestId = "";
+                }
+
+                JAXBElement<String> issueElement = factory.createIssue(origRequestId);
+                SOAPHeaderElement issueHeaderElement = header.addHeaderElement(issueElement.getName());
+                issueHeaderElement.addTextNode((String) issueElement.getValue());
+
+                Client client = factory.createClient();
+                JAXBElement<Client> clientElement = factory.createClient(client);
+                client.setObjectType(this.clientObjectType);
+                client.setXRoadInstance(this.clientSdsbInstance);
+                client.setMemberClass(this.clientMemberClass);
+                client.setMemberCode(this.clientMemberCode);
+                client.setSubsystemCode(this.clientSubsystemCode);
+
+                Marshaller marshaller;
+                marshaller = JAXBContext.newInstance(Client.class).createMarshaller();
+                marshaller.marshal(clientElement, header);
+
+                Service service = factory.createService();
+                JAXBElement<Service> serviceElement = factory.createService(service);
+                service.setObjectType(this.serviceObjectType);
+                service.setXRoadInstance(this.serviceSdsbInstance);
+                service.setMemberClass(this.serviceMemberClass);
+                service.setMemberCode(this.serviceMemberCode);
+                service.setSubsystemCode(this.serviceSubsystemCode);
+                service.setServiceCode(this.serviceServiceCode);
+
+                marshaller = JAXBContext.newInstance(Service.class).createMarshaller();
+                marshaller.marshal(serviceElement, header);
+
+                soapMsg.saveChanges();
+
+            } catch (Exception e) {
+                LOG.error("Xroad header handler exception occured " + e);
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public boolean handleFault(SOAPMessageContext messageContext) {
+        return true;
+    }
+
+    public void close(MessageContext messageContext) {
+    }
 }

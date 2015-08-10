@@ -19,23 +19,23 @@ import fi.vm.kapa.rova.vtjclient.service.VTJService;
 @Path("/vtj")
 public class VTJResource {
 
-	@Inject
-	private VTJService service;
+    @Inject
+    private VTJService service;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/person/{schema}/{hetu}")
-	public Response getPerson(@PathParam("hetu") String hetu,
-			@PathParam("schema") String schema,
-			@QueryParam("endUserId") String endUserId,
-			@QueryParam("requestId") String requestId) {
-		try {
-			Person person = service.getPerson(hetu, schema, endUserId, requestId);
-			return Response.ok().entity(person).build();
-		} catch (Exception e) {
-			ResponseBuilder responseBuilder = Response.serverError();
-			return responseBuilder.build();
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/person/{schema}/{hetu}")
+    public Response getPerson(@PathParam("hetu") String hetu,
+            @PathParam("schema") String schema,
+            @QueryParam("endUserId") String endUserId,
+            @QueryParam("requestId") String requestId) {
+        try {
+            Person person = service.getPerson(hetu, schema, endUserId, requestId);
+            return Response.ok().entity(person).build();
+        } catch (Exception e) {
+            ResponseBuilder responseBuilder = Response.serverError();
+            return responseBuilder.build();
 
-		}
-	}
+        }
+    }
 }

@@ -5,30 +5,29 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlRootElement(name = "YritysJaYhteisoEdunvalvoja")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EdunvalvojaYritys {
 
-	@XmlElement(name = "Ytunnus")
-	private StringNode ytunnus;
+    @XmlElement(name = "Ytunnus")
+    private StringNode ytunnus;
 
-	@XmlElement(name = "Nimi")
-	private StringNode nimi;
+    @XmlElement(name = "Nimi")
+    private StringNode nimi;
 
-	public StringNode getYtunnus() {
-		return ytunnus;
-	}
+    public StringNode getYtunnus() {
+        return ytunnus;
+    }
 
-	public void setYtunnus(StringNode ytunnus) {
-		this.ytunnus = ytunnus;
-	}
+    public void setYtunnus(StringNode ytunnus) {
+        this.ytunnus = ytunnus;
+    }
 
-	public StringNode getNimi() {
-		return nimi;
-	}
+    public StringNode getNimi() {
+        return nimi;
+    }
 
-	public void setNimi(StringNode nimi) {
-		this.nimi = nimi;
-	}
+    public void setNimi(StringNode nimi) {
+        this.nimi = nimi;
+    }
 }

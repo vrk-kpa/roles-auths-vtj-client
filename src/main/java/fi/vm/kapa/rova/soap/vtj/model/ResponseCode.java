@@ -10,31 +10,31 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ResponseCode {
 
-	@XmlValue
-	private String value;
+    @XmlValue
+    private String value;
 
-	@XmlAttribute(name = "koodi")
-	private String code;
+    @XmlAttribute(name = "koodi")
+    private String code;
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String toString() {
-		return "ResponseCode [value=" + value + ", code=" + code + "]";
-	}
+    @Override
+    public String toString() {
+        return "ResponseCode [value=" + value + ", code=" + code + "]";
+    }
 
 }

@@ -9,47 +9,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Principal {
 
-	@XmlElement(name = "Henkilotunnus")
-	private StringNode id;
+    @XmlElement(name = "Henkilotunnus")
+    private StringNode id;
 
-	@XmlElement(name = "Sukunimi")
-	private StringNode lastName;
+    @XmlElement(name = "Sukunimi")
+    private StringNode lastName;
 
-	@XmlElement(name = "Etunimet")
-	private StringNode firstNames;
+    @XmlElement(name = "Etunimet")
+    private StringNode firstNames;
 
-	@XmlElement(name = "Huoltotiedot")
-	private Huoltotieto custodyInformation;
+    @XmlElement(name = "Huoltotiedot")
+    private Huoltotieto custodyInformation;
 
-	public StringNode getId() {
-		return id;
-	}
+    public StringNode getId() {
+        return id;
+    }
 
-	public void setId(StringNode id) {
-		this.id = id;
-	}
+    public void setId(StringNode id) {
+        this.id = id;
+    }
 
-	public StringNode getLastName() {
-		return lastName;
-	}
+    public StringNode getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(StringNode lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(StringNode lastName) {
+        this.lastName = lastName;
+    }
 
-	public StringNode getFirstNames() {
-		return firstNames;
-	}
+    public StringNode getFirstNames() {
+        return firstNames;
+    }
 
-	public void setFirstNames(StringNode firstNames) {
-		this.firstNames = firstNames;
-	}
+    public void setFirstNames(StringNode firstNames) {
+        this.firstNames = firstNames;
+    }
 
-	@Override
-	public String toString() {
-		return "Principal [id=" + id + ", lastName=" + lastName
-				+ ", firstNames=" + firstNames + ", custodyInformation="
-				+ custodyInformation + "]";
-	}
+    @Override
+    public String toString() {
+        return "Principal [id=" + id + ", lastName=" + lastName
+                + ", firstNames=" + firstNames + ", custodyInformation="
+                + custodyInformation + "]";
+    }
 
 }

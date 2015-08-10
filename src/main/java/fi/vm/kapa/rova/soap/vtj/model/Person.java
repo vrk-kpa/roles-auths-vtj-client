@@ -11,143 +11,143 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
 
-	@XmlElement(name = "Henkilotunnus")
-	private Hetu hetu;
+    @XmlElement(name = "Henkilotunnus")
+    private Hetu hetu;
 
-	@XmlElement(name = "NykyinenSukunimi")
-	private CurrentLastName lastName;
+    @XmlElement(name = "NykyinenSukunimi")
+    private CurrentLastName lastName;
 
-	@XmlElement(name = "NykyisetEtunimet")
-	private CurrentFirstNames firstName;
+    @XmlElement(name = "NykyisetEtunimet")
+    private CurrentFirstNames firstName;
 
-	@XmlElement(name = "Huollettava")
-	private List<Principal> principal;
+    @XmlElement(name = "Huollettava")
+    private List<Principal> principal;
 
-	@XmlElement(name = "Kuolintiedot", required = false)
-	private Deceased deceased;
+    @XmlElement(name = "Kuolintiedot", required = false)
+    private Deceased deceased;
 
-	@XmlElement(name = "Edunvalvonta", required = false)
-	private Edunvalvonta edunvalvonta;
+    @XmlElement(name = "Edunvalvonta", required = false)
+    private Edunvalvonta edunvalvonta;
 
-	@XmlElement(name = "Edunvalvontavaltuutus", required = false)
-	private EdunvalvontaValtuutus edunvalvontaValtuutus;
+    @XmlElement(name = "Edunvalvontavaltuutus", required = false)
+    private EdunvalvontaValtuutus edunvalvontaValtuutus;
 
-	@XmlElement(name = "Huoltaja", required = false)
-	private List<Huoltaja> huoltaja;
+    @XmlElement(name = "Huoltaja", required = false)
+    private List<Huoltaja> huoltaja;
 
-	@XmlElement(name = "Turvakielto", required = false)
-	private Turvakielto turvakielto;
+    @XmlElement(name = "Turvakielto", required = false)
+    private Turvakielto turvakielto;
 
-	@XmlElement(name = "Huostaanotto", required = false)
-	private Huostaanotto huostaanotto;
+    @XmlElement(name = "Huostaanotto", required = false)
+    private Huostaanotto huostaanotto;
 
-	@XmlElement(name = "Huoltotiedot")
-	private Huoltotieto huoltotieto;
-	
-	@XmlElement(name = "HuoltajaLkm")
-	private HuoltajaMaara huoltajaMaara;
+    @XmlElement(name = "Huoltotiedot")
+    private Huoltotieto huoltotieto;
 
-	public List<Huoltaja> getHuoltaja() {
-		return huoltaja;
-	}
+    @XmlElement(name = "HuoltajaLkm")
+    private HuoltajaMaara huoltajaMaara;
 
-	public void setHuoltaja(List<Huoltaja> huoltaja) {
-		this.huoltaja = huoltaja;
-	}
+    public List<Huoltaja> getHuoltaja() {
+        return huoltaja;
+    }
 
-	public Hetu getHetu() {
-		return hetu;
-	}
+    public void setHuoltaja(List<Huoltaja> huoltaja) {
+        this.huoltaja = huoltaja;
+    }
 
-	public void setHetu(Hetu hetu) {
-		this.hetu = hetu;
-	}
+    public Hetu getHetu() {
+        return hetu;
+    }
 
-	public Deceased getDeceased() {
-		return deceased;
-	}
+    public void setHetu(Hetu hetu) {
+        this.hetu = hetu;
+    }
 
-	public void setDeceased(Deceased deceased) {
-		this.deceased = deceased;
-	}
+    public Deceased getDeceased() {
+        return deceased;
+    }
 
-	public CurrentFirstNames getFirstName() {
-		return firstName;
-	}
+    public void setDeceased(Deceased deceased) {
+        this.deceased = deceased;
+    }
 
-	public void setFirstName(CurrentFirstNames firstName) {
-		this.firstName = firstName;
-	}
+    public CurrentFirstNames getFirstName() {
+        return firstName;
+    }
 
-	public CurrentLastName getLastName() {
-		return lastName;
-	}
+    public void setFirstName(CurrentFirstNames firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(CurrentLastName lastName) {
-		this.lastName = lastName;
-	}
+    public CurrentLastName getLastName() {
+        return lastName;
+    }
 
-	public List<Principal> getPrincipal() {
-		return principal;
-	}
+    public void setLastName(CurrentLastName lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setPrincipal(List<Principal> principal) {
-		this.principal = principal;
-	}
+    public List<Principal> getPrincipal() {
+        return principal;
+    }
 
-	public Edunvalvonta getEdunvalvonta() {
-		return edunvalvonta;
-	}
+    public void setPrincipal(List<Principal> principal) {
+        this.principal = principal;
+    }
 
-	public void setEdunvalvonta(Edunvalvonta edunvalvonta) {
-		this.edunvalvonta = edunvalvonta;
-	}
+    public Edunvalvonta getEdunvalvonta() {
+        return edunvalvonta;
+    }
 
-	public EdunvalvontaValtuutus getEdunvalvontaValtuutus() {
-		return edunvalvontaValtuutus;
-	}
+    public void setEdunvalvonta(Edunvalvonta edunvalvonta) {
+        this.edunvalvonta = edunvalvonta;
+    }
 
-	public void setEdunvalvontaValtuutus(
-			EdunvalvontaValtuutus edunvalvontaValtuutus) {
-		this.edunvalvontaValtuutus = edunvalvontaValtuutus;
-	}
+    public EdunvalvontaValtuutus getEdunvalvontaValtuutus() {
+        return edunvalvontaValtuutus;
+    }
 
-	public Turvakielto getTurvakielto() {
-		return turvakielto;
-	}
+    public void setEdunvalvontaValtuutus(
+            EdunvalvontaValtuutus edunvalvontaValtuutus) {
+        this.edunvalvontaValtuutus = edunvalvontaValtuutus;
+    }
 
-	public void setTurvakielto(Turvakielto turvakielto) {
-		this.turvakielto = turvakielto;
-	}
+    public Turvakielto getTurvakielto() {
+        return turvakielto;
+    }
 
-	public Huostaanotto getHuostaanotto() {
-		return huostaanotto;
-	}
+    public void setTurvakielto(Turvakielto turvakielto) {
+        this.turvakielto = turvakielto;
+    }
 
-	public void setHuostaanotto(Huostaanotto huostaanotto) {
-		this.huostaanotto = huostaanotto;
-	}
+    public Huostaanotto getHuostaanotto() {
+        return huostaanotto;
+    }
 
-	public Huoltotieto getHuoltotieto() {
-		return huoltotieto;
-	}
+    public void setHuostaanotto(Huostaanotto huostaanotto) {
+        this.huostaanotto = huostaanotto;
+    }
 
-	public void setHuoltotieto(Huoltotieto huoltotieto) {
-		this.huoltotieto = huoltotieto;
-	}
+    public Huoltotieto getHuoltotieto() {
+        return huoltotieto;
+    }
 
-	public HuoltajaMaara getHuoltajaMaara() {
-		return huoltajaMaara;
-	}
+    public void setHuoltotieto(Huoltotieto huoltotieto) {
+        this.huoltotieto = huoltotieto;
+    }
 
-	public void setHuoltajaMaara(HuoltajaMaara huoltajaMaara) {
-		this.huoltajaMaara = huoltajaMaara;
-	}
+    public HuoltajaMaara getHuoltajaMaara() {
+        return huoltajaMaara;
+    }
 
-	@Override
-	public String toString() {
-		return "Person [hetu=" + hetu + ", lastName=" + lastName
-				+ ", firstName=" + firstName + ", principal=" + principal
-				+ ", deceased=" + deceased + "]";
-	}
+    public void setHuoltajaMaara(HuoltajaMaara huoltajaMaara) {
+        this.huoltajaMaara = huoltajaMaara;
+    }
+
+    @Override
+    public String toString() {
+        return "Person [hetu=" + hetu + ", lastName=" + lastName
+                + ", firstName=" + firstName + ", principal=" + principal
+                + ", deceased=" + deceased + "]";
+    }
 }

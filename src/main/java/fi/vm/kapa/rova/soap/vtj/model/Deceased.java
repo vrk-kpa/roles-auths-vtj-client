@@ -5,23 +5,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="Kuolintiedot")
+@XmlRootElement(name = "Kuolintiedot")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Deceased {
 
-	@XmlElement(name = "Kuollut")
-	private StringNode deceased;
+    @XmlElement(name = "Kuollut")
+    private StringNode deceased;
 
-	public StringNode getDeceased() {
-		return deceased;
-	}
+    public StringNode getDeceased() {
+        return deceased;
+    }
 
-	public void setDeceased(StringNode deceased) {
-		this.deceased = deceased;
-	}
-	
-	@Override
-	public String toString() {
-		return "Deceased [deceased=" + deceased + "]";
-	}
+    public void setDeceased(StringNode deceased) {
+        this.deceased = deceased;
+    }
+
+    @Override
+    public String toString() {
+        return "Deceased [deceased=" + deceased + "]";
+    }
 }
