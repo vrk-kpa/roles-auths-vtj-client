@@ -9,8 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @PropertySources(value = {
     @PropertySource("classpath:application.properties"),
-    @PropertySource(value = "classpath:developer.properties", ignoreResourceNotFound = true),
-    @PropertySource(value = "file:/opt/www/roles-auths-vtj-client/config/service.properties", ignoreResourceNotFound = true)})
+    @PropertySource(value = "file:/opt/rova/roles-auths-vtj-client/config/service.properties", ignoreResourceNotFound = true)})
 public class AppConfiguration {
 
     @Bean
