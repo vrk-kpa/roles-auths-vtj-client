@@ -25,7 +25,7 @@ public class VTJService {
 
     final int HETU_LENGTH = 11;
 
-    public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) {
+    public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) throws VTJServiceException {
         Person person = null;
         try {
             long startTime = System.currentTimeMillis();
@@ -38,7 +38,7 @@ public class VTJService {
 
         } catch (Throwable e) {
             LOG.error("Person parsing failed reason:" + e);
-            e.printStackTrace();
+            throw new VTJServiceException("Person parsing failed", e);
         }
         return person;
     }

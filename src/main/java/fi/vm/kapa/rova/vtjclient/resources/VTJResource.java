@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import fi.vm.kapa.rova.vtj.model.Person;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
+import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 
 @Service
 @Path("/vtj")
@@ -31,12 +32,8 @@ public class VTJResource {
             @QueryParam("requestId") String requestId) {
         try {
             Person person = service.getPerson(hetu, schema, endUserId, requestId);
-            if (person == null) {
-                ResponseBuilder responseBuilder = Response.serverError();
-                return responseBuilder.build();
-            }
             return Response.ok().entity(person).build();
-        } catch (Exception e) {
+        } catch (VTJServiceException e) {
             ResponseBuilder responseBuilder = Response.serverError();
             return responseBuilder.build();
         }
