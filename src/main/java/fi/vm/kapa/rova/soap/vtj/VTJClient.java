@@ -74,9 +74,9 @@ public class VTJClient implements SpringPropertyNames {
         HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
         reqBodyTiedot.setHenkilotunnus(hetu);
         reqBodyTiedot.setKayttajatunnus(vtjUsername);
-        reqBodyTiedot.setLoppukayttaja(origUserId);
         reqBodyTiedot.setSalasana(vtjPassword);
         reqBodyTiedot.setSoSoNimi(schema);
+        reqBodyTiedot.setLoppukayttaja(origUserId == null ? "rova-end-user-unknown" :  origUserId);
 
         Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
 
