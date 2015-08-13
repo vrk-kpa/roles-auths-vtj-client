@@ -31,11 +31,14 @@ public class VTJResource {
             @QueryParam("requestId") String requestId) {
         try {
             Person person = service.getPerson(hetu, schema, endUserId, requestId);
+            if (person == null) {
+                ResponseBuilder responseBuilder = Response.serverError();
+                return responseBuilder.build();
+            }
             return Response.ok().entity(person).build();
         } catch (Exception e) {
             ResponseBuilder responseBuilder = Response.serverError();
             return responseBuilder.build();
-
         }
     }
 }
