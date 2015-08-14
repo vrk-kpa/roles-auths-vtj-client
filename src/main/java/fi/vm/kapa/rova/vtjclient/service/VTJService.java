@@ -48,6 +48,7 @@ public class VTJService {
                 LOG.error("Person parsing failed reason:" + e.getMessage());
                 vtjResponse.setError("vtj.parsinta.epaonnistui");
             }
+            
         } catch (Throwable e) {
             LOG.error("VTJ request failed:" + e.getMessage());
             vtjResponse.setError("vtj.haku.epaonnistui");

@@ -29,6 +29,7 @@ public class VTJResource {
             @PathParam("schema") String schema,
             @QueryParam("endUserId") String endUserId,
             @QueryParam("requestId") String requestId) {
+        
         try {
             VTJResponse vtjResponse = service.getVTJResponse(hetu, schema, endUserId, requestId);
             return Response.ok().entity(vtjResponse).build();
