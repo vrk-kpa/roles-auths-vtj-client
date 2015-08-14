@@ -12,9 +12,8 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.stereotype.Service;
 
-import fi.vm.kapa.rova.vtj.model.Person;
+import fi.vm.kapa.rova.vtj.model.VTJResponse;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
-import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 
 @Service
 @Path("/vtj")
@@ -31,9 +30,9 @@ public class VTJResource {
             @QueryParam("endUserId") String endUserId,
             @QueryParam("requestId") String requestId) {
         try {
-            Person person = service.getPerson(hetu, schema, endUserId, requestId);
-            return Response.ok().entity(person).build();
-        } catch (VTJServiceException e) {
+            VTJResponse vtjResponse = service.getVTJResponse(hetu, schema, endUserId, requestId);
+            return Response.ok().entity(vtjResponse).build();
+        } catch (Exception e) { // TODO tarpeeton try-catch?
             ResponseBuilder responseBuilder = Response.serverError();
             return responseBuilder.build();
         }

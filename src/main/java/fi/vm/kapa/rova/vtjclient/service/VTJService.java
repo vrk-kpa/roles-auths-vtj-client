@@ -14,6 +14,7 @@ import fi.vm.kapa.rova.soap.vtj.model.EdunvalvojaHenkilo;
 import fi.vm.kapa.rova.soap.vtj.model.Principal;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.vtj.model.Person;
+import fi.vm.kapa.rova.vtj.model.VTJResponse;
 
 @Service
 public class VTJService {
@@ -25,22 +26,34 @@ public class VTJService {
 
     final int HETU_LENGTH = 11;
 
-    public Person getPerson(String hetu, String schema, String origUserId, String origRequestId) throws VTJServiceException {
+    public VTJResponse getVTJResponse(String hetu, String schema, String origUserId, String origRequestId) {
         Person person = null;
+        VTJResponse vtjResponse = new VTJResponse(); // person == null & success == false as default
+        
         try {
             long startTime = System.currentTimeMillis();
 
             VTJResponseMessage response = client.getResponse(hetu, schema, origUserId, origRequestId);
-
+            
+//            String codeValue = response.getResponseCode() != null ? response.getResponseCode().getValue() : "";
+//            if (codeValue != null) codeValue = codeValue.replace(" ", "_");
+//            LOG.info("codevalue="+ codeValue +",duration=" + (System.currentTimeMillis() - startTime));
             LOG.info("duration=" + (System.currentTimeMillis() - startTime));
 
-            person = fromSoapMessage(response);
-
+            try {
+                person = fromSoapMessage(response);
+                vtjResponse.setPerson(person);
+                vtjResponse.setSuccess(true);
+            } catch (Throwable e) {
+                LOG.error("Person parsing failed reason:" + e.getMessage());
+                vtjResponse.setError("vtj.parsinta.epaonnistui");
+            }
         } catch (Throwable e) {
-            LOG.error("Person parsing failed reason:" + e);
-            throw new VTJServiceException("Person parsing failed", e);
+            LOG.error("VTJ request failed:" + e.getMessage());
+            vtjResponse.setError("vtj.haku.epaonnistui");
         }
-        return person;
+        
+        return vtjResponse;
     }
 
     private Person fromSoapMessage(VTJResponseMessage message) {
