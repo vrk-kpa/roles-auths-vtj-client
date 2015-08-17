@@ -8,4 +8,4 @@ Maven commands:
 * mvn spring-boot:run
 
 ## Start standalone jar
-java -Dserver.port=8005 -jar target/roles-auths-vtj-client.jar
+java -Dserver.port=8002 -jar target/roles-auths-vtj-client.jar
