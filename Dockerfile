@@ -32,4 +32,4 @@ ADD target/roles-auths-vtj-client.jar /opt/rova/roles-auths-vtj-client/
 WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-Dlogback.configurationFile=config/logback.xml", "-jar", "roles-auths-vtj-client.jar"]
+ENTRYPOINT ["java", "-Dlogging.config=config/logback.xml", "-jar", "roles-auths-vtj-client.jar"]
