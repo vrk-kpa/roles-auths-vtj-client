@@ -33,3 +33,4 @@ WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-Dlogging.config=config/logback.xml", "-jar", "roles-auths-vtj-client.jar"]
+
