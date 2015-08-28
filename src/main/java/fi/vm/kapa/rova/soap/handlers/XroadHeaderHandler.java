@@ -24,9 +24,6 @@ import org.springframework.stereotype.Component;
 import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
-
-import java.util.Map;
-
 import fi.vrk.xml.rova.vtj.Client;
 import fi.vrk.xml.rova.vtj.ObjectFactory;
 import fi.vrk.xml.rova.vtj.Service;
@@ -40,9 +37,6 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 
     @Autowired
     private HttpServletRequest request;
-    
-    public static final String ORIG_USERID_HEADER = "origUserId";
-    public static final String ORIG_REQUEST_ID_HEADER = "origRequestId";
 
     public Set<QName> getHeaders() {
         return Collections.emptySet();
