@@ -26,14 +26,14 @@ public class VTJService {
 
     final int HETU_LENGTH = 11;
 
-    public VTJResponse getVTJResponse(String hetu, String schema, String origUserId, String origRequestId) {
+    public VTJResponse getVTJResponse(String hetu, String schema) {
         Person person = null;
         VTJResponse vtjResponse = new VTJResponse(); // person == null & success == false as default
         
         try {
             long startTime = System.currentTimeMillis();
 
-            VTJResponseMessage response = client.getResponse(hetu, schema, origUserId, origRequestId);
+            VTJResponseMessage response = client.getResponse(hetu, schema);
             
 //            String codeValue = response.getResponseCode() != null ? response.getResponseCode().getValue() : "";
 //            if (codeValue != null) codeValue = codeValue.replace(" ", "_");

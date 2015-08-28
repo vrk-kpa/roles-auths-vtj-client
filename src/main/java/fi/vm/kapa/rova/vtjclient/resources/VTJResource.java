@@ -26,12 +26,10 @@ public class VTJResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/person/{schema}/{hetu}")
     public Response getPerson(@PathParam("hetu") String hetu,
-            @PathParam("schema") String schema,
-            @QueryParam("endUserId") String endUserId,
-            @QueryParam("requestId") String requestId) {
+            @PathParam("schema") String schema) {
         
         try {
-            VTJResponse vtjResponse = service.getVTJResponse(hetu, schema, endUserId, requestId);
+            VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
             return Response.ok().entity(vtjResponse).build();
         } catch (Exception e) { // TODO tarpeeton try-catch?
             ResponseBuilder responseBuilder = Response.serverError();

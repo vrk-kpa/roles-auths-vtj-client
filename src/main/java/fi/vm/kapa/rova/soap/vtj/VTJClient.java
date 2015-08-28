@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebService;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -21,6 +22,7 @@ import org.w3c.dom.Node;
 
 import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
 import fi.vm.kapa.rova.soap.handlers.XroadHeaderHandler;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyReqBodyTiedot;
@@ -38,6 +40,9 @@ public class VTJClient implements SpringPropertyNames {
 
     @Autowired
     private XroadHeaderHandler xroadHeaderHandler;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Value(VTJ_USERNAME)
     private String vtjUsername;
@@ -62,21 +67,24 @@ public class VTJClient implements SpringPropertyNames {
         service.setHandlerResolver(hs);
     }
 
-    public VTJResponseMessage getResponse(String hetu, String schema, String origUserId, String origRequestId) throws JAXBException {
+    public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException {
         LOG.debug("VTJClient.getResponse() starts");
         ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
         BindingProvider bp = (BindingProvider) iService;
 
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
-        bp.getRequestContext().put(XroadHeaderHandler.ORIG_USERID_HEADER, origUserId);
-        bp.getRequestContext().put(XroadHeaderHandler.ORIG_REQUEST_ID_HEADER, origRequestId);
 
         HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
         reqBodyTiedot.setHenkilotunnus(hetu);
         reqBodyTiedot.setKayttajatunnus(vtjUsername);
         reqBodyTiedot.setSalasana(vtjPassword);
         reqBodyTiedot.setSoSoNimi(schema);
-        reqBodyTiedot.setLoppukayttaja(origUserId == null ? "rova-end-user-unknown" :  origUserId);
+        
+        String origUserId = request.getHeader(RequestIdentificationFilter.XROAD_END_USER);
+        if (origUserId == null) {
+            origUserId = "rova-end-user-unknown";
+        }
+        reqBodyTiedot.setLoppukayttaja(origUserId);
 
         Holder<HenkiloTunnusKyselyReqBodyTiedot> request = new Holder<HenkiloTunnusKyselyReqBodyTiedot>(reqBodyTiedot);
 
