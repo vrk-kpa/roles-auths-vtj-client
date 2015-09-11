@@ -51,7 +51,7 @@ public class VTJClient implements SpringPropertyNames {
     @Value(XROAD_ENDPOINT)
     private String xrdEndPoint;
 
-    private static Logger LOG = Logger.getLogger(VTJClient.class, Logger.VTJ_CLIENT);
+    private static Logger LOG = Logger.getLogger(VTJClient.class);
 
     @PostConstruct
     public void init() {

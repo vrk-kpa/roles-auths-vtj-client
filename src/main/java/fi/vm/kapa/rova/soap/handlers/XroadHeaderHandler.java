@@ -31,7 +31,7 @@ import fi.vrk.xml.rova.vtj.Service;
 @Component
 public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, SpringPropertyNames {
 
-    private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class, Logger.VTJ_CLIENT);
+    private static Logger LOG = Logger.getLogger(XroadHeaderHandler.class);
 
     private ObjectFactory factory = new ObjectFactory();
 

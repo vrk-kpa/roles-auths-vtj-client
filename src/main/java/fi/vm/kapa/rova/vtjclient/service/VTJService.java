@@ -19,7 +19,7 @@ import fi.vm.kapa.rova.vtj.model.VTJResponse;
 @Service
 public class VTJService {
 
-    private static Logger LOG = Logger.getLogger(VTJService.class, Logger.VTJ_CLIENT);
+    private static Logger LOG = Logger.getLogger(VTJService.class);
 
     @Autowired
     private VTJClient client;
