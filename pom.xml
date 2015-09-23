@@ -212,7 +212,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <XadditionalHeaders>true</XadditionalHeaders>
                     <packageName>fi.vrk.xml.rova.vtj</packageName>
                     <wsdlLocation>../../../../../wsdl/vtj.wsdl</wsdlLocation>
                     <wsdlUrls>
