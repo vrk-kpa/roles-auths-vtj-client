@@ -33,3 +33,7 @@ client_member_class={{ vtj_client_member_class }}
 client_member_code={{ vtj_client_member_code }}
 # ROVA_SUBSYSTEM_CODE defines the name of the caller subsystem on X-road
 client_subsystem_code={{ vtj_client_subsystem_code }}
+
+logstash.host={{ logstash_host }}
+logstash.port={{ logstash_port }}
+logstash.level=INFO
