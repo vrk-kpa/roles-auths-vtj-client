@@ -32,5 +32,5 @@ ADD target/roles-auths-vtj-client.jar /opt/rova/roles-auths-vtj-client/
 WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
-ENTRYPOINT ["java", cd "-jar", "roles-auths-vtj-client.jar"]
+ENTRYPOINT ["java", "-jar", "roles-auths-vtj-client.jar"]
 
