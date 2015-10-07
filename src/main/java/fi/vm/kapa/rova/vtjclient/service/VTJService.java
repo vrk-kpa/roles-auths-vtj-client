@@ -58,7 +58,7 @@ public class VTJService {
 
     private void logVTJError(String errorString) {
         Logger.LogMap logmap = LOG.errorMap();
-        logmap.set(ERROR, errorString);
+        logmap.set(ERRORSTR, errorString);
         logmap.log();
     }
 
