@@ -1,5 +1,7 @@
 package fi.vm.kapa.rova.vtjclient.service;
 
+import static fi.vm.kapa.rova.logging.Logger.Field.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,26 +37,35 @@ public class VTJService {
 
             VTJResponseMessage response = client.getResponse(hetu, schema);
             
-//            String codeValue = response.getResponseCode() != null ? response.getResponseCode().getValue() : "";
-//            if (codeValue != null) codeValue = codeValue.replace(" ", "_");
-//            LOG.info("codevalue="+ codeValue +",duration=" + (System.currentTimeMillis() - startTime));
-            LOG.info("duration=" + (System.currentTimeMillis() - startTime));
+            logVTJRequest(startTime, System.currentTimeMillis());
 
             try {
                 person = fromSoapMessage(response);
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Throwable e) {
-                LOG.error("Person parsing failed reason:" + e.getMessage());
+                logVTJError("Person parsing failed reason:" + e.getMessage());
                 vtjResponse.setError("vtj.parsinta.epaonnistui");
             }
             
         } catch (Throwable e) {
-            LOG.error("VTJ request failed:" + e.getMessage());
+            logVTJError("VTJ request failed:" + e.getMessage());
             vtjResponse.setError("vtj.haku.epaonnistui");
         }
         
         return vtjResponse;
+    }
+
+    private void logVTJError(String errorString) {
+        Logger.LogMap logmap = LOG.errorMap();
+        logmap.set(ERROR, errorString);
+        logmap.log();
+    }
+
+    private void logVTJRequest(long startTime, long currentTimeMillis) {
+        Logger.LogMap logmap = LOG.infoMap();
+        logmap.set(DURATION, currentTimeMillis - startTime);
+        logmap.log();
     }
 
     private Person fromSoapMessage(VTJResponseMessage message) {
