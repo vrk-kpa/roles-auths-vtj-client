@@ -37,33 +37,35 @@ public class VTJService {
 
             VTJResponseMessage response = client.getResponse(hetu, schema);
             
-            logVTJRequest(startTime, System.currentTimeMillis());
+            logVTJRequest(schema, startTime, System.currentTimeMillis());
 
             try {
                 person = fromSoapMessage(response);
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Throwable e) {
-                logVTJError("Person parsing failed reason:" + e.getMessage());
+                logVTJError(schema, "Person parsing failed reason:" + e.getMessage());
                 vtjResponse.setError("vtj.parsinta.epaonnistui");
             }
             
         } catch (Throwable e) {
-            logVTJError("VTJ request failed:" + e.getMessage());
+            logVTJError(schema, "VTJ request failed:" + e.getMessage());
             vtjResponse.setError("vtj.haku.epaonnistui");
         }
         
         return vtjResponse;
     }
 
-    private void logVTJError(String errorString) {
+    private void logVTJError(String schema, String errorString) {
         Logger.LogMap logmap = LOG.errorMap();
+        logmap.set(OPERATION, schema);
         logmap.set(ERRORSTR, errorString);
         logmap.log();
     }
 
-    private void logVTJRequest(long startTime, long currentTimeMillis) {
+    private void logVTJRequest(String schema, long startTime, long currentTimeMillis) {
         Logger.LogMap logmap = LOG.infoMap();
+        logmap.set(OPERATION, schema);
         logmap.set(DURATION, currentTimeMillis - startTime);
         logmap.log();
     }
