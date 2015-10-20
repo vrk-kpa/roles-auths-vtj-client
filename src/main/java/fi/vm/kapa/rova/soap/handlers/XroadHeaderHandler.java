@@ -94,7 +94,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
 
                 JAXBElement<String> idElement = factory.createId(UUID.randomUUID().toString());
                 SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
-                idHeaderElement.addTextNode((String) idElement.getValue());
+                idHeaderElement.addTextNode(idElement.getValue());
                
                 
                 String origUserId = request.getHeader(RequestIdentificationFilter.XROAD_END_USER);
@@ -104,17 +104,17 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 
                 JAXBElement<String> userIdElement = factory.createUserId(origUserId);
                 SOAPHeaderElement uidHeaderElement = header.addHeaderElement(userIdElement.getName());
-                uidHeaderElement.addTextNode((String) userIdElement.getValue());
+                uidHeaderElement.addTextNode(userIdElement.getValue());
 
                 
-                String origRequestId = request.getHeader(RequestIdentificationFilter.XROAD_REQUEST_IDENTIFIER);;
+                String origRequestId = request.getHeader(RequestIdentificationFilter.XROAD_REQUEST_IDENTIFIER);
                 if (origRequestId == null) {
                     origRequestId = "";
                 }
                 
                 JAXBElement<String> issueElement = factory.createIssue(origRequestId);
                 SOAPHeaderElement issueHeaderElement = header.addHeaderElement(issueElement.getName());
-                issueHeaderElement.addTextNode((String) issueElement.getValue());
+                issueHeaderElement.addTextNode(issueElement.getValue());
 
                 Client client = factory.createClient();
                 JAXBElement<Client> clientElement = factory.createClient(client);

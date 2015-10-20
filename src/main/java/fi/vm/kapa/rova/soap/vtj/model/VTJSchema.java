@@ -4,5 +4,5 @@ public enum VTJSchema {
 
     ROV1,
     ROV2,
-    ROV3;
+    ROV3
 }
