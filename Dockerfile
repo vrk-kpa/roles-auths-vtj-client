@@ -29,6 +29,7 @@ RUN apt-get update && \
 # Deploy project
 RUN mkdir -p /opt/rova/roles-auths-vtj-client/
 ADD target/roles-auths-vtj-client.jar /opt/rova/roles-auths-vtj-client/
+ADD service.properties.template /opt/rova/roles-auths-vtj-client/
 WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
