@@ -33,5 +33,5 @@ ADD service.properties.template /opt/rova/roles-auths-vtj-client/
 WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "roles-auths-vtj-client.jar"]
+ENTRYPOINT ["java", "-Xms256m", "-Xmx512m", "-jar", "roles-auths-vtj-client.jar"]
 
