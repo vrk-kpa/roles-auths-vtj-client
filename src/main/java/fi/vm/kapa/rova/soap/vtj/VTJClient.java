@@ -92,17 +92,18 @@ public class VTJClient implements SpringPropertyNames {
         Holder<HenkiloTunnusKyselyResType> response = new Holder<HenkiloTunnusKyselyResType>(resType);
         iService.henkilonTunnusKysely(request, response);
 
+        VTJResponseMessage result = null;
+
         resType = response.value;
         List<Object> list = resType.getAny();
-        for (Object o : list) {
+        if (list != null && !list.isEmpty()) {
             JAXBContext context = JAXBContext
                     .newInstance(VTJResponseMessage.class);
             Unmarshaller um = context.createUnmarshaller();
             um.setEventHandler(new CustomValidationEventHandler());
-
-            return (VTJResponseMessage) um.unmarshal((Node) o);
+            result =  (VTJResponseMessage) um.unmarshal((Node) list.get(0));
         }
-        return null;
+        return result;
     }
 
 }
