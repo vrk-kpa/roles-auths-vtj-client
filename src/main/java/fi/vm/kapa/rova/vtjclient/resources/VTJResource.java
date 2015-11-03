@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.stereotype.Service;
 
-import fi.vm.kapa.rova.vtj.model.VTJResponse;
+import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 
 @Service

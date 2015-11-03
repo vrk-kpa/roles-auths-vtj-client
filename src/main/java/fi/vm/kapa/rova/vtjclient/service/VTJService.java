@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fi.vm.kapa.rova.external.model.vtj.Person;
+import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vm.kapa.rova.soap.vtj.model.Huoltaja;
@@ -15,8 +17,6 @@ import fi.vm.kapa.rova.soap.vtj.model.EdunvalvontaValtuutettuHenkilo;
 import fi.vm.kapa.rova.soap.vtj.model.EdunvalvojaHenkilo;
 import fi.vm.kapa.rova.soap.vtj.model.Principal;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
-import fi.vm.kapa.rova.vtj.model.Person;
-import fi.vm.kapa.rova.vtj.model.VTJResponse;
 
 @Service
 public class VTJService {
