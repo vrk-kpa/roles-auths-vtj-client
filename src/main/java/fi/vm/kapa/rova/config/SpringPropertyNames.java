@@ -5,10 +5,6 @@ public interface SpringPropertyNames {
     String VTJ_USERNAME = "${vtj_username}"; // vtj-palvelun käyttäjätunnus
     String VTJ_PASSWORD = "${vtj_password}"; // vtj-palvelun salasana
 
-    String USER_ID = "${userId}"; // xroad-kutsun userId
-    String ID = "${id}"; // xroad-kutsun id
-    String ISSUE = "${issue}"; // xroad-kutsun issue
-
     String SERVICE_SDSB_INSTANCE = "${service_sdsb_instance}"; // xroad instanssin id (eg. FI_DEV)
     String SERVICE_MEMBER_CLASS = "${service_member_class}"; // xroadia kutsuvan organisaation tyyppi (eg. COM, ORG, GOV)
     String SERVICE_MEMBER_CODE = "${service_member_code}"; // xroadia kutsuvan organisaation id (eg. yt-tunnus)
@@ -26,4 +22,12 @@ public interface SpringPropertyNames {
     String CLIENT_SUBSYSTEM_CODE = "${client_subsystem_code}";
 
     String XROAD_ENDPOINT = "${xroad_endpoint}"; // xroad-kutsun endpoint (oma liityntäpalvelin)
+
+    String SSL_KEYSTORETYPE = "ssl_keystoretype";
+    String SSL_KEYSTORE = "ssl_keystore";
+    String SSL_KEYSTOREPASSWORD = "ssl_keystorepassword";
+    String SSL_TRUSTSTORETYPE = "ssl_truststoretype";
+    String SSL_TRUSTSTORE = "ssl_truststore";
+    String SSL_TRUSTSTOREPASSWORD = "ssl_truststorepassword";
+
 }
