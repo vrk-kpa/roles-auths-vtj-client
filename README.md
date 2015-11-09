@@ -9,3 +9,7 @@ Maven commands:
 
 ## Start standalone jar
 java -Dserver.port=8002 -jar target/roles-auths-vtj-client.jar
+
+# About application properties
+ssl-prefixed properties can be left empty if https is not used for communicating with Xroad server
+
