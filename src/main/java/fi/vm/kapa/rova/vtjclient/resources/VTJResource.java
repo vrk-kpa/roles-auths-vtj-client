@@ -5,7 +5,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -13,11 +12,14 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.springframework.stereotype.Service;
 
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
+import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 
 @Service
 @Path("/vtj")
 public class VTJResource {
+
+    private static Logger log = Logger.getLogger(VTJResource.class);
 
     @Inject
     private VTJService service;
@@ -27,7 +29,7 @@ public class VTJResource {
     @Path("/person/{schema}/{hetu}")
     public Response getPerson(@PathParam("hetu") String hetu,
             @PathParam("schema") String schema) {
-        
+        log.info("Person request received.");
         try {
             VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
             return Response.ok().entity(vtjResponse).build();
