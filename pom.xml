@@ -1,15 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>fi.vm.kapa.rova</groupId>
     <artifactId>roles-auths-vtj-client</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <name>roles-auths-vtj-client</name>
+
     <properties>
-        <jersey.version>2.15</jersey.version>
-        <cxf.version>2.2.3</cxf.version>
         <io.spring.platform-version>1.1.1.RELEASE</io.spring.platform-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <docker.image.prefix>docker-registry.kapa.ware.fi</docker.image.prefix>
@@ -20,23 +17,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
-                <version>${jersey.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>${io.spring.platform-version}</version>
+                <groupId>fi.vm.kapa.rova</groupId>
+                <artifactId>roles-auths-parent</artifactId>
+                <version>1.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <dependencies>
 
+    <dependencies>
         <!-- Spring deps -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -110,19 +100,16 @@
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0</version>
             <type>jar</type>
         </dependency>
 
         <dependency>
             <groupId>fi.vm.kapa.rova</groupId>
             <artifactId>roles-auths-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>fi.vm.kapa.rova</groupId>
             <artifactId>roles-auths-engine-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -132,7 +119,6 @@
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>2.2.10</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -172,7 +158,6 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>4.3</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -215,16 +200,16 @@
                         <goals>
                             <goal>wsimport</goal>
                         </goals>
+                        <configuration>
+                            <packageName>fi.vrk.xml.rova.vtj</packageName>
+                            <wsdlLocation>../../../../../wsdl/vtj.wsdl</wsdlLocation>
+                            <wsdlUrls>
+                                <wsdlUrl>${basedir}/src/main/resources/wsdl/vtj.wsdl</wsdlUrl>
+                            </wsdlUrls>
+                            <verbose>true</verbose>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <packageName>fi.vrk.xml.rova.vtj</packageName>
-                    <wsdlLocation>../../../../../wsdl/vtj.wsdl</wsdlLocation>
-                    <wsdlUrls>
-                        <wsdlUrl>${basedir}/src/main/resources/wsdl/vtj.wsdl</wsdlUrl>
-                    </wsdlUrls>
-                    <verbose>true</verbose>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
