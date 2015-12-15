@@ -148,6 +148,11 @@ public class Person {
     public String toString() {
         return "Person [hetu=" + hetu + ", lastName=" + lastName
                 + ", firstName=" + firstName + ", principal=" + principal
-                + ", deceased=" + deceased + "]";
+                + ", deceased=" + deceased + ", edunvalvonta=" + edunvalvonta
+                + ", edunvalvontaValtuutus=" + edunvalvontaValtuutus
+                + ", huoltaja=" + huoltaja + ", turvakielto=" + turvakielto
+                + ", huostaanotto=" + huostaanotto + ", huoltotieto="
+                + huoltotieto + ", huoltajaMaara=" + huoltajaMaara + "]";
     }
+
 }
