@@ -20,7 +20,7 @@ public class Person {
     @XmlElement(name = "NykyisetEtunimet")
     private CurrentFirstNames firstName;
 
-    @XmlElement(name = "Huollettava")
+    @XmlElement(name = "Huollettava", required = false)
     private List<Principal> principal;
 
     @XmlElement(name = "Kuolintiedot", required = false)
@@ -41,10 +41,10 @@ public class Person {
     @XmlElement(name = "Huostaanotto", required = false)
     private Huostaanotto huostaanotto;
 
-    @XmlElement(name = "Huoltotiedot")
+    @XmlElement(name = "Huoltotiedot", required = false)
     private Huoltotieto huoltotieto;
 
-    @XmlElement(name = "HuoltajaLkm")
+    @XmlElement(name = "HuoltajaLkm", required = false)
     private HuoltajaMaara huoltajaMaara;
 
     public List<Huoltaja> getHuoltaja() {
