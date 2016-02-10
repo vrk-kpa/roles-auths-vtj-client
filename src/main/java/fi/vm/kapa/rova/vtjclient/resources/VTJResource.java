@@ -29,7 +29,7 @@ public class VTJResource {
     @Path("/person/{schema}/{hetu}")
     public Response getPerson(@PathParam("hetu") String hetu,
             @PathParam("schema") String schema) {
-        log.info("Person request received.");
+        log.debug("Person request received.");
         try {
             VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
             return Response.ok().entity(vtjResponse).build();
