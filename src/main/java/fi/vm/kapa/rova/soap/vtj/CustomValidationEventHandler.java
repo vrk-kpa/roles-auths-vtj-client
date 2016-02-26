@@ -16,7 +16,6 @@ public class CustomValidationEventHandler implements ValidationEventHandler {
             LOG.debug("Unexpected element found: " + event);
         } else {
             LOG.debug("Validation event: " + event + " " + event.getMessage());
-//			System.out.println("Validation event: " + event + " " + event.getMessage());
         }
         return true;
     }

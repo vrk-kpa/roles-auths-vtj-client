@@ -30,12 +30,7 @@ public class VTJResource {
     public Response getPerson(@PathParam("hetu") String hetu,
             @PathParam("schema") String schema) {
         log.debug("Person request received.");
-        try {
-            VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
-            return Response.ok().entity(vtjResponse).build();
-        } catch (Exception e) { // TODO tarpeeton try-catch?
-            ResponseBuilder responseBuilder = Response.serverError();
-            return responseBuilder.build();
-        }
+        VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
+        return Response.ok().entity(vtjResponse).build();
     }
 }
