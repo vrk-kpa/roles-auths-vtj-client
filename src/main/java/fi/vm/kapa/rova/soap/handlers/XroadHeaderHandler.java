@@ -1,8 +1,14 @@
 package fi.vm.kapa.rova.soap.handlers;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.UUID;
+import eu.x_road.xsd.xroad.Client;
+import eu.x_road.xsd.xroad.ObjectFactory;
+import eu.x_road.xsd.xroad.Service;
+import fi.vm.kapa.rova.config.SpringPropertyNames;
+import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
@@ -16,17 +22,9 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import fi.vm.kapa.rova.config.SpringPropertyNames;
-import fi.vm.kapa.rova.logging.Logger;
-import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
-import fi.vrk.xml.rova.vtj.Client;
-import fi.vrk.xml.rova.vtj.ObjectFactory;
-import fi.vrk.xml.rova.vtj.Service;
+import java.util.Collections;
+import java.util.Set;
+import java.util.UUID;
 
 @Component
 public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, SpringPropertyNames {
@@ -92,6 +90,8 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                     header = soapEnv.addHeader();
                 }
 
+
+
                 JAXBElement<String> idElement = factory.createId(UUID.randomUUID().toString());
                 SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
                 idHeaderElement.addTextNode(idElement.getValue());
@@ -128,6 +128,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 marshaller = JAXBContext.newInstance(Client.class).createMarshaller();
                 marshaller.marshal(clientElement, header);
 
+
                 Service service = factory.createService();
                 JAXBElement<Service> serviceElement = factory.createService(service);
                 service.setObjectType(this.serviceObjectType);
@@ -148,6 +149,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 e.printStackTrace();
             }
         }
+
         return true;
     }
 

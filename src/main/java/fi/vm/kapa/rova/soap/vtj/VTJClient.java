@@ -1,7 +1,15 @@
 package fi.vm.kapa.rova.soap.vtj;
 
-import java.util.ArrayList;
-import java.util.List;
+import fi.vm.kapa.rova.config.SpringPropertyNames;
+import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
+import fi.vm.kapa.rova.soap.handlers.XroadHeaderHandler;
+import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
+import fi.vrk.xml.ws.vtj.vtjkysely._1.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Node;
 
 import javax.annotation.PostConstruct;
 import javax.jws.WebService;
@@ -9,27 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.w3c.dom.Node;
-
-import fi.vm.kapa.rova.config.SpringPropertyNames;
-import fi.vm.kapa.rova.logging.Logger;
-import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
-import fi.vm.kapa.rova.soap.handlers.XroadHeaderHandler;
-import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
-import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyReqBodyTiedot;
-import fi.vrk.xml.rova.vtj.HenkiloTunnusKyselyResType;
-import fi.vrk.xml.rova.vtj.ISoSoAdapterService60;
-import fi.vrk.xml.rova.vtj.ObjectFactory;
-import fi.vrk.xml.rova.vtj.SoSoAdapterService60;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @WebService(endpointInterface = "fi.vrk.xml.rova.vtj.ISoSoAdapterService60")
@@ -43,6 +36,10 @@ public class VTJClient implements SpringPropertyNames {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    ISoSoAdapterService60 vtjClient;
+
 
     @Value(VTJ_USERNAME)
     private String vtjUsername;
@@ -69,10 +66,7 @@ public class VTJClient implements SpringPropertyNames {
 
     public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException {
         LOG.debug("VTJClient.getResponse() starts");
-        ISoSoAdapterService60 iService = service.getBasicHttpBindingISoSoAdapterService60();
-        BindingProvider bp = (BindingProvider) iService;
-
-        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xrdEndPoint);
+        ISoSoAdapterService60 iService = vtjClient;
 
         HenkiloTunnusKyselyReqBodyTiedot reqBodyTiedot = factory.createHenkiloTunnusKyselyReqBodyTiedot();
         reqBodyTiedot.setHenkilotunnus(hetu);
