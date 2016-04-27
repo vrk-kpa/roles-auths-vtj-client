@@ -8,3 +8,4 @@ dc-application.properties
 idp_metadata.xml
 sp_local_keystore.jks
 logback.xml
+/application.properties
