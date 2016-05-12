@@ -74,9 +74,9 @@ public class VTJClient implements SpringPropertyNames {
         reqBodyTiedot.setSalasana(vtjPassword);
         reqBodyTiedot.setSoSoNimi(schema);
         
-        String origUserId = request.getHeader(RequestIdentificationFilter.XROAD_END_USER);
+        String origUserId = request.getHeader(RequestIdentificationFilter.ORIG_END_USER);
         if (origUserId == null) {
-            origUserId = "rova-end-user-unknown";
+            throw new IllegalArgumentException("End user header missing");
         }
         reqBodyTiedot.setLoppukayttaja(origUserId);
 

@@ -119,9 +119,9 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 idHeaderElement.addTextNode(idElement.getValue());
                
                 
-                String origUserId = request.getHeader(RequestIdentificationFilter.XROAD_END_USER);
-                if (origUserId == null) {
-                    origUserId = "rova-end-user-unknown";
+                String origUserId = request.getHeader(RequestIdentificationFilter.ORIG_END_USER);
+                if (origUserId == null || origUserId.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Request identifier header missing");
                 }
                 
                 JAXBElement<String> userIdElement = factory.createUserId(origUserId);
@@ -129,9 +129,9 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 uidHeaderElement.addTextNode(userIdElement.getValue());
 
                 
-                String origRequestId = request.getHeader(RequestIdentificationFilter.XROAD_REQUEST_IDENTIFIER);
-                if (origRequestId == null) {
-                    origRequestId = "";
+                String origRequestId = request.getHeader(RequestIdentificationFilter.ORIG_REQUEST_IDENTIFIER);
+                if (origRequestId == null || origRequestId.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Request identifier header missing");
                 }
                 
                 JAXBElement<String> issueElement = factory.createIssue(origRequestId);
