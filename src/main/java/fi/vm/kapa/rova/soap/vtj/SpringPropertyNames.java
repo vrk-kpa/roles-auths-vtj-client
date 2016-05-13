@@ -36,7 +36,7 @@ public interface SpringPropertyNames {
     String VTJ_SERVICE_CODE = "${service_service_code}"; // xroad-kohdepalvelun nimi (eg. getRandom)
 
     String SERVICE_OBJECT_TYPE = "${service_object_type}"; // xroad-kutsun palvelutyyppi 
-    String CLIENT_OBJECT_TYPE = "${client_object_type}"; // xroad-kutsun objektityyppi	
+    String CLIENT_OBJECT_TYPE = "${client_object_type}"; // xroad-kutsun objektityyppi  
 
     String ROVA_ENDPOINT = "${rova_endpoint}"; // xroad-kutsun endpoint (oman liityntäpalvelimen ip)
     String ROVA_SDSB_INSTANCE = "${client_sdsb_instance}"; // oman xroad-instanssin id
