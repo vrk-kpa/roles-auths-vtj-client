@@ -164,8 +164,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 soapMsg.saveChanges();
 
             } catch (Exception e) {
-                LOG.error("Xroad header handler exception occured " + e);
-                e.printStackTrace();
+                LOG.error("Xroad header handler exception occured " + e, e);
             }
         }
 
