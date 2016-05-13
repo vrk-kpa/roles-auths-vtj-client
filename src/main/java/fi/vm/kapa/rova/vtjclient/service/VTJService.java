@@ -65,12 +65,12 @@ public class VTJService {
                 person = fromSoapMessage(response);
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 logVTJError(schema, "Person parsing failed reason:" + e.getMessage());
                 vtjResponse.setError("vtj.parsinta.epaonnistui");
             }
             
-        } catch (Throwable e) {
+        } catch (Exception e) {
             logVTJError(schema, "VTJ request failed:" + e.getMessage());
             vtjResponse.setError("vtj.haku.epaonnistui");
         }
