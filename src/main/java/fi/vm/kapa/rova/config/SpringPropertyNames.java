@@ -36,7 +36,7 @@ public interface SpringPropertyNames {
     String SERVICE_OBJECT_TYPE = "${service_object_type}"; // xroad-kutsun palvelutyyppi 
     String SERVICE_SERVICE_VERSION = "${service_service_version}"; // palvelun versio
 
-    String CLIENT_OBJECT_TYPE = "${client_object_type}"; // xroad-kutsun objektityyppi	
+    String CLIENT_OBJECT_TYPE = "${client_object_type}"; // xroad-kutsun objektityyppi  
 
     String CLIENT_SDSB_INSTANCE = "${client_sdsb_instance}";
     String CLIENT_MEMBER_CLASS = "${client_member_class}";
