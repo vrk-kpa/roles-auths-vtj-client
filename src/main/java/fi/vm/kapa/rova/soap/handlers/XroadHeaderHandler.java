@@ -130,7 +130,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 if (origRequestId == null || origRequestId.trim().isEmpty()) {
                     throw new IllegalArgumentException("Request identifier header missing");
                 } else {
-                    origRequestId = origUserId.replaceAll(";", "|");
+                    origRequestId = origRequestId.replaceAll(";", "|");
                 }
 
                 JAXBElement<String> issueElement = factory.createIssue(origRequestId);
