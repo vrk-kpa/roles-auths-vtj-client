@@ -42,6 +42,9 @@ public class Person {
     @XmlElement(name = "NykyisetEtunimet")
     private CurrentFirstNames firstName;
 
+    @XmlElement(name = "NykyinenKutsumanimi")
+    private CurrentNickName nickname;
+
     @XmlElement(name = "Huollettava", required = false)
     private List<Principal> principal;
 
@@ -107,6 +110,14 @@ public class Person {
 
     public void setLastName(CurrentLastName lastName) {
         this.lastName = lastName;
+    }
+    
+    public CurrentNickName getNickname() {
+        return nickname;
+    }
+    
+    public void setNickname(CurrentNickName nickname) {
+        this.nickname = nickname;
     }
 
     public List<Principal> getPrincipal() {
