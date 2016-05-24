@@ -108,8 +108,8 @@ public class VTJService {
         if (sPerson.getLastName() != null) {
             person.setLastName(sPerson.getLastName().getLastName().getValue());
         }
-        if (sPerson.getNickname() != null) {
-            person.setNickName(sPerson.getNickname().getNickName().getValue());
+        if (sPerson.getCallingName() != null) {
+            person.setCallingName(sPerson.getCallingName().getNickName().getValue());
         }
         if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null
                 && sPerson.getDeceased().getDeceased().getValue() != null) {

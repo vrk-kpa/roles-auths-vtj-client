@@ -43,7 +43,7 @@ public class Person {
     private CurrentFirstNames firstName;
 
     @XmlElement(name = "NykyinenKutsumanimi")
-    private CurrentNickName nickname;
+    private CurrentNickName callingName;
 
     @XmlElement(name = "Huollettava", required = false)
     private List<Principal> principal;
@@ -112,12 +112,12 @@ public class Person {
         this.lastName = lastName;
     }
     
-    public CurrentNickName getNickname() {
-        return nickname;
+    public CurrentNickName getCallingName() {
+        return callingName;
     }
     
-    public void setNickname(CurrentNickName nickname) {
-        this.nickname = nickname;
+    public void setCallingName(CurrentNickName callingName) {
+        this.callingName = callingName;
     }
 
     public List<Principal> getPrincipal() {
