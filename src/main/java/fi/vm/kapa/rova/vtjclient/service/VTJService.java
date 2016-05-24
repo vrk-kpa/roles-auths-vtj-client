@@ -108,6 +108,9 @@ public class VTJService {
         if (sPerson.getLastName() != null) {
             person.setLastName(sPerson.getLastName().getLastName().getValue());
         }
+        if (sPerson.getCallingName() != null) {
+            person.setCallingName(sPerson.getCallingName().getNickName().getValue());
+        }
         if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null
                 && sPerson.getDeceased().getDeceased().getValue() != null) {
             person.setDeceased(sPerson.getDeceased().getDeceased().getValue().equals("1")); // "1" = Kuollut 
