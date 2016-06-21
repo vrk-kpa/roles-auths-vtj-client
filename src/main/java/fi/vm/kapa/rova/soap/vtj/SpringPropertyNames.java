@@ -25,7 +25,7 @@ package fi.vm.kapa.rova.soap.vtj;
 public interface SpringPropertyNames {
 
     String VTJ_USERNAME = "${vtj_username}"; // vtj-palvelun käyttäjätunnus
-    String VTJ_PASSWORD = "${vtj_password}"; // vtj-palvelun salasana
+    String VTJ_PASSWORD = "${vtj_password}"; //NOSONAR tässä ei ole kovakoodattu vtj-palvelun salasana
     String VTJ_USERID = "${userId}"; // xroad-kutsun userId
     String VTJ_ID = "${id}"; // xroad-kutsun id
     String VTJ_ISSUE = "${vtj_issue}"; // xroad-kutsun issue

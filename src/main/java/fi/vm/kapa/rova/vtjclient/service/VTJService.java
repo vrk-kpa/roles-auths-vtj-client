@@ -22,23 +22,18 @@
  */
 package fi.vm.kapa.rova.vtjclient.service;
 
-import static fi.vm.kapa.rova.logging.Logger.Field.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import fi.vm.kapa.rova.external.model.vtj.Person;
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
-import fi.vm.kapa.rova.soap.vtj.model.Huoltaja;
-import fi.vm.kapa.rova.soap.vtj.model.EdunvalvontaValtuutettuHenkilo;
-import fi.vm.kapa.rova.soap.vtj.model.EdunvalvojaHenkilo;
-import fi.vm.kapa.rova.soap.vtj.model.Principal;
-import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
+import fi.vm.kapa.rova.soap.vtj.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static fi.vm.kapa.rova.logging.Logger.Field.*;
 
 @Service
 public class VTJService {
@@ -66,22 +61,25 @@ public class VTJService {
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Exception e) {
-                logVTJError(schema, "Person parsing failed reason:" + e.getMessage());
+                logVTJError(schema, "Person parsing failed reason:" + e.getMessage(), e);
                 vtjResponse.setError("vtj.parsinta.epaonnistui");
             }
             
         } catch (Exception e) {
-            logVTJError(schema, "VTJ request failed:" + e.getMessage());
+            logVTJError(schema, "VTJ request failed:" + e.getMessage(), e);
             vtjResponse.setError("vtj.haku.epaonnistui");
         }
         
         return vtjResponse;
     }
 
-    private void logVTJError(String schema, String errorString) {
+    private void logVTJError(String schema, String errorString, Exception e) {
         Logger.LogMap logmap = LOG.errorMap();
         logmap.set(OPERATION, schema);
         logmap.set(ERRORSTR, errorString);
+        if (e != null) {
+            logmap.set(STACKTRACE, Logger.createStackTrace(e));
+        }
         logmap.log();
     }
 
