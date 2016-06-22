@@ -22,14 +22,14 @@
  */
 package fi.vm.kapa.rova.soap.vtj;
 
+import fi.vm.kapa.rova.logging.Logger;
+
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 
-import fi.vm.kapa.rova.logging.Logger;
-
 public class CustomValidationEventHandler implements ValidationEventHandler {
 
-    private static Logger LOG = Logger.getLogger(CustomValidationEventHandler.class);
+    private static final Logger LOG = Logger.getLogger(CustomValidationEventHandler.class);
 
     @Override
     public boolean handleEvent(ValidationEvent event) {
