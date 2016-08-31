@@ -4,6 +4,8 @@ FROM docker-registry.kapa.ware.fi/roles-auths-java-base@sha256:84db8eb95099600b8
 RUN mkdir -p /opt/rova/roles-auths-vtj-client/
 ADD target/roles-auths-vtj-client.jar /opt/rova/roles-auths-vtj-client/
 ADD service.properties.template /opt/rova/roles-auths-vtj-client/
+ADD LICENSE /opt/rova/roles-auths-vtj-client/license/LICENSE
+ADD target/site /opt/rova/roles-auths-vtj-client/license/dependency-report
 WORKDIR /opt/rova/roles-auths-vtj-client/
 
 EXPOSE 8080
