@@ -58,7 +58,7 @@ public class SoapConfiguration {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 
         // load distribution
-        LoadDistributorFeature loadDistributorFeature = new LoadDistributorFeature();
+        LoadDistributorFeature loadDistributorFeature = new RovaLoadDistributorFeature();
         RandomStrategy ldStrategy = new RandomStrategy();
         ldStrategy.setAlternateAddresses(getEndpoints());
         loadDistributorFeature.setStrategy(ldStrategy);
