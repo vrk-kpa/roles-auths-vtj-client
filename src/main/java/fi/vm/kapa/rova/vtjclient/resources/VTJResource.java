@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
+import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 
 @Service
 @Path("/vtj")
@@ -49,7 +50,7 @@ public class VTJResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/person/{schema}/{hetu}")
     public Response getPerson(@PathParam("hetu") String hetu,
-            @PathParam("schema") String schema) {
+            @PathParam("schema") String schema) throws VTJServiceException {
         log.debug("Person request received.");
         VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
         return Response.ok().entity(vtjResponse).build();

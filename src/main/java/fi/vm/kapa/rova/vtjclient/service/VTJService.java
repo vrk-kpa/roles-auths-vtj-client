@@ -45,7 +45,7 @@ public class VTJService {
 
     final int HETU_LENGTH = 11;
 
-    public VTJResponse getVTJResponse(String hetu, String schema) {
+    public VTJResponse getVTJResponse(String hetu, String schema) throws VTJServiceException {
         Person person = null;
         VTJResponse vtjResponse = new VTJResponse(); // person == null & success == false as default
         
@@ -61,26 +61,14 @@ public class VTJService {
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Exception e) {
-                logVTJError(schema, "Person parsing failed reason:" + e.getMessage(), e);
-                vtjResponse.setError("vtj.parsinta.epaonnistui");
+                throw new VTJServiceException("Person parsing failed reason: " + e.getMessage(), e);
             }
             
         } catch (Exception e) {
-            logVTJError(schema, "VTJ request failed:" + e.getMessage(), e);
-            vtjResponse.setError("vtj.haku.epaonnistui");
+            throw new VTJServiceException("VTJ request failed: " + e.getMessage(), e);
         }
         
         return vtjResponse;
-    }
-
-    private void logVTJError(String schema, String errorString, Exception e) {
-        Logger.LogMap logmap = LOG.errorMap();
-        logmap.set(OPERATION, schema);
-        logmap.set(ERRORSTR, errorString);
-        if (e != null) {
-            logmap.set(STACKTRACE, Logger.createStackTrace(e));
-        }
-        logmap.log();
     }
 
     private void logVTJRequest(String schema, long startTime, long currentTimeMillis) {
