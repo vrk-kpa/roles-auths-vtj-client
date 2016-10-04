@@ -120,22 +120,23 @@ public class VTJService {
         if (sPerson.getEdunvalvonta() != null && sPerson.getEdunvalvonta().getEdunvalvontatieto() != null
                 && sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue() != null) {
             person.setEdunvalvonta(sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue().equals("1")); // "1" = Edunvalvonnassa
-
+        } else {
+            person.setEdunvalvonta(false);
+        }
+        if (sPerson.getEdunvalvonta() != null) {
             person.setEdunvalvontaEiRajoitettu(false);
             person.setEdunvalvontaRajoitettu(false);
             person.setEdunvalvontaJulistettu(false);
 
             if (sPerson.getEdunvalvonta().getRajoituskoodi() != null && sPerson.getEdunvalvonta().getRajoituskoodi().getValue() != null) {
-                if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+                if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
                     person.setEdunvalvontaEiRajoitettu(true);
-                } else if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
+                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
                     person.setEdunvalvontaRajoitettu(true);
-                } else if (person.isEdunvalvonta() && sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
+                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
                     person.setEdunvalvontaJulistettu(true);
                 }
             }
-        } else {
-            person.setEdunvalvonta(false);
         }
 
         if (sPerson.getTurvakielto() != null && sPerson.getTurvakielto().getTurvakielto() != null
