@@ -1,0 +1,202 @@
+/**
+ * The MIT License
+ * Copyright (c) 2016 Population Register Centre
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+package fi.vm.kapa.rova.vtjclient.service;
+
+import fi.vm.kapa.rova.external.model.vtj.Person;
+import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.soap.vtj.model.*;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Juha Korkalainen on 10/7/16.
+ */
+@Component
+public class PersonParser {
+
+    private static Logger LOG = Logger.getLogger(PersonParser.class);
+
+    final int HETU_LENGTH = 11;
+
+    void parseIdentity(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        person.setHetu(sPerson.getHetu().getHetu());
+        if (sPerson.getHetu().getValidityCode().equals("1")) { // "1" = hetu voimassa
+            person.setHetuValid(true);
+        } else {
+            person.setHetuValid(false);
+        }
+
+        if (sPerson.getFirstName() != null) {
+            person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
+        }
+        if (sPerson.getLastName() != null) {
+            person.setLastName(sPerson.getLastName().getLastName().getValue());
+        }
+        if (sPerson.getCallingName() != null) {
+            person.setCallingName(sPerson.getCallingName().getNickName().getValue());
+        }
+
+        LOG.debug("fromSoapMessage: person=" + person);
+
+    }
+    void parseIsDeceased(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+
+        if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null
+                && sPerson.getDeceased().getDeceased().getValue() != null) {
+            person.setDeceased(sPerson.getDeceased().getDeceased().getValue().equals("1")); // "1" = Kuollut
+        } else {
+            person.setDeceased(false);
+        }
+    }
+
+    void parseHuostaanotto(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
+                && sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
+            person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
+                    .getValue().equals("1")); // "1" = huostaanotettu
+        } else {
+            person.setHuostaanotettu(false);
+        }
+
+    }
+
+    void parseTurvakielto(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        if (sPerson.getTurvakielto() != null && sPerson.getTurvakielto().getTurvakielto() != null
+                && sPerson.getTurvakielto().getTurvakielto().getValue() != null) {
+            person.setTurvakielto(sPerson.getTurvakielto().getTurvakielto().getValue().equals("1"));
+        } else {
+            person.setTurvakielto(false);
+        }
+    }
+
+    void parseEdunvalvonta(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        if (sPerson.getEdunvalvonta() != null && sPerson.getEdunvalvonta().getEdunvalvontatieto() != null
+                && sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue() != null) {
+            person.setEdunvalvonta(sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue().equals("1")); // "1" = Edunvalvonnassa
+        } else {
+            person.setEdunvalvonta(false);
+        }
+        if (sPerson.getEdunvalvonta() != null) {
+            person.setEdunvalvontaEiRajoitettu(false);
+            person.setEdunvalvontaRajoitettu(false);
+            person.setEdunvalvontaJulistettu(false);
+
+            if (sPerson.getEdunvalvonta().getRajoituskoodi() != null && sPerson.getEdunvalvonta().getRajoituskoodi().getValue() != null) {
+                if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
+                    person.setEdunvalvontaEiRajoitettu(true);
+                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
+                    person.setEdunvalvontaRajoitettu(true);
+                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
+                    person.setEdunvalvontaJulistettu(true);
+                }
+            }
+        }
+    }
+
+    void parseHuoltajat(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        List<Person> result = new ArrayList<Person>();
+
+        //check if custodian is valid
+        if (sPerson.getHuoltaja() != null && sPerson.getHuoltaja().get(0).getId().getValue().length() == HETU_LENGTH) {
+            List<Huoltaja> huoltajat = sPerson.getHuoltaja();
+
+            for (Huoltaja g : huoltajat) {
+                Person huoltaja = new Person();
+                huoltaja.setHetu(g.getId().getValue());
+                huoltaja.setFirstNames(g.getFirstNames().getValue());
+                huoltaja.setLastName(g.getLastName().getValue());
+                if (g.getHuoltotieto() != null && g.getHuoltotieto().getCustodyDivisionCode() != null
+                        && g.getHuoltotieto().getCustodyDivisionCode().getValue() != null) {
+                    huoltaja.setHuollonjakoSopimus(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
+                    huoltaja.setHuollonjakoMaarays(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
+                }
+                result.add(huoltaja);
+            }
+        }
+        person.setHuoltajat(result);
+    }
+
+    void parsePrincipals(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+
+        List<Person> result = new ArrayList<Person>();
+        List<Principal> principals = sPerson.getPrincipal();
+
+        if (principals != null && principals.get(0).getId().getValue().length() == HETU_LENGTH) {
+            for (Principal p : principals) {
+                Person principal = new Person();
+                principal.setHetu(p.getId().getValue());
+                principal.setFirstNames(p.getFirstNames().getValue());
+                principal.setLastName(p.getLastName().getValue());
+                result.add(principal);
+            }
+        }
+        person.setPrincipals(result);
+    }
+
+    void parseEdunvalvojat(
+            fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        List<Person> result = new ArrayList<Person>();
+
+        if (sPerson.getEdunvalvonta() != null) {
+            List<EdunvalvojaHenkilo> henkiloedunvalvojat = sPerson.getEdunvalvonta().getEdunvalvojaHenkilo();
+            if (henkiloedunvalvojat != null) {
+                for (EdunvalvojaHenkilo p : henkiloedunvalvojat) {
+                    if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
+                        Person edunvalvoja = new Person();
+                        edunvalvoja.setHetu(p.getHetu().getValue());
+                        edunvalvoja.setBirthdate(p.getBirthday().getValue());
+                        edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
+                        edunvalvoja.setLastName(p.getLastName().getValue());
+                        result.add(edunvalvoja);
+                    }
+                }
+            }
+        }
+
+        person.setEdunvalvojat(result);
+    }
+
+    void parseEdunvalvontaValtuutetut(
+            fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        List<Person> result = new ArrayList<Person>();
+
+        if (sPerson.getEdunvalvontaValtuutus() != null) {
+            List<EdunvalvontaValtuutettuHenkilo> henkiloEdunvalvontaValtuutetut = sPerson.getEdunvalvontaValtuutus().getEdunvalvontaValtuutettuHenkilo();
+            if (henkiloEdunvalvontaValtuutetut != null) {
+                for (EdunvalvontaValtuutettuHenkilo p : henkiloEdunvalvontaValtuutetut) {
+                    if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
+                        Person edunvalvontaValtuutettu = new Person();
+                        edunvalvontaValtuutettu.setHetu(p.getHetu().getValue());
+                        edunvalvontaValtuutettu.setBirthdate(p.getBirthday().getValue());
+                        edunvalvontaValtuutettu.setFirstNames(p.getFirstName().getFirstName().getValue());
+                        edunvalvontaValtuutettu.setLastName(p.getLastName().getValue());
+                        result.add(edunvalvontaValtuutettu);
+                    }
+                }
+            }
+        }
+        person.setEdunvalvontaValtuutetut(result);
+    }
+}
