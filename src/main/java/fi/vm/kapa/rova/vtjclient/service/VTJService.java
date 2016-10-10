@@ -60,15 +60,18 @@ public class VTJService {
             try {
                 fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
                 person = new Person();
+                personParser.parseHetu(sPerson, person);
                 personParser.parseIdentity(sPerson, person);
                 personParser.parseHuoltajat(sPerson, person);
                 personParser.parsePrincipals(sPerson, person);
-                personParser.parseEdunvalvonta(sPerson, person);
+                personParser.parseEdunvalvontaTieto(sPerson, person);
+                personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
                 personParser.parseEdunvalvojat(sPerson, person);
                 personParser.parseEdunvalvontaValtuutetut(sPerson, person);
                 personParser.parseTurvakielto(sPerson, person);
                 personParser.parseHuostaanotto(sPerson, person);
                 personParser.parseIsDeceased(sPerson, person);
+                LOG.debug("Parsed fromSoapMessage: person=" + person);
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Exception e) {
