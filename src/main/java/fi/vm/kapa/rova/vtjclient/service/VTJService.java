@@ -43,7 +43,8 @@ public class VTJService {
     @Autowired
     private VTJClient client;
 
-    final int HETU_LENGTH = 11;
+    @Autowired
+    private PersonParser personParser;
 
     public VTJResponse getVTJResponse(String hetu, String schema) throws VTJServiceException {
         Person person = null;
@@ -57,7 +58,20 @@ public class VTJService {
             logVTJRequest(schema, startTime, System.currentTimeMillis());
 
             try {
-                person = fromSoapMessage(response);
+                fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
+                person = new Person();
+                personParser.parseHetu(sPerson, person);
+                personParser.parseIdentity(sPerson, person);
+                personParser.parseHuoltajat(sPerson, person);
+                personParser.parsePrincipals(sPerson, person);
+                personParser.parseEdunvalvontaTieto(sPerson, person);
+                personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
+                personParser.parseEdunvalvojat(sPerson, person);
+                personParser.parseEdunvalvontaValtuutetut(sPerson, person);
+                personParser.parseTurvakielto(sPerson, person);
+                personParser.parseHuostaanotto(sPerson, person);
+                personParser.parseIsDeceased(sPerson, person);
+                LOG.debug("Parsed fromSoapMessage: person=" + person);
                 vtjResponse.setPerson(person);
                 vtjResponse.setSuccess(true);
             } catch (Exception e) {
@@ -78,161 +92,15 @@ public class VTJService {
         logmap.log();
     }
 
-    private Person fromSoapMessage(VTJResponseMessage message) {
-        fi.vm.kapa.rova.soap.vtj.model.Person sPerson = message.getPerson();
-        Person person = new Person();
-        person.setHetu(sPerson.getHetu().getHetu());
-        if (sPerson.getHetu().getValidityCode().equals("1")) { // "1" = hetu voimassa
-            person.setHetuValid(true);
-        } else {
-            person.setHetuValid(false);
-        }
-
-        if (sPerson.getFirstName() != null) {
-            person.setFirstNames(sPerson.getFirstName().getFirstName().getValue());
-        }
-        if (sPerson.getLastName() != null) {
-            person.setLastName(sPerson.getLastName().getLastName().getValue());
-        }
-        if (sPerson.getCallingName() != null) {
-            person.setCallingName(sPerson.getCallingName().getNickName().getValue());
-        }
-        if (sPerson.getDeceased() != null && sPerson.getDeceased().getDeceased() != null
-                && sPerson.getDeceased().getDeceased().getValue() != null) {
-            person.setDeceased(sPerson.getDeceased().getDeceased().getValue().equals("1")); // "1" = Kuollut 
-        } else {
-            person.setDeceased(false);
-        }
-
-        person.setPrincipals(getPrincipals(sPerson));
-        person.setHuoltajat(getHuoltajat(sPerson));
-        person.setEdunvalvojat(getEdunvalvojat(sPerson));
-        person.setEdunvalvontaValtuutetut(getEdunvalvontaValtuutetut(sPerson));
-
-        if (sPerson.getHuostaanotto() != null && sPerson.getHuostaanotto().getHuostaanottoTieto() != null
-                && sPerson.getHuostaanotto().getHuostaanottoTieto().getValue() != null) {
-            person.setHuostaanotettu(sPerson.getHuostaanotto().getHuostaanottoTieto()
-                    .getValue().equals("1")); // "1" = huostaanotettu
-        } else {
-            person.setHuostaanotettu(false);
-        }
-
-        if (sPerson.getEdunvalvonta() != null && sPerson.getEdunvalvonta().getEdunvalvontatieto() != null
-                && sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue() != null) {
-            person.setEdunvalvonta(sPerson.getEdunvalvonta().getEdunvalvontatieto().getValue().equals("1")); // "1" = Edunvalvonnassa
-        } else {
-            person.setEdunvalvonta(false);
-        }
-        if (sPerson.getEdunvalvonta() != null) {
-            person.setEdunvalvontaEiRajoitettu(false);
-            person.setEdunvalvontaRajoitettu(false);
-            person.setEdunvalvontaJulistettu(false);
-
-            if (sPerson.getEdunvalvonta().getRajoituskoodi() != null && sPerson.getEdunvalvonta().getRajoituskoodi().getValue() != null) {
-                if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("1")) { // "1" = ei rajoitettu
-                    person.setEdunvalvontaEiRajoitettu(true);
-                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("2")) { // "2" = rajoitettu
-                    person.setEdunvalvontaRajoitettu(true);
-                } else if (sPerson.getEdunvalvonta().getRajoituskoodi().getValue().equals("3")) { // "3" = julistettu
-                    person.setEdunvalvontaJulistettu(true);
-                }
-            }
-        }
-
-        if (sPerson.getTurvakielto() != null && sPerson.getTurvakielto().getTurvakielto() != null
-                && sPerson.getTurvakielto().getTurvakielto().getValue() != null) {
-            person.setTurvakielto(sPerson.getTurvakielto().getTurvakielto().getValue().equals("1"));
-        } else {
-            person.setTurvakielto(false);
-        }
-        LOG.debug("fromSoapMessage: person=" + person);
-
-        return person;
+    public void setPersonParser(PersonParser personParser) {
+        this.personParser = personParser;
     }
 
-    private List<Person> getHuoltajat(
-            fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
-        List<Person> result = new ArrayList<Person>();
-
-        //check if custodian is valid
-        if (sPerson.getHuoltaja() != null && sPerson.getHuoltaja().get(0).getId().getValue().length() == HETU_LENGTH) {
-            List<Huoltaja> huoltajat = sPerson.getHuoltaja();
-
-            for (Huoltaja g : huoltajat) {
-                Person huoltaja = new Person();
-                huoltaja.setHetu(g.getId().getValue());
-                huoltaja.setFirstNames(g.getFirstNames().getValue());
-                huoltaja.setLastName(g.getLastName().getValue());
-                if (g.getHuoltotieto() != null && g.getHuoltotieto().getCustodyDivisionCode() != null
-                        && g.getHuoltotieto().getCustodyDivisionCode().getValue() != null) {
-                    huoltaja.setHuollonjakoSopimus(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("2"));
-                    huoltaja.setHuollonjakoMaarays(g.getHuoltotieto().getCustodyDivisionCode().getValue().equalsIgnoreCase("1"));
-                }
-                result.add(huoltaja);
-            }
-        }
-        return result;
+    void setClient(VTJClient client) {
+        this.client = client;
     }
 
-    private List<Person> getPrincipals(
-            fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
-
-        List<Person> result = new ArrayList<Person>();
-        List<Principal> principals = sPerson.getPrincipal();
-
-        if (principals != null && principals.get(0).getId().getValue().length() == HETU_LENGTH) {
-            for (Principal p : principals) {
-                Person principal = new Person();
-                principal.setHetu(p.getId().getValue());
-                principal.setFirstNames(p.getFirstNames().getValue());
-                principal.setLastName(p.getLastName().getValue());
-                result.add(principal);
-            }
-        }
-        return result;
-    }
-
-    private List<Person> getEdunvalvojat(
-            fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
-        List<Person> result = new ArrayList<Person>();
-
-        if (sPerson.getEdunvalvonta() != null) {
-            List<EdunvalvojaHenkilo> henkiloedunvalvojat = sPerson.getEdunvalvonta().getEdunvalvojaHenkilo();
-            if (henkiloedunvalvojat != null) {
-                for (EdunvalvojaHenkilo p : henkiloedunvalvojat) {
-                    if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
-                        Person edunvalvoja = new Person();
-                        edunvalvoja.setHetu(p.getHetu().getValue());
-                        edunvalvoja.setBirthdate(p.getBirthday().getValue());
-                        edunvalvoja.setFirstNames(p.getFirstName().getFirstName().getValue());
-                        edunvalvoja.setLastName(p.getLastName().getValue());
-                        result.add(edunvalvoja);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    private List<Person> getEdunvalvontaValtuutetut(
-            fi.vm.kapa.rova.soap.vtj.model.Person sPerson) {
-        List<Person> result = new ArrayList<Person>();
-
-        if (sPerson.getEdunvalvontaValtuutus() != null) {
-            List<EdunvalvontaValtuutettuHenkilo> henkiloEdunvalvontaValtuutetut = sPerson.getEdunvalvontaValtuutus().getEdunvalvontaValtuutettuHenkilo();
-            if (henkiloEdunvalvontaValtuutetut != null) {
-                for (EdunvalvontaValtuutettuHenkilo p : henkiloEdunvalvontaValtuutetut) {
-                    if (p.getHetu().getValue() != null && p.getHetu().getValue().length() == HETU_LENGTH) {
-                        Person edunvalvontaValtuutettu = new Person();
-                        edunvalvontaValtuutettu.setHetu(p.getHetu().getValue());
-                        edunvalvontaValtuutettu.setBirthdate(p.getBirthday().getValue());
-                        edunvalvontaValtuutettu.setFirstNames(p.getFirstName().getFirstName().getValue());
-                        edunvalvontaValtuutettu.setLastName(p.getLastName().getValue());
-                        result.add(edunvalvontaValtuutettu);
-                    }
-                }
-            }
-        }
-        return result;
+    static void setLOG(Logger LOG) {
+        VTJService.LOG = LOG;
     }
 }
