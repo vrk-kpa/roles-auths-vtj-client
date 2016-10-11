@@ -64,7 +64,6 @@ public class PersonParserTest {
         assertEquals(true, person.isHetuValid());
 
         verify(soapPersonMock, hetuMock);
-        reset(soapPersonMock, hetuMock);
     }
 
     @Test
@@ -136,8 +135,6 @@ public class PersonParserTest {
 
         verify(soapPersonMock, firstNameMock, firstNameStringMock, lastNameMock, lastNameStringMock, nickNameMock,
                 nickNameStringMock);
-        reset(soapPersonMock, firstNameMock, firstNameStringMock, lastNameMock, lastNameStringMock, nickNameMock,
-                nickNameStringMock);
     }
 
     @Test
@@ -161,8 +158,6 @@ public class PersonParserTest {
         assertEquals(true, person.isDeceased());
 
         verify(soapPersonMock, deceasedMock, deceasedStringMock);
-        reset(soapPersonMock, deceasedMock, deceasedStringMock);
-
     }
 
     @Test
@@ -181,7 +176,6 @@ public class PersonParserTest {
         assertEquals(false, person.isDeceased());
 
         verify(soapPersonMock);
-        reset(soapPersonMock);
     }
 
     @Test
@@ -206,8 +200,6 @@ public class PersonParserTest {
         assertEquals(true, person.isHuostaanotettu());
 
         verify(soapPersonMock, huostaanottoMock, huostaanottoStringMock);
-        reset(soapPersonMock, huostaanottoMock, huostaanottoStringMock);
-
     }
 
     @Test
@@ -226,7 +218,6 @@ public class PersonParserTest {
         assertEquals(false, person.isHuostaanotettu());
 
         verify(soapPersonMock);
-        reset(soapPersonMock);
     }
 
     @Test
@@ -250,7 +241,6 @@ public class PersonParserTest {
         assertEquals(true, person.isTurvakielto());
 
         verify(soapPersonMock, TurvakieltoMock, TurvakieltoStringMock);
-        reset(soapPersonMock, TurvakieltoMock, TurvakieltoStringMock);
     }
 
     @Test
@@ -269,7 +259,6 @@ public class PersonParserTest {
         assertEquals(false, person.isTurvakielto());
 
         verify(soapPersonMock);
-        reset(soapPersonMock);
     }
 
     @Test
@@ -312,7 +301,6 @@ public class PersonParserTest {
         assertEquals(false, person.isEdunvalvonta());
 
         verify(soapPersonMock);
-        reset(soapPersonMock);
     }
 
     @Test
@@ -339,7 +327,6 @@ public class PersonParserTest {
         assertEquals(false, person.isEdunvalvontaJulistettu());
 
         verify(soapPersonMock, EdunvalvontaMock, rajoituskoodiStringMock);
-        reset(soapPersonMock, EdunvalvontaMock, rajoituskoodiStringMock);
     }
 
     @Test
@@ -392,7 +379,6 @@ public class PersonParserTest {
         assertEquals(true, person.isEdunvalvontaJulistettu());
 
         verify(soapPersonMock, EdunvalvontaMock, rajoituskoodiStringMock);
-        reset(soapPersonMock, EdunvalvontaMock, rajoituskoodiStringMock);
     }
 
     @Test
@@ -412,8 +398,6 @@ public class PersonParserTest {
         assertEquals(false, person.isEdunvalvontaRajoitettu());
         assertEquals(false, person.isEdunvalvontaJulistettu());
         verify(soapPersonMock);
-        reset(soapPersonMock);
-
     }
 
     @Test
@@ -428,7 +412,6 @@ public class PersonParserTest {
         parser.parseEdunvalvojat(soapPersonMock, person);
         assertEquals(0, person.getEdunvalvojat().size());
         verify(soapPersonMock);
-        reset(soapPersonMock);
     }
 
     @Test
@@ -512,9 +495,6 @@ public class PersonParserTest {
         }
         verify(soapPersonMock, edunvalvonta, e1, hetu1, firstNameMock1, firstNameStringMock1, lastName1, bDay1, e2,
                 hetu2, firstNameMock2, firstNameStringMock2, lastName2, bDay2);
-        reset(soapPersonMock, edunvalvonta, e1, hetu1, firstNameMock1, firstNameStringMock1, lastName1, bDay1, e2,
-                hetu2, firstNameMock2, firstNameStringMock2, lastName2, bDay2);
-
     }
 
     @Test
@@ -633,8 +613,6 @@ public class PersonParserTest {
         }
         verify(soapPersonMock, huoltaja1, hetu1, firstName1, lastName1, huoltotieto1, divisionCode1, huoltaja2, hetu2,
                 firstName2, lastName2, huoltotieto2, divisionCode2, huoltaja3, hetu3, firstName3, lastName3);
-        reset(soapPersonMock, huoltaja1, hetu1, firstName1, lastName1, huoltotieto1, divisionCode1, huoltaja2, hetu2,
-                firstName2, lastName2, huoltotieto2, divisionCode2, huoltaja3, hetu3, firstName3, lastName3);
     }
 
     @Test
@@ -649,8 +627,6 @@ public class PersonParserTest {
         parser.parsePrincipals(soapPersonMock, person);
         assertEquals(0, person.getPrincipals().size());
         verify(soapPersonMock);
-        reset(soapPersonMock);
-
     }
 
     @Test
@@ -714,7 +690,6 @@ public class PersonParserTest {
 
         }
         verify(soapPersonMock, p1, hetu1, firstName1, lastName1, p2, hetu2, firstName2, lastName2);
-        reset(soapPersonMock, p1, hetu1, firstName1, lastName1, p2, hetu2, firstName2, lastName2);
     }
 
     @Test
@@ -813,9 +788,6 @@ public class PersonParserTest {
 
         }
         verify(soapPersonMock, edunvalvontaValtuutus, e1, hetu1, firstNameMock1, firstNameStringMock1, lastName1, bDay1, e2,
-                hetu2, firstNameMock2, firstNameStringMock2, lastName2, bDay2);
-
-        reset(soapPersonMock, edunvalvontaValtuutus, e1, hetu1, firstNameMock1, firstNameStringMock1, lastName1, bDay1, e2,
                 hetu2, firstNameMock2, firstNameStringMock2, lastName2, bDay2);
     }
 
