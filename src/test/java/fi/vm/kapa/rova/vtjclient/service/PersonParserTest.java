@@ -499,11 +499,6 @@ public class PersonParserTest {
     }
 
     @Test
-    public void parseEdunvalvontaValtuutetutTest() {
-
-    }
-
-    @Test
     public void parseHuoltajatEmptyTest() {
         fi.vm.kapa.rova.soap.vtj.model.Person soapPersonMock = createMockBuilder(
                 fi.vm.kapa.rova.soap.vtj.model.Person.class).addMockedMethod("getHuoltaja").createMock();
