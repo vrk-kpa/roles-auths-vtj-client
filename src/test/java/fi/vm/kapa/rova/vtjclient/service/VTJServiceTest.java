@@ -80,7 +80,7 @@ public class VTJServiceTest {
         VTJService service = new VTJService();
         service.setClient(clientMock);
         service.setPersonParser(parserMock);
-        service.getVTJResponse(EasyMock.anyString(), EasyMock.anyString());
+        service.getVTJResponse("010180-111N", "ROV2");
 
         verify(clientMock, parserMock);
     }
