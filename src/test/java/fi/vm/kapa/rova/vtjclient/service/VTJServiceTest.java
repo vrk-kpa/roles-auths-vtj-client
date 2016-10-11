@@ -32,6 +32,7 @@ import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.createMock;;
 
 
 /**
@@ -43,12 +44,7 @@ public class VTJServiceTest {
     public void getVTJResponse() throws Exception {
         VTJResponseMessage responseMock = createMockBuilder(VTJResponseMessage.class).createNiceMock();
         VTJClient clientMock = createMockBuilder(VTJClient.class).addMockedMethod("getResponse").createMock();
-        PersonParser parserMock = createMockBuilder(PersonParser.class).addMockedMethod("parseHetu").addMockedMethod(
-                "parseIdentity").addMockedMethod("parseHuoltajat").addMockedMethod("parsePrincipals").addMockedMethod(
-                "parseEdunvalvontaTieto").addMockedMethod("parseEdunvalvontaRajoitusKoodi").addMockedMethod(
-                "parseEdunvalvojat").addMockedMethod("parseEdunvalvontaValtuutetut").addMockedMethod(
-                "parseTurvakielto").addMockedMethod("parseHuostaanotto").addMockedMethod(
-                "parseIsDeceased").createMock();
+        PersonParser parserMock = createMock(PersonParser.class);
 
         expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(responseMock).once();
 
@@ -80,7 +76,7 @@ public class VTJServiceTest {
         VTJService service = new VTJService();
         service.setClient(clientMock);
         service.setPersonParser(parserMock);
-        service.getVTJResponse("010180-111N", "ROV2");
+        service.getVTJResponse("HETU", "SCHEMA");
 
         verify(clientMock, parserMock);
     }
