@@ -27,25 +27,22 @@ import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import static org.easymock.EasyMock.createMockBuilder;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.createMock;;
 
-
 /**
  * Created by Juha Korkalainen on 10/7/16.
  */
 public class VTJServiceTest {
+    VTJResponseMessage responseMock = createMock(VTJResponseMessage.class);
+    VTJClient clientMock = createMock(VTJClient.class);
+    PersonParser parserMock = createMock(PersonParser.class);
 
     @Test
     public void getVTJResponse() throws Exception {
-        VTJResponseMessage responseMock = createMockBuilder(VTJResponseMessage.class).createNiceMock();
-        VTJClient clientMock = createMockBuilder(VTJClient.class).addMockedMethod("getResponse").createMock();
-        PersonParser parserMock = createMock(PersonParser.class);
-
         expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(responseMock).once();
 
         parserMock.parseHetu(EasyMock.anyObject(), EasyMock.anyObject());
