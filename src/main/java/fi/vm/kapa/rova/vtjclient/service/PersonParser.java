@@ -121,19 +121,21 @@ public class PersonParser {
 
         if (huoltajat != null) {
             for (Huoltaja g : huoltajat) {
-                Person huoltaja = new Person();
-                huoltaja.setHetu(g.getId().getValue());
-                huoltaja.setFirstNames(g.getFirstNames().getValue());
-                huoltaja.setLastName(g.getLastName().getValue());
-                Huoltotieto huoltotieto = g.getHuoltotieto();
-                if (huoltotieto != null) {
-                    StringNode custodyDivisionCode = huoltotieto.getCustodyDivisionCode();
-                    if (custodyDivisionCode != null && custodyDivisionCode.getValue() != null) {
-                        huoltaja.setHuollonjakoSopimus(custodyDivisionCode.getValue().equalsIgnoreCase("2"));
-                        huoltaja.setHuollonjakoMaarays(custodyDivisionCode.getValue().equalsIgnoreCase("1"));
+                if (!StringUtils.isBlank(g.getId().getValue())) {
+                    Person huoltaja = new Person();
+                    huoltaja.setHetu(g.getId().getValue());
+                    huoltaja.setFirstNames(g.getFirstNames().getValue());
+                    huoltaja.setLastName(g.getLastName().getValue());
+                    Huoltotieto huoltotieto = g.getHuoltotieto();
+                    if (huoltotieto != null) {
+                        StringNode custodyDivisionCode = huoltotieto.getCustodyDivisionCode();
+                        if (custodyDivisionCode != null && custodyDivisionCode.getValue() != null) {
+                            huoltaja.setHuollonjakoSopimus(custodyDivisionCode.getValue().equalsIgnoreCase("2"));
+                            huoltaja.setHuollonjakoMaarays(custodyDivisionCode.getValue().equalsIgnoreCase("1"));
+                        }
                     }
+                    result.add(huoltaja);
                 }
-                result.add(huoltaja);
             }
         }
         person.setHuoltajat(result);

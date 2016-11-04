@@ -568,8 +568,8 @@ public class PersonParserTest {
         expect(soapPersonMock.getHuoltaja()).andReturn(huoltajat).once();
         expect(huoltajaFirstName1.getValue()).andReturn("firstName1").once();
         expect(huoltajaLastName1.getValue()).andReturn("lastName1").once();
-        expect(huoltajaHetu1.getValue()).andReturn("hetu1").once();
-        expect(huoltaja1.getId()).andReturn(huoltajaHetu1).once();
+        expect(huoltajaHetu1.getValue()).andReturn("hetu1").times(2);
+        expect(huoltaja1.getId()).andReturn(huoltajaHetu1).times(2);
         expect(huoltaja1.getFirstNames()).andReturn(huoltajaFirstName1).once();
         expect(huoltaja1.getLastName()).andReturn(huoltajaLastName1).once();
         expect(huoltaja1.getHuoltotieto()).andReturn(huoltotieto1).once();
@@ -578,8 +578,8 @@ public class PersonParserTest {
 
         expect(huoltajaFirstName2.getValue()).andReturn("firstName2").once();
         expect(huoltajaLastName2.getValue()).andReturn("lastName2").once();
-        expect(huoltajaHetu2.getValue()).andReturn("hetu2").once();
-        expect(huoltaja2.getId()).andReturn(huoltajaHetu2).once();
+        expect(huoltajaHetu2.getValue()).andReturn("hetu2").times(2);
+        expect(huoltaja2.getId()).andReturn(huoltajaHetu2).times(2);
         expect(huoltaja2.getFirstNames()).andReturn(huoltajaFirstName2).once();
         expect(huoltaja2.getLastName()).andReturn(huoltajaLastName2).once();
         expect(huoltaja2.getHuoltotieto()).andReturn(huoltotieto2).once();
@@ -588,8 +588,8 @@ public class PersonParserTest {
 
         expect(huoltajaFirstName3.getValue()).andReturn("firstName3").once();
         expect(huoltajaLastName3.getValue()).andReturn("lastName3").once();
-        expect(huoltajaHetu3.getValue()).andReturn("hetu3").once();
-        expect(huoltaja3.getId()).andReturn(huoltajaHetu3).once();
+        expect(huoltajaHetu3.getValue()).andReturn("hetu3").times(2);
+        expect(huoltaja3.getId()).andReturn(huoltajaHetu3).times(2);
         expect(huoltaja3.getFirstNames()).andReturn(huoltajaFirstName3).once();
         expect(huoltaja3.getLastName()).andReturn(huoltajaLastName3).once();
         expect(huoltaja3.getHuoltotieto()).andReturn(null).once();
