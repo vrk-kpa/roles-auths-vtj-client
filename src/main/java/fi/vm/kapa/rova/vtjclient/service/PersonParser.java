@@ -25,6 +25,7 @@ package fi.vm.kapa.rova.vtjclient.service;
 import fi.vm.kapa.rova.external.model.vtj.Person;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.model.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -162,7 +163,7 @@ public class PersonParser {
             List<EdunvalvojaHenkilo> henkiloedunvalvojat = sPerson.getEdunvalvonta().getEdunvalvojaHenkilo();
             if (henkiloedunvalvojat != null) {
                 for (EdunvalvojaHenkilo p : henkiloedunvalvojat) {
-                    if (p.getHetu().getValue() != null) {
+                    if (!StringUtils.isBlank(p.getHetu().getValue())) {
                         Person edunvalvoja = new Person();
                         edunvalvoja.setHetu(p.getHetu().getValue());
                         edunvalvoja.setBirthdate(p.getBirthday().getValue());
@@ -184,7 +185,7 @@ public class PersonParser {
             List<EdunvalvontaValtuutettuHenkilo> henkiloEdunvalvontaValtuutetut = sPerson.getEdunvalvontaValtuutus().getEdunvalvontaValtuutettuHenkilo();
             if (henkiloEdunvalvontaValtuutetut != null) {
                 for (EdunvalvontaValtuutettuHenkilo p : henkiloEdunvalvontaValtuutetut) {
-                    if (p.getHetu().getValue() != null) {
+                    if (!StringUtils.isBlank(p.getHetu().getValue())) {
                         Person edunvalvontaValtuutettu = new Person();
                         edunvalvontaValtuutettu.setHetu(p.getHetu().getValue());
                         edunvalvontaValtuutettu.setBirthdate(p.getBirthday().getValue());
