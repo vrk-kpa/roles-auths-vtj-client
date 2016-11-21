@@ -148,11 +148,13 @@ public class PersonParser {
 
         if (principals != null) {
             for (Principal p : principals) {
-                Person principal = new Person();
-                principal.setHetu(p.getId().getValue());
-                principal.setFirstNames(p.getFirstNames().getValue());
-                principal.setLastName(p.getLastName().getValue());
-                result.add(principal);
+                if (!StringUtils.isBlank(p.getId().getValue())) {
+                    Person principal = new Person();
+                    principal.setHetu(p.getId().getValue());
+                    principal.setFirstNames(p.getFirstNames().getValue());
+                    principal.setLastName(p.getLastName().getValue());
+                    result.add(principal);
+                }
             }
         }
         person.setPrincipals(result);
