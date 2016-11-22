@@ -654,11 +654,14 @@ public class PersonParserTest {
     @Test
     public void parsePrincipalsMultipleTest() {
 
-        List<Principal> principals = new ArrayList();
+        List<Principal> principals = new ArrayList<>();
         principals.add(principal1);
         principals.add(principal2);
 
         expect(soapPersonMock.getPrincipal()).andReturn(principals).once();
+
+        expect(principal1.getId()).andReturn(principalHetu1).once();
+        expect(principalHetu1.getValue()).andReturn("hetu1").once();
 
         expect(principal1.getId()).andReturn(principalHetu1).once();
         expect(principalHetu1.getValue()).andReturn("hetu1").once();
@@ -669,7 +672,10 @@ public class PersonParserTest {
         expect(principal1.getLastName()).andReturn(principalLastName1).once();
         expect(principalLastName1.getValue()).andReturn("lastName1").once();
 
-        expect(principal2.getId()).andReturn(principalHetu2);
+        expect(principal2.getId()).andReturn(principalHetu2).once();
+        expect(principalHetu2.getValue()).andReturn("hetu2").once();
+
+        expect(principal2.getId()).andReturn(principalHetu2).once();
         expect(principalHetu2.getValue()).andReturn("hetu2").once();
 
         expect(principal2.getFirstNames()).andReturn(principalFirstName2).once();
