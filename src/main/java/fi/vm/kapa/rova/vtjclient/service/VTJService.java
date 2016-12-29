@@ -22,19 +22,17 @@
  */
 package fi.vm.kapa.rova.vtjclient.service;
 
+import static fi.vm.kapa.rova.logging.Logger.Field.DURATION;
+import static fi.vm.kapa.rova.logging.Logger.Field.OPERATION;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import fi.vm.kapa.rova.external.model.vtj.Person;
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
-import fi.vm.kapa.rova.soap.vtj.model.*;
+import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.xml.bind.JAXBException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static fi.vm.kapa.rova.logging.Logger.Field.*;
 
 @Service
 public class VTJService {
@@ -50,34 +48,50 @@ public class VTJService {
     public VTJResponse getVTJResponse(String hetu, String schema) throws VTJServiceException {
         Person person = null;
         VTJResponse vtjResponse = new VTJResponse(); // person == null & success == false as default
-        
-        long startTime = System.currentTimeMillis();
 
-        VTJResponseMessage response = null;
         try {
-            response = client.getResponse(hetu, schema);
-        } catch (JAXBException e) {
+            long startTime = System.currentTimeMillis();
+
+            VTJResponseMessage response = client.getResponse(hetu, schema);
+            
+            logVTJRequest(schema, startTime, System.currentTimeMillis());
+
+            fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
+            
+            if (sPerson != null) {
+                try {
+                    person = new Person();
+                    personParser.parseHetu(sPerson, person);
+                    personParser.parseIdentity(sPerson, person);
+                    personParser.parseHuoltajat(sPerson, person);
+                    personParser.parsePrincipals(sPerson, person);
+                    personParser.parseEdunvalvontaTieto(sPerson, person);
+                    personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
+                    personParser.parseEdunvalvojat(sPerson, person);
+                    personParser.parseEdunvalvontaValtuutetut(sPerson, person);
+                    personParser.parseTurvakielto(sPerson, person);
+                    personParser.parseHuostaanotto(sPerson, person);
+                    personParser.parseIsDeceased(sPerson, person);
+                    LOG.debug("Parsed fromSoapMessage: person=" + person);
+                    vtjResponse.setPerson(person);
+                    vtjResponse.setSuccess(true);
+                } catch (Exception e) {
+                    throw new VTJServiceException("Person parsing failed reason: " + e.getMessage(), e);
+                }
+
+            } else {
+                String faultMsg;
+                if (!isBlank(response.getFaultCode())) {
+                    faultMsg = response.getFaultCode() +" "+ response.getFaultString();
+                } else {
+                    faultMsg = "Unknown reason"; // shouldn't happen
+                }
+                throw new VTJServiceException(faultMsg, new RuntimeException(faultMsg));
+            }
+
+        } catch (Exception e) {
             throw new VTJServiceException("VTJ request failed: " + e.getMessage(), e);
         }
-
-        logVTJRequest(schema, startTime, System.currentTimeMillis());
-
-        fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
-        person = new Person();
-        personParser.parseHetu(sPerson, person);
-        personParser.parseIdentity(sPerson, person);
-        personParser.parseHuoltajat(sPerson, person);
-        personParser.parsePrincipals(sPerson, person);
-        personParser.parseEdunvalvontaTieto(sPerson, person);
-        personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
-        personParser.parseEdunvalvojat(sPerson, person);
-        personParser.parseEdunvalvontaValtuutetut(sPerson, person);
-        personParser.parseTurvakielto(sPerson, person);
-        personParser.parseHuostaanotto(sPerson, person);
-        personParser.parseIsDeceased(sPerson, person);
-        LOG.debug("Parsed fromSoapMessage: person=" + person);
-        vtjResponse.setPerson(person);
-        vtjResponse.setSuccess(true);
 
         return vtjResponse;
     }

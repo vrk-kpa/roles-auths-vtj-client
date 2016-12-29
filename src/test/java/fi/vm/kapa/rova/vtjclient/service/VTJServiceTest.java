@@ -23,6 +23,7 @@
 package fi.vm.kapa.rova.vtjclient.service;
 
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
+import fi.vm.kapa.rova.soap.vtj.model.Person;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -43,6 +44,8 @@ public class VTJServiceTest {
 
     @Test
     public void getVTJResponse() throws Exception {
+    	Person sPerson = new Person();
+    	expect(responseMock.getPerson()).andReturn(sPerson);
         expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(responseMock).once();
 
         parserMock.parseHetu(EasyMock.anyObject(), EasyMock.anyObject());
@@ -68,13 +71,42 @@ public class VTJServiceTest {
         parserMock.parseIsDeceased(EasyMock.anyObject(), EasyMock.anyObject());
         expectLastCall();
 
-        replay(clientMock, parserMock);
+        replay(clientMock, parserMock, responseMock);
 
         VTJService service = new VTJService();
         service.setClient(clientMock);
         service.setPersonParser(parserMock);
         service.getVTJResponse("HETU", "SCHEMA");
 
-        verify(clientMock, parserMock);
+        verify(clientMock, parserMock, responseMock);
+    }
+
+    @Test(expected = VTJServiceException.class)
+    public void getVTJFaultFound() throws Exception {
+        VTJResponseMessage faultResponseMock = createMock(VTJResponseMessage.class);
+        expect(faultResponseMock.getPerson()).andReturn(null).once();
+        expect(faultResponseMock.getFaultCode()).andReturn("1234").times(2);
+        expect(faultResponseMock.getFaultString()).andReturn("VTJ-kutsu hylätty").once();
+        expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(faultResponseMock).once();
+
+        replay(clientMock, faultResponseMock);
+
+        VTJService service = new VTJService();
+        service.setClient(clientMock);
+        service.getVTJResponse("HETU", "SCHEMA");
+    }
+
+    @Test(expected = VTJServiceException.class)
+    public void getVTJFaultNotFound() throws Exception {
+        VTJResponseMessage faultResponseMock = createMock(VTJResponseMessage.class);
+        expect(faultResponseMock.getPerson()).andReturn(null).once();
+        expect(faultResponseMock.getFaultCode()).andReturn(null).once();
+        expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(faultResponseMock).once();
+
+        replay(clientMock, faultResponseMock);
+
+        VTJService service = new VTJService();
+        service.setClient(clientMock);
+        service.getVTJResponse("HETU", "SCHEMA");
     }
 }
