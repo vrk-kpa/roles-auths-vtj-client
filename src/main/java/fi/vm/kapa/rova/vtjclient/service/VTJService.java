@@ -30,6 +30,7 @@ import fi.vm.kapa.rova.soap.vtj.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,38 +51,34 @@ public class VTJService {
         Person person = null;
         VTJResponse vtjResponse = new VTJResponse(); // person == null & success == false as default
         
+        long startTime = System.currentTimeMillis();
+
+        VTJResponseMessage response = null;
         try {
-            long startTime = System.currentTimeMillis();
-
-            VTJResponseMessage response = client.getResponse(hetu, schema);
-            
-            logVTJRequest(schema, startTime, System.currentTimeMillis());
-
-            try {
-                fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
-                person = new Person();
-                personParser.parseHetu(sPerson, person);
-                personParser.parseIdentity(sPerson, person);
-                personParser.parseHuoltajat(sPerson, person);
-                personParser.parsePrincipals(sPerson, person);
-                personParser.parseEdunvalvontaTieto(sPerson, person);
-                personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
-                personParser.parseEdunvalvojat(sPerson, person);
-                personParser.parseEdunvalvontaValtuutetut(sPerson, person);
-                personParser.parseTurvakielto(sPerson, person);
-                personParser.parseHuostaanotto(sPerson, person);
-                personParser.parseIsDeceased(sPerson, person);
-                LOG.debug("Parsed fromSoapMessage: person=" + person);
-                vtjResponse.setPerson(person);
-                vtjResponse.setSuccess(true);
-            } catch (Exception e) {
-                throw new VTJServiceException("Person parsing failed reason: " + e.getMessage(), e);
-            }
-            
-        } catch (Exception e) {
+            response = client.getResponse(hetu, schema);
+        } catch (JAXBException e) {
             throw new VTJServiceException("VTJ request failed: " + e.getMessage(), e);
         }
-        
+
+        logVTJRequest(schema, startTime, System.currentTimeMillis());
+
+        fi.vm.kapa.rova.soap.vtj.model.Person sPerson = response.getPerson();
+        person = new Person();
+        personParser.parseHetu(sPerson, person);
+        personParser.parseIdentity(sPerson, person);
+        personParser.parseHuoltajat(sPerson, person);
+        personParser.parsePrincipals(sPerson, person);
+        personParser.parseEdunvalvontaTieto(sPerson, person);
+        personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);
+        personParser.parseEdunvalvojat(sPerson, person);
+        personParser.parseEdunvalvontaValtuutetut(sPerson, person);
+        personParser.parseTurvakielto(sPerson, person);
+        personParser.parseHuostaanotto(sPerson, person);
+        personParser.parseIsDeceased(sPerson, person);
+        LOG.debug("Parsed fromSoapMessage: person=" + person);
+        vtjResponse.setPerson(person);
+        vtjResponse.setSuccess(true);
+
         return vtjResponse;
     }
 

@@ -20,16 +20,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fi.vm.kapa.rova.vtjclient.service;
+package fi.vm.kapa.rova.soap.vtj.model;
 
-public class VTJServiceException extends Exception {
-    private static final long serialVersionUID = 1L;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
-    public VTJServiceException(String msg) {
-        super(msg);
+@XmlRootElement(name = "faultString", namespace = "http://xml.vrk.fi/ws/vtj/vtjkysely/1")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class faultString {
+
+    @XmlValue
+    private String value;
+
+    public String getValue() {
+        return value;
     }
 
-    public VTJServiceException(String msg, Throwable t) {
-        super(msg, t);
+    public void setValue(String value) {
+        this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "faultCode [value=" + value + "]";
+    }
+
 }

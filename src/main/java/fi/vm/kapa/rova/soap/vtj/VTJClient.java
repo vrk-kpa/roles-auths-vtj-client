@@ -25,7 +25,11 @@ package fi.vm.kapa.rova.soap.vtj;
 import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
+import fi.vm.kapa.rova.soap.vtj.model.StringNode;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
+import fi.vm.kapa.rova.soap.vtj.model.faultCode;
+import fi.vm.kapa.rova.soap.vtj.model.faultString;
+import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 import fi.vrk.xml.ws.vtj.vtjkysely._1.HenkiloTunnusKyselyReqBodyTiedot;
 import fi.vrk.xml.ws.vtj.vtjkysely._1.HenkiloTunnusKyselyResType;
 import fi.vrk.xml.ws.vtj.vtjkysely._1.ISoSoAdapterService60;
@@ -39,6 +43,7 @@ import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.ws.Holder;
 import java.util.List;
@@ -54,7 +59,6 @@ public class VTJClient implements SpringPropertyNames {
     @Autowired
     ISoSoAdapterService60 vtjClient;
 
-
     @Value(VTJ_USERNAME)
     private String vtjUsername;
     @Value(VTJ_PASSWORD)
@@ -64,7 +68,7 @@ public class VTJClient implements SpringPropertyNames {
 
     private static Logger LOG = Logger.getLogger(VTJClient.class);
 
-    public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException {
+    public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException, VTJServiceException {
         LOG.debug("VTJClient.getResponse() starts");
         ISoSoAdapterService60 iService = vtjClient;
 
@@ -91,11 +95,19 @@ public class VTJClient implements SpringPropertyNames {
         resType = response.value;
         List<Object> list = resType.getAny();
         if (list != null && !list.isEmpty()) {
-            JAXBContext context = JAXBContext
-                    .newInstance(VTJResponseMessage.class);
+            JAXBContext context = JAXBContext.newInstance(VTJResponseMessage.class);
             Unmarshaller um = context.createUnmarshaller();
             um.setEventHandler(new CustomValidationEventHandler());
-            result =  (VTJResponseMessage) um.unmarshal((Node) list.get(0));
+            try {
+                result = (VTJResponseMessage) um.unmarshal((Node) list.get(0));
+            } catch (UnmarshalException e) {
+                JAXBContext errorContext = JAXBContext.newInstance(faultCode.class, faultString.class);
+                faultCode code = (faultCode) errorContext.createUnmarshaller()
+                        .unmarshal((Node) list.get(0));
+                faultString string = (faultString) errorContext.createUnmarshaller()
+                        .unmarshal((Node) list.get(1));
+                throw new VTJServiceException(code.toString() + " " + string.toString());
+            }
         }
         return result;
     }
