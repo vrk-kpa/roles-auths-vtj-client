@@ -44,8 +44,8 @@ public class VTJServiceTest {
 
     @Test
     public void getVTJResponse() throws Exception {
-    	Person sPerson = new Person();
-    	expect(responseMock.getPerson()).andReturn(sPerson);
+        Person sPerson = new Person();
+        expect(responseMock.getPerson()).andReturn(sPerson);
         expect(clientMock.getResponse(EasyMock.anyString(), EasyMock.anyString())).andReturn(responseMock).once();
 
         parserMock.parseHetu(EasyMock.anyObject(), EasyMock.anyObject());
