@@ -133,6 +133,12 @@ public class PersonParser {
                             huoltaja.setHuollonjakoSopimus(custodyDivisionCode.getValue().equalsIgnoreCase("2"));
                             huoltaja.setHuollonjakoMaarays(custodyDivisionCode.getValue().equalsIgnoreCase("1"));
                         }
+                        StringNode custodyDivisionCode2 = huoltotieto.getCustodyDivisionCode2();
+                        if (custodyDivisionCode2 != null && custodyDivisionCode2.getValue() != null) {
+                            huoltaja.setHuollonjakoSopimus(custodyDivisionCode2.getValue().equalsIgnoreCase("2"));
+                            huoltaja.setHuollonjakoMaarays(custodyDivisionCode2.getValue().equalsIgnoreCase("1"));
+                            huoltaja.setHuollonjakoVainAsumisenOsalta(custodyDivisionCode2.getValue().equalsIgnoreCase("3"));
+                        }
                     }
                     result.add(huoltaja);
                 }

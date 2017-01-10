@@ -77,6 +77,7 @@ public class PersonParserTest {
     private StringNode huoltajaLastName1;
     private Huoltotieto huoltotieto1;
     private StringNode divisionCode1;
+    private StringNode divisionCode21;
 
     private Huoltaja huoltaja2;
     private StringNode huoltajaHetu2;
@@ -84,11 +85,20 @@ public class PersonParserTest {
     private StringNode huoltajaLastName2;
     private Huoltotieto huoltotieto2;
     private StringNode divisionCode2;
+    private StringNode divisionCode22;
 
     private Huoltaja huoltaja3;
     private StringNode huoltajaHetu3;
     private StringNode huoltajaFirstName3;
     private StringNode huoltajaLastName3;
+
+    private Huoltaja huoltaja4;
+    private StringNode huoltajaHetu4;
+    private StringNode huoltajaFirstName4;
+    private StringNode huoltajaLastName4;
+    private Huoltotieto huoltotieto4;
+    private StringNode divisionCode4;
+    private StringNode divisionCode24;
 
     private EdunvalvontaValtuutus edunvalvontaValtuutus;
     private StringNode eduvalvontaRajoituskoodiStringMock;
@@ -158,6 +168,7 @@ public class PersonParserTest {
         huoltajaLastName1 = createMock(StringNode.class);
         huoltotieto1 = createMock(Huoltotieto.class);
         divisionCode1 = createMock(StringNode.class);
+        divisionCode21 = createMock(StringNode.class);
 
         huoltaja2 = createMock(Huoltaja.class);
         huoltajaHetu2 = createMock(StringNode.class);
@@ -165,11 +176,20 @@ public class PersonParserTest {
         huoltajaLastName2 = createMock(StringNode.class);
         huoltotieto2 = createMock(Huoltotieto.class);
         divisionCode2 = createMock(StringNode.class);
+        divisionCode22 = createMock(StringNode.class);
 
         huoltaja3 = createMock(Huoltaja.class);
         huoltajaHetu3 = createMock(StringNode.class);
         huoltajaFirstName3 = createMock(StringNode.class);
         huoltajaLastName3 = createMock(StringNode.class);
+
+        huoltaja4 = createMock(Huoltaja.class);
+        huoltajaHetu4 = createMock(StringNode.class);
+        huoltajaFirstName4 = createMock(StringNode.class);
+        huoltajaLastName4 = createMock(StringNode.class);
+        huoltotieto4 = createMock(Huoltotieto.class);
+        divisionCode4 = createMock(StringNode.class);
+        divisionCode24 = createMock(StringNode.class);
 
         edunvalvontaValtuutus = createMock(EdunvalvontaValtuutus.class);
         eduvalvontaRajoituskoodiStringMock = createMock(StringNode.class);
@@ -574,6 +594,7 @@ public class PersonParserTest {
         expect(huoltaja1.getLastName()).andReturn(huoltajaLastName1).once();
         expect(huoltaja1.getHuoltotieto()).andReturn(huoltotieto1).once();
         expect(huoltotieto1.getCustodyDivisionCode()).andReturn(divisionCode1).once();
+        expect(huoltotieto1.getCustodyDivisionCode2()).andReturn(null).once();
         expect(divisionCode1.getValue()).andReturn("1").times(3);
 
         expect(huoltajaFirstName2.getValue()).andReturn("firstName2").once();
@@ -583,6 +604,7 @@ public class PersonParserTest {
         expect(huoltaja2.getFirstNames()).andReturn(huoltajaFirstName2).once();
         expect(huoltaja2.getLastName()).andReturn(huoltajaLastName2).once();
         expect(huoltaja2.getHuoltotieto()).andReturn(huoltotieto2).once();
+        expect(huoltotieto2.getCustodyDivisionCode2()).andReturn(null).once();
         expect(huoltotieto2.getCustodyDivisionCode()).andReturn(divisionCode2).once();
         expect(divisionCode2.getValue()).andReturn("2").times(3);
 
@@ -617,6 +639,7 @@ public class PersonParserTest {
                     assertEquals("lastName1", h.getLastName());
                     assertEquals(true, h.isHuollonjakoMaarays());
                     assertEquals(false, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
                     break;
                 }
                 case 1: {
@@ -625,6 +648,7 @@ public class PersonParserTest {
                     assertEquals("lastName2", h.getLastName());
                     assertEquals(false, h.isHuollonjakoMaarays());
                     assertEquals(true, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
                     break;
                 }
                 case 2: {
@@ -633,12 +657,125 @@ public class PersonParserTest {
                     assertEquals("lastName3", h.getLastName());
                     assertEquals(false, h.isHuollonjakoMaarays());
                     assertEquals(false, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
                     break;
                 }
             }
 
         }
     }
+
+    @Test
+    public void parseHuoltajatMultipleHuollonjakokoodi2Test() {
+        List<Huoltaja> huoltajat = new ArrayList();
+        huoltajat.add(huoltaja1);
+        huoltajat.add(huoltaja2);
+        huoltajat.add(huoltaja3);
+        huoltajat.add(huoltaja4);
+
+        expect(soapPersonMock.getHuoltaja()).andReturn(huoltajat).once();
+        expect(huoltajaFirstName1.getValue()).andReturn("firstName1").once();
+        expect(huoltajaLastName1.getValue()).andReturn("lastName1").once();
+        expect(huoltajaHetu1.getValue()).andReturn("hetu1").times(2);
+        expect(huoltaja1.getId()).andReturn(huoltajaHetu1).times(2);
+        expect(huoltaja1.getFirstNames()).andReturn(huoltajaFirstName1).once();
+        expect(huoltaja1.getLastName()).andReturn(huoltajaLastName1).once();
+        expect(huoltaja1.getHuoltotieto()).andReturn(huoltotieto1).once();
+        expect(huoltotieto1.getCustodyDivisionCode()).andReturn(null).once();
+        expect(huoltotieto1.getCustodyDivisionCode2()).andReturn(divisionCode21).once();
+        expect(divisionCode21.getValue()).andReturn("1").times(4);
+
+        expect(huoltajaFirstName2.getValue()).andReturn("firstName2").once();
+        expect(huoltajaLastName2.getValue()).andReturn("lastName2").once();
+        expect(huoltajaHetu2.getValue()).andReturn("hetu2").times(2);
+        expect(huoltaja2.getId()).andReturn(huoltajaHetu2).times(2);
+        expect(huoltaja2.getFirstNames()).andReturn(huoltajaFirstName2).once();
+        expect(huoltaja2.getLastName()).andReturn(huoltajaLastName2).once();
+        expect(huoltaja2.getHuoltotieto()).andReturn(huoltotieto2).once();
+        expect(huoltotieto2.getCustodyDivisionCode()).andReturn(null).once();
+        expect(huoltotieto2.getCustodyDivisionCode2()).andReturn(divisionCode22).once();
+        expect(divisionCode22.getValue()).andReturn("2").times(4);
+
+        expect(huoltajaFirstName3.getValue()).andReturn("firstName3").once();
+        expect(huoltajaLastName3.getValue()).andReturn("lastName3").once();
+        expect(huoltajaHetu3.getValue()).andReturn("hetu3").times(2);
+        expect(huoltaja3.getId()).andReturn(huoltajaHetu3).times(2);
+        expect(huoltaja3.getFirstNames()).andReturn(huoltajaFirstName3).once();
+        expect(huoltaja3.getLastName()).andReturn(huoltajaLastName3).once();
+        expect(huoltaja3.getHuoltotieto()).andReturn(null).once();
+
+        expect(huoltajaFirstName4.getValue()).andReturn("firstName4").once();
+        expect(huoltajaLastName4.getValue()).andReturn("lastName4").once();
+        expect(huoltajaHetu4.getValue()).andReturn("hetu4").times(2);
+        expect(huoltaja4.getId()).andReturn(huoltajaHetu4).times(2);
+        expect(huoltaja4.getFirstNames()).andReturn(huoltajaFirstName4).once();
+        expect(huoltaja4.getLastName()).andReturn(huoltajaLastName4).once();
+        expect(huoltaja4.getHuoltotieto()).andReturn(huoltotieto4).once();
+        expect(huoltotieto4.getCustodyDivisionCode()).andReturn(null).once();
+        expect(huoltotieto4.getCustodyDivisionCode2()).andReturn(divisionCode24).once();
+        expect(divisionCode24.getValue()).andReturn("3").times(4);
+
+        replay(soapPersonMock, huoltaja1, huoltajaHetu1, huoltajaFirstName1, huoltajaLastName1, huoltotieto1,
+                divisionCode21, huoltaja2, huoltajaHetu2, huoltajaFirstName2, huoltajaLastName2, huoltotieto2,
+                divisionCode22, huoltaja3, huoltajaHetu3, huoltajaFirstName3, huoltajaLastName3,
+                huoltaja4, huoltajaHetu4, huoltajaFirstName4, huoltajaLastName4, huoltotieto4,
+                divisionCode24);
+
+        PersonParser parser = new PersonParser();
+        Person person = new Person();
+        parser.parseHuoltajat(soapPersonMock, person);
+
+        verify(soapPersonMock, huoltaja1, huoltajaHetu1, huoltajaFirstName1, huoltajaLastName1, huoltotieto1,
+                divisionCode21, huoltaja2, huoltajaHetu2, huoltajaFirstName2, huoltajaLastName2, huoltotieto2,
+                divisionCode22, huoltaja3, huoltajaHetu3, huoltajaFirstName3, huoltajaLastName3,
+                huoltaja4, huoltajaHetu4, huoltajaFirstName4, huoltajaLastName4, huoltotieto4,
+                divisionCode24);
+
+        assertEquals(4, person.getHuoltajat().size());
+        for (int i = 0; i < person.getHuoltajat().size(); i++) {
+            Person h = person.getHuoltajat().get(i);
+            switch (i) {
+                case 0: {
+                    assertEquals("hetu1", h.getHetu());
+                    assertEquals("firstName1", h.getFirstNames());
+                    assertEquals("lastName1", h.getLastName());
+                    assertEquals(true, h.isHuollonjakoMaarays());
+                    assertEquals(false, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
+                    break;
+                }
+                case 1: {
+                    assertEquals("hetu2", h.getHetu());
+                    assertEquals("firstName2", h.getFirstNames());
+                    assertEquals("lastName2", h.getLastName());
+                    assertEquals(false, h.isHuollonjakoMaarays());
+                    assertEquals(true, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
+                    break;
+                }
+                case 2: {
+                    assertEquals("hetu3", h.getHetu());
+                    assertEquals("firstName3", h.getFirstNames());
+                    assertEquals("lastName3", h.getLastName());
+                    assertEquals(false, h.isHuollonjakoMaarays());
+                    assertEquals(false, h.isHuollonjakoSopimus());
+                    assertEquals(false, h.isHuollonjakoVainAsumisenOsalta());
+                    break;
+                }
+                case 3: {
+                    assertEquals("hetu4", h.getHetu());
+                    assertEquals("firstName4", h.getFirstNames());
+                    assertEquals("lastName4", h.getLastName());
+                    assertEquals(false, h.isHuollonjakoMaarays());
+                    assertEquals(false, h.isHuollonjakoSopimus());
+                    assertEquals(true, h.isHuollonjakoVainAsumisenOsalta());
+                    break;
+                }
+            }
+
+        }
+    }
+
 
     @Test
     public void parsePrincipalsEmptyTest() {

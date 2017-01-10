@@ -34,6 +34,9 @@ public class Huoltotieto {
     @XmlElement(name = "Huollonjakokoodi")
     private StringNode custodyDivisionCode;
 
+    @XmlElement(name = "Huollonjakokoodi2")
+    private StringNode custodyDivisionCode2;
+
     public StringNode getCustodyDivisionCode() {
         return custodyDivisionCode;
     }
@@ -42,10 +45,20 @@ public class Huoltotieto {
         this.custodyDivisionCode = custodyDivisionCode;
     }
 
+    public StringNode getCustodyDivisionCode2() {
+        return custodyDivisionCode2;
+    }
+
+    public void setCustodyDivisionCode2(StringNode custodyDivisionCode2) {
+        this.custodyDivisionCode2 = custodyDivisionCode2;
+    }
+
     @Override
     public String toString() {
-        return "CustodyInformation [custodyDivisionCode=" + custodyDivisionCode
-                + "]";
+        return "Huoltotieto{" +
+                "custodyDivisionCode=" + custodyDivisionCode +
+                ", custodyDivisionCode2=" + custodyDivisionCode2 +
+                '}';
     }
 
 }
