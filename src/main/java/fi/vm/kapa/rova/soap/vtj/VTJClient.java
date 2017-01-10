@@ -83,7 +83,7 @@ public class VTJClient implements SpringPropertyNames {
         context = JAXBContext.newInstance(VTJResponseMessage.class);
     }
 
-    public VTJResponseMessage getResponse(String hetu, String schema) throws JAXBException, VTJServiceException {
+    public VTJResponseMessage getResponse(String hetu, String schema) {
         LOG.debug("VTJClient.getResponse() starts");
         ISoSoAdapterService60 iService = vtjClient;
 
