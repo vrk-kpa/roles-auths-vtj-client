@@ -22,11 +22,7 @@
  */
 package fi.vm.kapa.rova.soap.vtj.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "VTJHenkiloVastaussanoma", namespace = "http://xml.vrk.fi/schema/vtjkysely")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -46,6 +42,12 @@ public class VTJResponseMessage {
 
     @XmlAttribute(name = "versio")
     private String version;
+
+    @XmlAttribute(name = "faultCode")
+    private String faultCode;
+
+    @XmlAttribute(name = "faultString")
+    private String faultString;
 
     public String getDataTimeStamp() {
         return dataTimeStamp;
@@ -86,6 +88,22 @@ public class VTJResponseMessage {
     public void setResponseCode(ResponseCode responseCode) {
         this.responseCode = responseCode;
     }
+
+	public String getFaultCode() {
+		return faultCode;
+	}
+
+	public void setFaultCode(String faultCode) {
+		this.faultCode = faultCode;
+	}
+
+	public String getFaultString() {
+		return faultString;
+	}
+
+	public void setFaultString(String faultString) {
+		this.faultString = faultString;
+	}
 
     @Override
     public String toString() {
