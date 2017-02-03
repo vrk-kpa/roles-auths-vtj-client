@@ -1,5 +1,6 @@
 /target/
-
+/roles-auths-vtj-client.iml
+*~
 /.settings/
 .classpath
 .project
