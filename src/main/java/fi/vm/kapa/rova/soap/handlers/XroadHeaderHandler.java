@@ -115,6 +115,9 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 SOAPHeaderElement idHeaderElement = header.addHeaderElement(idElement.getName());
                 idHeaderElement.addTextNode(idElement.getValue());
 
+                JAXBElement<String> protocolVersion = factory.createProtocolVersion("4.0");
+                SOAPHeaderElement protocolVersionElement = header.addHeaderElement(protocolVersion.getName());
+                protocolVersionElement.addTextNode(protocolVersion.getValue());
 
                 String origUserId = request.getHeader(RequestIdentificationFilter.ORIG_END_USER);
                 if (origUserId == null || origUserId.trim().isEmpty()) {
