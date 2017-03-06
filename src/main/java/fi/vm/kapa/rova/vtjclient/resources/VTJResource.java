@@ -33,9 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-
 @Configuration
 @RestController
 @RequestMapping("/vtj")
