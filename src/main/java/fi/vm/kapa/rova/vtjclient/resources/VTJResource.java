@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.core.MediaType;
+
 @Configuration
 @RestController
 @RequestMapping("/vtj")
@@ -46,7 +48,7 @@ public class VTJResource {
     @RequestMapping(
             value = "/person/{schema}/{hetu}",
             method = RequestMethod.GET,
-            produces = "application/json"
+            produces = MediaType.APPLICATION_JSON
     )
     public VTJResponse getPerson(@PathVariable("hetu") String hetu,
             @PathVariable("schema") String schema) throws VTJServiceException {
