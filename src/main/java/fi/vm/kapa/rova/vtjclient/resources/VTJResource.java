@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.core.MediaType;
 
-@Configuration
 @RestController
 @RequestMapping("/vtj")
 public class VTJResource {
