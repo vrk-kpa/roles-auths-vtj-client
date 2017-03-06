@@ -22,37 +22,40 @@
  */
 package fi.vm.kapa.rova.vtjclient.resources;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.springframework.stereotype.Service;
-
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-@Service
-@Path("/vtj")
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+@Configuration
+@RestController
+@RequestMapping("/vtj")
 public class VTJResource {
 
     private static Logger log = Logger.getLogger(VTJResource.class);
 
-    @Inject
+    @Autowired
     private VTJService service;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/person/{schema}/{hetu}")
-    public Response getPerson(@PathParam("hetu") String hetu,
-            @PathParam("schema") String schema) throws VTJServiceException {
+    @RequestMapping(
+            value = "/person/{schema}/{hetu}",
+            method = RequestMethod.GET,
+            produces = "application/json"
+    )
+    public VTJResponse getPerson(@PathVariable("hetu") String hetu,
+            @PathVariable("schema") String schema) throws VTJServiceException {
         log.debug("Person request received.");
         VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
-        return Response.ok().entity(vtjResponse).build();
+        return vtjResponse;
     }
 }

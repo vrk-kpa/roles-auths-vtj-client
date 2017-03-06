@@ -22,27 +22,22 @@
  */
 package fi.vm.kapa.rova.config;
 
-import javax.annotation.PostConstruct;
-import javax.ws.rs.ApplicationPath;
-
-import org.glassfish.jersey.server.ResourceConfig;
+import fi.vm.kapa.rova.rest.validation.RequestValidationFilter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import fi.vm.kapa.rova.rest.exception.ExceptionMapper;
-import fi.vm.kapa.rova.rest.exception.WebApplicationExceptionMapper;
-import fi.vm.kapa.rova.rest.validation.ValidationContainerRequestFilter;
-import fi.vm.kapa.rova.vtjclient.resources.VTJResource;
+
+import javax.annotation.PostConstruct;
 
 @Configuration
-@ApplicationPath("/")
-public class ServiceConfiguration extends ResourceConfig {
+public class ServiceConfiguration {
 
     @Value("${api_key}")
     String apiKey;
 
     @Value("${api_path_prefix}")
-    String apiPathPrefix;
+    String pathPrefix;
 
     @Value("${request_alive_seconds}")
     Integer requestAliveSeconds;
@@ -66,16 +61,21 @@ public class ServiceConfiguration extends ResourceConfig {
     String sslTrustStorePassword;
 
     public ServiceConfiguration() {
-        register(VTJResource.class);
+
     }
+
+    @Bean(name = "apiValidationFilter")
+    public FilterRegistrationBean apiValidationFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new RequestValidationFilter(apiKey, requestAliveSeconds, pathPrefix));
+        filterRegistrationBean.addUrlPatterns("/vtj/*");
+        filterRegistrationBean.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+        return filterRegistrationBean;
+    }
+
 
     @PostConstruct
     public void init() {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        register(new ValidationContainerRequestFilter(apiKey, requestAliveSeconds, apiPathPrefix));
-        registerClasses(
-                WebApplicationExceptionMapper.class,
-                ExceptionMapper.class);
         System.setProperty("javax.net.ssl.keyStoreType", sslKeyStoreType);
         System.setProperty("javax.net.ssl.keyStore", sslKeyStore);
         System.setProperty("javax.net.ssl.keyStorePassword", sslKeyStorePassword);
