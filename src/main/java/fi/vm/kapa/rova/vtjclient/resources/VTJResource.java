@@ -46,7 +46,6 @@ public class VTJResource {
     @Autowired
     private VTJService service;
 
-    @Path("/person/{schema}/{hetu}")
     @RequestMapping(
             value = "/person/{schema}/{hetu}",
             method = RequestMethod.GET,
