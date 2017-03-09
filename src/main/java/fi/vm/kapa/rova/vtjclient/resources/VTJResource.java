@@ -24,19 +24,18 @@ package fi.vm.kapa.rova.vtjclient.resources;
 
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.vtj.VTJ;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.core.MediaType;
 
 @RestController
-@RequestMapping("/vtj")
-public class VTJResource {
+public class VTJResource implements VTJ {
 
     private static Logger log = Logger.getLogger(VTJResource.class);
 
@@ -44,7 +43,7 @@ public class VTJResource {
     private VTJService service;
 
     @GetMapping(
-            value = "/person/{schema}/{hetu}",
+            value = VTJ_PERSON,
             produces = MediaType.APPLICATION_JSON
     )
     public VTJResponse getPerson(@PathVariable("hetu") String hetu,
