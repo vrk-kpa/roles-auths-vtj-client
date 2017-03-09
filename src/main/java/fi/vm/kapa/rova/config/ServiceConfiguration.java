@@ -64,7 +64,7 @@ public class ServiceConfiguration {
     public FilterRegistrationBean apiValidationFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new RequestValidationFilter(apiKey, requestAliveSeconds, pathPrefix));
-        filterRegistrationBean.addUrlPatterns("/vtj/*");
+        filterRegistrationBean.addUrlPatterns("/rest/*");
         filterRegistrationBean.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
         return filterRegistrationBean;
     }
