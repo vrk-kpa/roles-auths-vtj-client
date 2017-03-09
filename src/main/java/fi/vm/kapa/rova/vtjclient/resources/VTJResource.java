@@ -24,6 +24,7 @@ package fi.vm.kapa.rova.vtjclient.resources;
 
 import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
+import fi.vm.kapa.rova.rest.exception.WebApplicationException;
 import fi.vm.kapa.rova.vtj.VTJ;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
@@ -47,9 +48,14 @@ public class VTJResource implements VTJ {
             produces = MediaType.APPLICATION_JSON
     )
     public VTJResponse getPerson(@PathVariable("hetu") String hetu,
-            @PathVariable("schema") String schema) throws VTJServiceException {
+            @PathVariable("schema") String schema) {
         log.debug("Person request received.");
-        VTJResponse vtjResponse = service.getVTJResponse(hetu, schema);
+        VTJResponse vtjResponse;
+        try {
+            vtjResponse = service.getVTJResponse(hetu, schema);
+        } catch (VTJServiceException e) {
+            throw new WebApplicationException(e);
+        }
         return vtjResponse;
     }
 }
