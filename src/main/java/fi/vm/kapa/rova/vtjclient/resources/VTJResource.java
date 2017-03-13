@@ -44,7 +44,7 @@ public class VTJResource implements VTJ {
     private VTJService service;
 
     @GetMapping(
-            value = VTJ_PERSON,
+            value = VTJ_PERSON_PATH,
             produces = MediaType.APPLICATION_JSON
     )
     public VTJResponse getPerson(@PathVariable("hetu") String hetu,
