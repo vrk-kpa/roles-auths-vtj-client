@@ -22,8 +22,8 @@
  */
 package fi.vm.kapa.rova.vtjclient.service;
 
-import fi.vm.kapa.rova.external.model.vtj.Person;
 import fi.vm.kapa.rova.soap.vtj.model.*;
+import fi.vm.kapa.rova.vtj.model.Person;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
