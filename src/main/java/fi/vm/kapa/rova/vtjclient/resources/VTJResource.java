@@ -54,7 +54,7 @@ public class VTJResource implements VTJ {
         try {
             vtjResponse = service.getVTJResponse(hetu, schema);
         } catch (VTJServiceException e) {
-            throw new WebApplicationException(e);
+            throw new WebApplicationException(e, 204);
         }
         return vtjResponse;
     }
