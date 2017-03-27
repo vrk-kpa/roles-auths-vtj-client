@@ -4,3 +4,5 @@ SERVICE_OBJECT_TYPE=SERVICE
 CLIENT_OBJECT_TYPE=SUBSYSTEM
 service.name=roles-auths-vtj-client
 spring.application.name=roles-auths-vtj-client
+eureka.instance.metadataMap.version=1
+

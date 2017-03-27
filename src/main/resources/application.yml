@@ -1,0 +1,18 @@
+# SERVICE_OBJECT_TYPE (eg. SERVICE)
+SERVICE_OBJECT_TYPE: SERVICE
+# CLIENT_OBJECT_TYPE (eg. SUBSYSTEM)
+CLIENT_OBJECT_TYPE: SUBSYSTEM
+service:
+  name: roles-auths-vtj-client
+spring:
+  application:
+    name: roles-auths-vtj-client
+eureka:
+  instance:
+      statusPageUrlPath: /info
+      healthCheckUrlPath: /health
+      preferIpAddress: true
+  client:
+    enabled: false
+
+
