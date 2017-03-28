@@ -22,11 +22,11 @@
  */
 package fi.vm.kapa.rova.vtjclient.service;
 
-import fi.vm.kapa.rova.external.model.vtj.Person;
-import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
 import fi.vm.kapa.rova.soap.vtj.model.*;
+import fi.vm.kapa.rova.vtj.model.Person;
+import fi.vm.kapa.rova.vtj.model.VTJResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

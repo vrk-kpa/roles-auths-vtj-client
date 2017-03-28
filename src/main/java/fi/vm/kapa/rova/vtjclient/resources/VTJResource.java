@@ -22,10 +22,10 @@
  */
 package fi.vm.kapa.rova.vtjclient.resources;
 
-import fi.vm.kapa.rova.external.model.vtj.VTJResponse;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.rest.exception.WebApplicationException;
 import fi.vm.kapa.rova.vtj.VTJ;
+import fi.vm.kapa.rova.vtj.model.VTJResponse;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
 import org.springframework.beans.factory.annotation.Autowired;

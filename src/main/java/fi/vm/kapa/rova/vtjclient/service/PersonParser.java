@@ -22,9 +22,9 @@
  */
 package fi.vm.kapa.rova.vtjclient.service;
 
-import fi.vm.kapa.rova.external.model.vtj.Person;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.model.*;
+import fi.vm.kapa.rova.vtj.model.Person;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
