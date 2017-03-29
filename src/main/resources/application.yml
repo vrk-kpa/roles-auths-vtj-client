@@ -12,7 +12,7 @@ eureka:
       statusPageUrlPath: /info
       healthCheckUrlPath: /health
       preferIpAddress: true
+      non-secure-port: 0
   client:
     enabled: false
-
 
