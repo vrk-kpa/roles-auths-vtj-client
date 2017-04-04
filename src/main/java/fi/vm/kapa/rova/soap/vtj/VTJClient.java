@@ -24,8 +24,7 @@ package fi.vm.kapa.rova.soap.vtj;
 
 import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vm.kapa.rova.logging.Logger;
-import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
-import fi.vm.kapa.rova.soap.vtj.model.StringNode;
+import fi.vm.kapa.rova.rest.identification.RequestIdentificationInterceptor;
 import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.soap.vtj.model.faultCode;
 import fi.vm.kapa.rova.soap.vtj.model.faultString;
@@ -46,6 +45,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.ws.Holder;
+
 import java.util.List;
 
 @Component
@@ -78,7 +78,7 @@ public class VTJClient implements SpringPropertyNames {
         reqBodyTiedot.setSalasana(vtjPassword);
         reqBodyTiedot.setSoSoNimi(schema);
         
-        String origUserId = request.getHeader(RequestIdentificationFilter.ORIG_END_USER);
+        String origUserId = request.getHeader(RequestIdentificationInterceptor.ORIG_END_USER);
         if (origUserId == null) {
             throw new IllegalArgumentException("End user header missing");
         }

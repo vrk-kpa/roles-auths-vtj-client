@@ -27,7 +27,7 @@ import eu.x_road.xsd.xroad.ObjectFactory;
 import eu.x_road.xsd.xroad.Service;
 import fi.vm.kapa.rova.config.SpringPropertyNames;
 import fi.vm.kapa.rova.logging.Logger;
-import fi.vm.kapa.rova.rest.identification.RequestIdentificationFilter;
+import fi.vm.kapa.rova.rest.identification.RequestIdentificationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -44,6 +44,7 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
@@ -119,7 +120,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 SOAPHeaderElement protocolVersionElement = header.addHeaderElement(protocolVersion.getName());
                 protocolVersionElement.addTextNode(protocolVersion.getValue());
 
-                String origUserId = request.getHeader(RequestIdentificationFilter.ORIG_END_USER);
+                String origUserId = request.getHeader(RequestIdentificationInterceptor.ORIG_END_USER);
                 if (origUserId == null || origUserId.trim().isEmpty()) {
                     throw new IllegalArgumentException("User header missing");
                 }
@@ -129,7 +130,7 @@ public class XroadHeaderHandler implements SOAPHandler<SOAPMessageContext>, Spri
                 uidHeaderElement.addTextNode(userIdElement.getValue());
 
 
-                String origRequestId = request.getHeader(RequestIdentificationFilter.ORIG_REQUEST_IDENTIFIER);
+                String origRequestId = request.getHeader(RequestIdentificationInterceptor.ORIG_REQUEST_IDENTIFIER);
                 if (origRequestId == null || origRequestId.trim().isEmpty()) {
                     throw new IllegalArgumentException("Request identifier header missing");
                 } else {
