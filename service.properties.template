@@ -1,5 +1,4 @@
 api_key={{ vtj_client_api_key }}
-api_path_prefix={{ vtj_client_api_path_prefix }}
 request_alive_seconds=5
 # VTJ-spesific properties
 # identifies the caller (some user id or business identity code)
