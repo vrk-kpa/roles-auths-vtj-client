@@ -51,6 +51,8 @@ public class VTJServiceTest {
         expectLastCall();
         parserMock.parseHuoltajat(EasyMock.anyObject(), EasyMock.anyObject());
         expectLastCall();
+        parserMock.parseHuoltajaMaara(EasyMock.anyObject(), EasyMock.anyObject());
+        expectLastCall();
         parserMock.parsePrincipals(EasyMock.anyObject(), EasyMock.anyObject());
         expectLastCall();
         parserMock.parseEdunvalvontaTieto(EasyMock.anyObject(), EasyMock.anyObject());

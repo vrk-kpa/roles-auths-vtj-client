@@ -67,6 +67,7 @@ public class VTJService {
         personParser.parseHetu(sPerson, person);
         personParser.parseIdentity(sPerson, person);
         personParser.parseHuoltajat(sPerson, person);
+        personParser.parseHuoltajaMaara(sPerson, person);
         personParser.parsePrincipals(sPerson, person);
         personParser.parseEdunvalvontaTieto(sPerson, person);
         personParser.parseEdunvalvontaRajoitusKoodi(sPerson, person);

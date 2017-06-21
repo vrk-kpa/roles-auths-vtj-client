@@ -208,4 +208,13 @@ public class PersonParser {
         }
         person.setEdunvalvontaValtuutetut(result);
     }
+
+    void parseHuoltajaMaara(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
+        if (sPerson.getHuoltajaMaara() != null) {
+            String countString = sPerson.getHuoltajaMaara().getCustodyCount();
+            if (countString != null && !countString.isEmpty()) {
+                person.setHuoltajatCount(Integer.parseInt(countString));
+            }
+        }
+    }
 }

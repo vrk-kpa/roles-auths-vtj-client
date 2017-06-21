@@ -71,6 +71,8 @@ public class PersonParserTest {
     private StringNode edunvalvojaHenkiloLastName2;
     private StringNode edunvalvojaHenkiloBDay2;
 
+    private HuoltajaMaara huoltajaMaara;
+
     private Huoltaja huoltaja1;
     private StringNode huoltajaHetu1;
     private StringNode huoltajaFirstName1;
@@ -217,6 +219,8 @@ public class PersonParserTest {
         principalHetu2 = createMock(StringNode.class);
         principalFirstName2 = createMock(StringNode.class);
         principalLastName2 = createMock(StringNode.class);
+
+        huoltajaMaara = createMock(HuoltajaMaara.class);
 
     }
 
@@ -576,6 +580,46 @@ public class PersonParserTest {
         verify(soapPersonMock);
 
         assertEquals(0, person.getHuoltajat().size());
+    }
+
+    @Test
+    public void parseHuoltajatMaaraNullTest() {
+        expect(soapPersonMock.getHuoltajaMaara()).andReturn(null).once();
+
+        replay(soapPersonMock);
+        PersonParser parser = new PersonParser();
+        Person person = new Person();
+        parser.parseHuoltajaMaara(soapPersonMock, person);
+        verify(soapPersonMock);
+
+        assertEquals(null, person.getHuoltajatCount());
+    }
+
+    @Test
+    public void parseHuoltajatMaaraTest() {
+        expect(soapPersonMock.getHuoltajaMaara()).andReturn(huoltajaMaara).times(2);
+        expect(huoltajaMaara.getCustodyCount()).andReturn("0").once();
+
+        replay(soapPersonMock, huoltajaMaara);
+        PersonParser parser = new PersonParser();
+        Person person = new Person();
+        parser.parseHuoltajaMaara(soapPersonMock, person);
+        verify(soapPersonMock, huoltajaMaara);
+
+        assertEquals(0, person.getHuoltajatCount().intValue());
+    }
+
+    @Test
+    public void parseHuoltajatMaaraFailTest() {
+        expect(soapPersonMock.getHuoltajaMaara()).andReturn(huoltajaMaara).times(2);
+        expect(huoltajaMaara.getCustodyCount()).andReturn("").once();
+
+        replay(soapPersonMock, huoltajaMaara);
+        PersonParser parser = new PersonParser();
+        Person person = new Person();
+        parser.parseHuoltajaMaara(soapPersonMock, person);
+        verify(soapPersonMock, huoltajaMaara);
+        assertEquals(null, person.getHuoltajatCount());
     }
 
     @Test
