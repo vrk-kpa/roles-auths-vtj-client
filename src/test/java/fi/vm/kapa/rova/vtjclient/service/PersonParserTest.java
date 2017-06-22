@@ -71,7 +71,7 @@ public class PersonParserTest {
     private StringNode edunvalvojaHenkiloLastName2;
     private StringNode edunvalvojaHenkiloBDay2;
 
-    private HuoltajaMaara huoltajaMaara;
+    private StringNode huoltajaMaara;
 
     private Huoltaja huoltaja1;
     private StringNode huoltajaHetu1;
@@ -220,7 +220,7 @@ public class PersonParserTest {
         principalFirstName2 = createMock(StringNode.class);
         principalLastName2 = createMock(StringNode.class);
 
-        huoltajaMaara = createMock(HuoltajaMaara.class);
+        huoltajaMaara = createMock(StringNode.class);
 
     }
 
@@ -598,7 +598,7 @@ public class PersonParserTest {
     @Test
     public void parseHuoltajatMaaraTest() {
         expect(soapPersonMock.getHuoltajaMaara()).andReturn(huoltajaMaara).times(2);
-        expect(huoltajaMaara.getCustodyCount()).andReturn("0").once();
+        expect(huoltajaMaara.getValue()).andReturn("2").once();
 
         replay(soapPersonMock, huoltajaMaara);
         PersonParser parser = new PersonParser();
@@ -606,13 +606,13 @@ public class PersonParserTest {
         parser.parseHuoltajaMaara(soapPersonMock, person);
         verify(soapPersonMock, huoltajaMaara);
 
-        assertEquals(0, person.getHuoltajatCount().intValue());
+        assertEquals(2, person.getHuoltajatCount().intValue());
     }
 
     @Test
     public void parseHuoltajatMaaraFailTest() {
         expect(soapPersonMock.getHuoltajaMaara()).andReturn(huoltajaMaara).times(2);
-        expect(huoltajaMaara.getCustodyCount()).andReturn("").once();
+        expect(huoltajaMaara.getValue()).andReturn("").once();
 
         replay(soapPersonMock, huoltajaMaara);
         PersonParser parser = new PersonParser();

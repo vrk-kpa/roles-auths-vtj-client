@@ -211,7 +211,7 @@ public class PersonParser {
 
     void parseHuoltajaMaara(fi.vm.kapa.rova.soap.vtj.model.Person sPerson, Person person) {
         if (sPerson.getHuoltajaMaara() != null) {
-            String countString = sPerson.getHuoltajaMaara().getCustodyCount();
+            String countString = sPerson.getHuoltajaMaara().getValue();
             if (countString != null && !countString.isEmpty()) {
                 person.setHuoltajatCount(Integer.parseInt(countString));
             }

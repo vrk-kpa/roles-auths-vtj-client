@@ -57,7 +57,7 @@ public class ServiceConfiguration {
     @Value("${ssl_truststorepassword}")
     String sslTrustStorePassword;
 
-    @Bean(name = "apiValidationFilter")
+ /*   @Bean(name = "apiValidationFilter")
     public FilterRegistrationBean apiValidationFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new RequestValidationFilter(apiKey, requestAliveSeconds));
@@ -65,7 +65,7 @@ public class ServiceConfiguration {
         filterRegistrationBean.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
         return filterRegistrationBean;
     }
-
+*/
     @PostConstruct
     public void init() {
         System.setProperty("javax.net.ssl.keyStoreType", sslKeyStoreType);

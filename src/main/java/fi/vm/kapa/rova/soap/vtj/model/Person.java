@@ -69,8 +69,8 @@ public class Person {
     @XmlElement(name = "Huoltotiedot", required = false)
     private Huoltotieto huoltotieto;
 
-    @XmlElement(name = "HuoltajaLkm", required = false)
-    private HuoltajaMaara huoltajaMaara;
+    @XmlElement(name = "HuoltajaLkm")
+    private StringNode huoltajaMaara;
 
     public List<Huoltaja> getHuoltaja() {
         return huoltaja;
@@ -169,11 +169,11 @@ public class Person {
         this.huoltotieto = huoltotieto;
     }
 
-    public HuoltajaMaara getHuoltajaMaara() {
+    public StringNode getHuoltajaMaara() {
         return huoltajaMaara;
     }
 
-    public void setHuoltajaMaara(HuoltajaMaara huoltajaMaara) {
+    public void setHuoltajaMaara(StringNode huoltajaMaara) {
         this.huoltajaMaara = huoltajaMaara;
     }
 
