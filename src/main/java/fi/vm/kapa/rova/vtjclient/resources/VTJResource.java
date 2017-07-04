@@ -25,7 +25,6 @@ package fi.vm.kapa.rova.vtjclient.resources;
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.rest.exception.WebApplicationException;
 import fi.vm.kapa.rova.vtj.VTJ;
-import fi.vm.kapa.rova.vtj.model.MessageIDType;
 import fi.vm.kapa.rova.vtj.model.VTJResponse;
 import fi.vm.kapa.rova.vtjclient.service.VTJService;
 import fi.vm.kapa.rova.vtjclient.service.VTJServiceException;
@@ -52,9 +51,6 @@ public class VTJResource implements VTJ {
             @PathVariable("schema") String schema) {
         log.debug("Person request received.");
         VTJResponse vtjResponse;
-        if(MessageIDType.ROV5.toString().equals(schema)) {
-            schema = "PerusLT19";
-        }
         try {
             vtjResponse = service.getVTJResponse(hetu, schema);
         } catch (VTJServiceException e) {
