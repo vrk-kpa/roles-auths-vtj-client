@@ -24,17 +24,16 @@ package fi.vm.kapa.rova.vtjclient.service;
 
 import fi.vm.kapa.rova.logging.Logger;
 import fi.vm.kapa.rova.soap.vtj.VTJClient;
-import fi.vm.kapa.rova.soap.vtj.model.*;
+import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import fi.vm.kapa.rova.vtj.model.Person;
 import fi.vm.kapa.rova.vtj.model.VTJResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static fi.vm.kapa.rova.logging.Logger.Field.*;
+import static fi.vm.kapa.rova.logging.Logger.Field.DURATION;
+import static fi.vm.kapa.rova.logging.Logger.Field.OPERATION;
 
 @Service
 public class VTJService {

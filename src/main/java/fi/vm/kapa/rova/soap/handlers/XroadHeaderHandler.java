@@ -44,7 +44,6 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;

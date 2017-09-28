@@ -22,7 +22,6 @@
  */
 package fi.vm.kapa.rova.config;
 
-import com.netflix.appinfo.ApplicationInfoManager;
 import fi.vm.kapa.rova.engine.evaluation.BaseSpringConfig;
 import fi.vm.kapa.rova.logging.LogbackConfigurator;
 import fi.vm.kapa.rova.logging.MDCFilter;

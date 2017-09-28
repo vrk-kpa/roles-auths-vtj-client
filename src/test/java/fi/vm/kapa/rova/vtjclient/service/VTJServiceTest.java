@@ -27,11 +27,9 @@ import fi.vm.kapa.rova.soap.vtj.model.VTJResponseMessage;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.createMock;;
+import static org.easymock.EasyMock.*;
+
+;
 
 /**
  * Created by Juha Korkalainen on 10/7/16.

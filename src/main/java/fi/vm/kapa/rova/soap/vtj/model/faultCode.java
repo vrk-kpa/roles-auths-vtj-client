@@ -22,7 +22,10 @@
  */
 package fi.vm.kapa.rova.soap.vtj.model;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = "faultCode", namespace = "http://xml.vrk.fi/ws/vtj/vtjkysely/1")
 @XmlAccessorType(XmlAccessType.FIELD)
